@@ -1,7 +1,10 @@
-﻿namespace RatATatCatBackEnd.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RatATatCatBackEnd.Models
 {
     public class UserInfo
     {
+        [Key]
         public int UserId { get; set; }
         public string? DisplayName { get; set; }
         public string? UserName { get; set; }

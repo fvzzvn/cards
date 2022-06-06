@@ -59,3 +59,4 @@ D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\runtimes\win\lib\netstandar
 D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 D:\git\RatATatCat\RatATatCatBackEnd\obj\Debug\net6.0\RatATatCatBackEnd.Properties.Resources.resources
 D:\git\RatATatCat\RatATatCatBackEnd\obj\Debug\net6.0\RatATatCatBackEnd.csproj.GenerateResource.cache
+D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

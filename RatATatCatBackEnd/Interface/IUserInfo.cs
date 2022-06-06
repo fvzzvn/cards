@@ -9,6 +9,6 @@ namespace RatATatCatBackEnd.Interface
         public void AddUser(UserInfo user);
         public void UpdateUser(UserInfo user);
         public UserInfo DeleteUser(int id);
-        
+        public bool CheckUser(int id);
     }
 }

@@ -26,6 +26,11 @@ namespace RatATatCatBackEnd.Repository
             }
         }
 
+        public bool CheckUser(int id)
+        {
+            return _dbContext.UserInfos.Any(e => e.UserId == id);
+        }
+
         public UserInfo DeleteUser(int id)
         {
             try
@@ -59,7 +64,7 @@ namespace RatATatCatBackEnd.Repository
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException("No user found");
                 }
             }
             catch

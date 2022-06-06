@@ -19,7 +19,7 @@ namespace RatATatCatBackEnd.Models
         {
             modelBuilder.Entity<UserInfo>(entity =>
             {
-                entity.HasNoKey();
+                //entity.HasNoKey();
                 entity.ToTable("UserInfo");
                 entity.Property(e => e.UserId).HasColumnName("UserId");
                 entity.Property(e => e.DisplayName).HasMaxLength(60).IsUnicode(false);
