@@ -28,7 +28,7 @@ namespace RatATatCatBackEnd.Controllers
         public async Task<ActionResult<UserInfo>> Get(int id)
         {
             var user = await Task.FromResult(_IUserInfo.GetUserInfo(id));
-            if (user != null){
+            if (user == null){
                 return NotFound();
             }
             return user;
