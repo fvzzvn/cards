@@ -19,11 +19,13 @@ namespace RatATatCatBackEnd.Controllers
             _IUserInfo = IUserInfo;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
         {
             return await Task.FromResult(_IUserInfo.GetUsers());
         }
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UserInfo>> Get(int id)
         {
@@ -40,7 +42,7 @@ namespace RatATatCatBackEnd.Controllers
             _IUserInfo.AddUser(user);
             return await Task.FromResult(user);
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<UserInfo>> Put(int id, UserInfo user)
         {
@@ -65,7 +67,7 @@ namespace RatATatCatBackEnd.Controllers
             }
             return await Task.FromResult(user);
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<UserInfo>> Delete(int id)
         {
