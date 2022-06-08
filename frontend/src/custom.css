@@ -49,7 +49,7 @@
 }
 
 /*********************************************/
-/*              HOME CSS                 "/
+/*              HOME CSS                     "/
 /*********************************************/
 .home-wrapper {
   display: -webkit-box;
@@ -117,6 +117,16 @@
 .home-buttons-container .btn {
   width: calc(100% - 5px);
   margin: auto;
+}
+
+/*********************************************/
+/*              LOGIN REGISTER CSS           "/
+/*********************************************/
+.x-holder {
+  margin: 0;
+  padding: 2.727px 2.727px 0 2.727px;
+  background-color: #000;
+  border-radius: 15%;
 }
 
 /*!

@@ -11,8 +11,6 @@ $font-family-sans-serif: "Comfortaa", sans-serif;
 /*              GENERAL CSS                 "/
 /*********************************************/
 
-.btn {
-}
 
 .btn.btn-primary {
     color: $button-text-color;
@@ -56,7 +54,7 @@ $font-family-sans-serif: "Comfortaa", sans-serif;
 
 
 /*********************************************/
-/*              HOME CSS                 "/
+/*              HOME CSS                     "/
 /*********************************************/
 
 .home-wrapper {
@@ -105,8 +103,16 @@ $font-family-sans-serif: "Comfortaa", sans-serif;
     margin: auto;
   } 
   
+/*********************************************/
+/*              LOGIN REGISTER CSS           "/
+/*********************************************/
 
-
+.x-holder {
+    margin: 0;
+    padding: 2.727px 2.727px 0 2.727px;
+    background-color: #000;
+    border-radius: 15%;
+}
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap');

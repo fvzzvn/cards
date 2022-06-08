@@ -4,8 +4,9 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { register } from "../slices/auth";
 import { clearMessage } from "../slices/message";
+import Button from "react-bootstrap/Button";
 
-const Register = () => {
+const Register = (props) => {
   const [successful, setSuccessful] = useState(false);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
@@ -24,9 +25,7 @@ const Register = () => {
         "len",
         "The username must be between 3 and 20 characters.",
         (val) =>
-          val &&
-          val.toString().length >= 3 &&
-          val.toString().length <= 20
+          val && val.toString().length >= 3 && val.toString().length <= 20
       )
       .required("This field is required!"),
     email: Yup.string()
@@ -37,9 +36,7 @@ const Register = () => {
         "len",
         "The password must be between 6 and 40 characters.",
         (val) =>
-          val &&
-          val.toString().length >= 6 &&
-          val.toString().length <= 40
+          val && val.toString().length >= 6 && val.toString().length <= 40
       )
       .required("This field is required!"),
   });
@@ -57,68 +54,78 @@ const Register = () => {
       });
   };
 
-  return (
-    <div className="col-md-12 signup-form">
-      <div className="card card-container">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleRegister}
-        >
-          <Form>
-            {!successful && (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <Field name="username" type="text" className="form-control" />
-                  <ErrorMessage
-                    name="username"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <Field name="email" type="email" className="form-control" />
-                  <ErrorMessage
-                    name="email"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <Field
-                    name="password"
-                    type="password"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div className="form-group">
-                  <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-                </div>
-              </div>
-            )}
-          </Form>
-        </Formik>
-      </div>
-      {message && (
-        <div className="form-group">
-          <div
-            className={successful ? "alert alert-success" : "alert alert-danger"}
-            role="alert"
+  if (props.showRegister) {
+    return (
+      <div className="col-md-12 signup-form">
+        <div className="card card-container">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleRegister}
           >
-            {message}
-          </div>
+            <Form>
+              {!successful && (
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <Field
+                      name="username"
+                      type="text"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="username"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <Field name="email" type="email" className="form-control" />
+                    <ErrorMessage
+                      name="email"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <Field
+                      name="password"
+                      type="password"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <Button type="submit" variant="secondary">
+                      Utwórz nowe konto
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </Form>
+          </Formik>
         </div>
-      )}
-    </div>
-  );
+        {message && (
+          <div className="form-group">
+            <div
+              className={
+                successful ? "alert alert-success" : "alert alert-danger"
+              }
+              role="alert"
+            >
+              {message}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 };
 
 export default Register;
