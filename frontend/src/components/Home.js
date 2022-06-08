@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../services/user.service";
-import "../styles/Home.css";
+import "../custom.scss";
+import Button from "react-bootstrap/Button";
 
 const Home = () => {
   const [content, setContent] = useState("");
@@ -24,9 +25,9 @@ const Home = () => {
       <div className="home-wrapper">
         <div className="home-container">
           <div className="home-logo"></div>
-          <div className="buttons-container">
-            <button className="home-button yellow"> Zaloguj się</button>
-            <button className="home-button red"> Utwórz nowe konto</button>
+          <div className="home-buttons-container">
+            <Button variant="primary">Zaloguj się</Button>
+            <Button variant="secondary"> Utwórz nowe konto</Button>
           </div>
         </div>
       </div>
