@@ -7,6 +7,9 @@ $major: rgb(248,125,9);
 $button-text-color: #FFFFFF;
 $font-family-sans-serif: "Comfortaa", sans-serif;
 
+$btn-close-hover-opacity:    1;
+$btn-close-opacity:          .9;
+
 /*********************************************/
 /*              GENERAL CSS                 "/
 /*********************************************/
@@ -89,18 +92,17 @@ $font-family-sans-serif: "Comfortaa", sans-serif;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
-    height: 120px;
     width: 20vw;
     background-color: $major;
     border-radius: 20px;
-    margin-top: 50px;
     padding: 10px;
   }
 
  
   .home-buttons-container .btn {
     width: calc(100% - 5px);
-    margin: auto;
+    height: 50px;
+    margin: 5px auto;
   } 
   
 /*********************************************/
@@ -108,11 +110,24 @@ $font-family-sans-serif: "Comfortaa", sans-serif;
 /*********************************************/
 
 .x-holder {
-    margin: 0;
     padding: 2.727px 2.727px 0 2.727px;
     background-color: #000;
     border-radius: 15%;
+    transition: background-color .3s;
+    position: absolute;
+    right: -.9em;
+    top: -.9em;
 }
+
+.x-holder:hover {
+    background-color: $secondary;
+}
+
+.TEST {
+    position: relative;
+}
+
+
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap');

@@ -52,31 +52,33 @@ const Home = () => {
       <div className="home-wrapper">
         <div className="home-container">
           <div className="home-logo"></div>
-          <div className="home-buttons-container">
-            <Login showLogin={showLogin}></Login>
-            <Register showRegister={showRegister}></Register>
-            {showLoginButton ? (
-              <Button variant="primary" onClick={handleLoginClick}>
-                Zaloguj się
-              </Button>
-            ) : (
-              <p />
-            )}
-            {showRegisterButton ? (
-              <Button variant="secondary" onClick={handleRegisterClick}>
-                {" "}
-                Utwórz nowe konto
-              </Button>
-            ) : (
-              <p />
-            )}
+          <div className="TEST">
             {showLogin || showRegister ? (
               <div className="x-holder">
-                <CloseButton variant="white" onClick={handleExitButton}/>
+                <CloseButton variant="white" onClick={handleExitButton} />
               </div>
             ) : (
-              <p />
+              <div />
             )}
+            <div className="home-buttons-container">
+              <Login showLogin={showLogin}></Login>
+              <Register showRegister={showRegister}></Register>
+              {showLoginButton ? (
+                <Button variant="primary" onClick={handleLoginClick}>
+                  Zaloguj się
+                </Button>
+              ) : (
+                <div />
+              )}
+              {showRegisterButton ? (
+                <Button variant="secondary" onClick={handleRegisterClick}>
+                  {" "}
+                  Utwórz nowe konto
+                </Button>
+              ) : (
+                <div />
+              )}
+            </div>
           </div>
         </div>
       </div>
