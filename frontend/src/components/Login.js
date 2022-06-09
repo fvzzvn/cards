@@ -21,8 +21,8 @@ const Login = (props) => {
   };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("This field is required!"),
-    password: Yup.string().required("This field is required!"),
+    username: Yup.string().required("Wpisz nazwę użytkownika."),
+    password: Yup.string().required("Wpisz hasło."),
   });
 
   const handleLogin = (formValue) => {
@@ -83,6 +83,16 @@ const Login = (props) => {
                   <span>Zaloguj się</span>
                 </button>
               </div>
+                <ErrorMessage
+                  name="username"
+                  component="div"
+                  className="alert alert-danger"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="alert alert-danger"
+                />
             </Form>
           </Formik>
         </div>

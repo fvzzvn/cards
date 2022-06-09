@@ -28,10 +28,10 @@ const Register = (props) => {
         (val) =>
           val && val.toString().length >= 3 && val.toString().length <= 20
       )
-      .required("To pole jest wymagane."),
+      .required("Podaj nazwę użytkownika."),
     email: Yup.string()
       .email("Ten adres e-mail nie jest poprawny.")
-      .required("To pole jest wymagane."),
+      .required("Wpisz adres e-mail."),
     password: Yup.string()
       .test(
         "len",
