@@ -53,6 +53,7 @@ $btn-close-opacity:          .9;
     background-size: cover;
     background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: darken;
+    overflow: hidden;
   }
 
 
@@ -73,13 +74,13 @@ $btn-close-opacity:          .9;
     justify-content: center;
     flex-wrap: wrap;
     width: auto;
-    height: auto;
+    height: 60vh;
     margin: auto;
-    width: 30vw;
+    width: 40vw;
   }
   
   .home-logo {
-    height: 20vh;
+    height: 30vh;
     width: 100%;
     background-image: url("./assets/img/logo_transparent_slim.png");
     background-size: contain;
@@ -92,7 +93,7 @@ $btn-close-opacity:          .9;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 20vw;
+    width: 400px;
     background-color: $major;
     border-radius: 20px;
     padding: 10px;
@@ -101,9 +102,14 @@ $btn-close-opacity:          .9;
  
   .home-buttons-container .btn {
     width: calc(100% - 5px);
+    font-size: 1.25rem;
     height: 50px;
     margin: 5px auto;
-  } 
+  }
+
+  .form-group {
+    margin: 10px auto;
+  }
   
 /*********************************************/
 /*              LOGIN REGISTER CSS           "/
@@ -111,7 +117,7 @@ $btn-close-opacity:          .9;
 
 .x-holder {
     padding: 2.727px 2.727px 0 2.727px;
-    background-color: #000;
+    background-color: brown;
     border-radius: 15%;
     transition: background-color .3s;
     position: absolute;
@@ -123,10 +129,14 @@ $btn-close-opacity:          .9;
     background-color: $secondary;
 }
 
-.TEST {
+.buttons-wrapper {
     position: relative;
 }
 
+.h4-title {
+  color: white;
+  text-align: center;
+} 
 
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";

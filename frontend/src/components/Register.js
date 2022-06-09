@@ -17,28 +17,31 @@ const Register = (props) => {
     username: "",
     email: "",
     password: "",
+    password2: "",
   };
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .test(
         "len",
-        "The username must be between 3 and 20 characters.",
+        "Nazwa użytkownika musi mieć od 3 do 20 znaków.",
         (val) =>
           val && val.toString().length >= 3 && val.toString().length <= 20
       )
-      .required("This field is required!"),
+      .required("To pole jest wymagane."),
     email: Yup.string()
-      .email("This is not a valid email.")
-      .required("This field is required!"),
+      .email("Ten adres e-mail nie jest poprawny.")
+      .required("To pole jest wymagane."),
     password: Yup.string()
       .test(
         "len",
-        "The password must be between 6 and 40 characters.",
+        "Hasło może mieć od 6 do 40 znaków.",
         (val) =>
           val && val.toString().length >= 6 && val.toString().length <= 40
       )
-      .required("This field is required!"),
+      .required("To pole jest wymagane."),
+      password2: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Hasła muszą się zgadzać')
   });
 
   const handleRegister = (formValue) => {
@@ -56,8 +59,8 @@ const Register = (props) => {
 
   if (props.showRegister) {
     return (
-      <div className="col-md-12 signup-form">
-        <div className="card card-container">
+      <div>
+        <div className="formik-div">
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -66,39 +69,37 @@ const Register = (props) => {
             <Form>
               {!successful && (
                 <div>
+                  <h4 className="h4-title">Rejestracja</h4>
                   <div className="form-group">
-                    <label htmlFor="username">Username</label>
                     <Field
                       name="username"
+                      placeholder="Nazwa użytkownika"
                       type="text"
                       className="form-control"
                     />
-                    <ErrorMessage
-                      name="username"
-                      component="div"
-                      className="alert alert-danger"
-                    />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <Field name="email" type="email" className="form-control" />
-                    <ErrorMessage
+                    <Field
                       name="email"
-                      component="div"
-                      className="alert alert-danger"
+                      placeholder="Adres e-mail"
+                      type="email"
+                      className="form-control"
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="password">Password</label>
                     <Field
                       name="password"
+                      placeholder="Hasło"
                       type="password"
                       className="form-control"
                     />
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="alert alert-danger"
+                  </div>
+                  <div className="form-group">
+                    <Field
+                      name="password2"
+                      placeholder="Powtórz hasło"
+                      type="password"
+                      className="form-control"
                     />
                   </div>
                   <div className="form-group">
@@ -106,6 +107,26 @@ const Register = (props) => {
                       Utwórz nowe konto
                     </Button>
                   </div>
+                    <ErrorMessage
+                      name="username"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  <ErrorMessage
+                      name="email"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                    <ErrorMessage
+                      name="password2"
+                      component="div"
+                      className="alert alert-danger"
+                    />
                 </div>
               )}
             </Form>

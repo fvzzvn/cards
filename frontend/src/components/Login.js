@@ -44,8 +44,11 @@ const Login = (props) => {
   }
   if (props.showLogin) {
     return (
-      <div className="col-md-12 login-form">
-        <div className="card card-container">
+      <div>
+        <div className="login-title">
+          <h4 className="h4-title">Logowanie</h4>
+        </div>
+        <div>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}

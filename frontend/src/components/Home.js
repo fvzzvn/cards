@@ -52,7 +52,7 @@ const Home = () => {
       <div className="home-wrapper">
         <div className="home-container">
           <div className="home-logo"></div>
-          <div className="TEST">
+          <div className="buttons-wrapper">
             {showLogin || showRegister ? (
               <div className="x-holder">
                 <CloseButton variant="white" onClick={handleExitButton} />
