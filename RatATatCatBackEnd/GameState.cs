@@ -8,9 +8,9 @@ namespace RatATatCatBackEnd
 {
     public class GameState
     {
-        private readonly static Lazy<GameState> instance =
-            new Lazy<GameState>(() => new GameState(GlobalHost.ConnectionManager.GetHubContext<GameHub>()));
-
+        private static readonly Lazy<GameState> lazy =
+             new Lazy<GameState>(() => new GameState());
+        public static GameState Instance { get { return lazy.Value; } }
 
         private readonly ConcurrentDictionary<string, Player> players =
              new ConcurrentDictionary<string, Player>(StringComparer.OrdinalIgnoreCase);
@@ -18,19 +18,20 @@ namespace RatATatCatBackEnd
         private readonly ConcurrentDictionary<string, Game> games =
              new ConcurrentDictionary<string, Game>(StringComparer.OrdinalIgnoreCase);
 
-        private GameState(IHubContext context)
+        private GameState()
         {
-            this.Clients = context.Clients;
-            this.Groups = context.Groups;
         }
 
-        public IHubConnectionContext<dynamic> Clients { get; set; }
-        public IGroupManager Groups { get; set; }
-
-        public Player CreatePlayer(string username, string connectionId)
+        public Player CreatePlayer(string gameId,string username, string connectionId)
         {
+            Game foundGame;
+
+            foundGame = GetGame(gameId);
+                
             Player player = new Player(connectionId, username);
             this.players[connectionId] = player;
+
+            foundGame.AddPlayer(player);
 
             return player;
         }
@@ -45,10 +46,13 @@ namespace RatATatCatBackEnd
 
             return foundPlayer;
         }
-
-        public Game GetGame(Player player)
+        public bool IsPlayersReady()
         {
-            Game foundGame = this.games.Values.FirstOrDefault(g => g.Id == player.GameId);
+
+        }
+        public Game GetGame(string roomId)
+        {
+            Game foundGame = this.games.Values.FirstOrDefault(g => g.Id == roomId);
 
             if (foundGame == null)
             {
@@ -73,19 +77,14 @@ namespace RatATatCatBackEnd
             this.players.TryRemove(foundGame.Player2.Id, out foundPlayer);
         }
 
-        public async Task<Game> CreateGame(Player player1, Player player2, Player player3, Player player4)
+        public async Task<Game> CreateGame(string gameId)
         {
             // Define the new game and add to waiting pool
-            Game game = new Game(player1, player2, player3, player4);
+            Game game = new Game(gameId);
             this.games[game.Id] = game;
-
-            // Create a new group to manage communication using ID as group name
-            await this.Groups.Add(player1.Id, groupName: game.Id);
-            await this.Groups.Add(player2.Id, groupName: game.Id);
-            await this.Groups.Add(player3.Id, groupName: game.Id);
-            await this.Groups.Add(player4.Id, groupName: game.Id);
 
             return game;
         }
+        
     }
 }

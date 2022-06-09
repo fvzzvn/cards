@@ -2,15 +2,9 @@
 {
     public class Game
     {
-        public Game(Player player1, Player player2, Player player3, Player player4)
+        public Game(string id)
         {
-            this.Id = Guid.NewGuid().ToString();
-            
-            this.Player1 = player1;
-            this.Player2 = player2;
-            this.Player3 = player3;
-            this.Player4 = player4;
-
+            this.Id = id;
             this.Stack = new Stack();
 
         }
@@ -21,6 +15,35 @@
         public Player Player3 { get; set; }
         public Player Player4 { get; set; }
 
+        public void AddPlayer(Player player)
+        {
+            if(this.Player1 == null)
+            {
+                this.Player1 = player;
+            }
+            else if(this.Player2 == null)
+            {
+                this.Player2 = player;
+            }
+
+            else if (this.Player3 == null)
+            {
+                this.Player3 = player;
+            }
+
+            else if (this.Player4 == null)
+            {
+                this.Player4 = player;
+            }
+        }
+        public bool IsFull()
+        {
+            if (this.Player1 != null & this.Player2 != null & this.Player3 != null & this.Player4 != null)
+            {
+                return true;
+            }
+            return false;
+        }
         public void PlayCard(Card card, Player player)
         {
             if (Stack.PeekTop() == card)
