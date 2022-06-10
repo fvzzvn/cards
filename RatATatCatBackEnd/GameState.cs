@@ -46,9 +46,16 @@ namespace RatATatCatBackEnd
 
             return foundPlayer;
         }
-        public bool IsPlayersReady()
+        public bool IsPlayersReady(string roomId)
         {
+            Game game;
+            game = GetGame(roomId);
 
+            if (game.IsFull())
+            {
+                return true;
+            }
+            return false;
         }
         public Game GetGame(string roomId)
         {

@@ -15,10 +15,15 @@ namespace RatATatCatBackEnd.Hubs
 
             Player player = 
                 GameState.Instance.CreatePlayer(roomId, username, Context.ConnectionId);
-            this.Clients.Caller.playerJoined(player);
-
+            this.Clients.All.playerJoined(player);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId);
+
+            if (GameState.Instance.IsPlayersReady(roomId))
+            {
+                Game game = GameState.Instance.GetGame(roomId);
+                this.Clients.All.start(game);
+            }
 
         }
         public Task LeaveRoom(string roomId)
