@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
-using RatATatCatBackEnd.Hubs;
-using RatATatCatBackEnd.Models;
+﻿using RatATatCatBackEnd.Models;
 using System.Collections.Concurrent;
 
 namespace RatATatCatBackEnd
@@ -22,14 +19,16 @@ namespace RatATatCatBackEnd
         {
         }
 
-        public Player CreatePlayer(string gameId,string username, string connectionId)
+        public Player CreatePlayer(string gameId, string username, string connectionId)
         {
             Game foundGame;
 
             foundGame = GetGame(gameId);
-                
-            Player player = new Player(connectionId, username);
+
+            Player player = new Player(connectionId, username, gameId);
             this.players[connectionId] = player;
+
+            foundGame.Dealer.GiveHand(player);
 
             foundGame.AddPlayer(player);
 
@@ -46,16 +45,13 @@ namespace RatATatCatBackEnd
 
             return foundPlayer;
         }
-        public bool IsPlayersReady(string roomId)
+        public bool IsPlayersReady(string gameId)
         {
-            Game game;
-            game = GetGame(roomId);
+            Game game = GetGame(gameId);
 
-            if (game.IsFull())
-            {
-                return true;
-            }
-            return false;
+            game.PlayerTurn = game.Player1;
+
+            return game.IsFull();
         }
         public Game GetGame(string roomId)
         {
@@ -90,8 +86,9 @@ namespace RatATatCatBackEnd
             Game game = new Game(gameId);
             this.games[game.Id] = game;
 
+
             return game;
         }
-        
+
     }
 }

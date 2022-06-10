@@ -10,20 +10,32 @@
         {
             this.cards = new Stack<Card>();
         }
-
+        public bool NotEmpty()
+        {
+            if (this.stackSize > 0)
+            {
+                return true;
+            }
+            return false;
+        }
         public Card PeekTop()
         {
-            return cards.Peek();
+            return this.cards.Peek();
         }
 
-        public Card GetTop()
+        public Card GetTop(Player player)
         {
-            return cards.Pop();
+            Card card = new Card();
+            this.stackSize--;
+            card = this.cards.Pop();
+            player.Cards.Add(card);
+            return card;
         }
 
         public void PlaceCard(Card card)
         {
-            cards.Push(card);
+            this.cards.Push(card);
+            this.stackSize++;
         }
     }
 }

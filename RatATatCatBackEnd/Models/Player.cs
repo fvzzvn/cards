@@ -2,24 +2,41 @@
 {
     public class Player
     {
-        public Player(string id, string name)
+        public Player(string id, string name, string gameId)
         {
             this.Id = id;
             this.Name = name;
-            Card card = new Card() { Id = 1, Text = "2 tref", IsSpecial = 0 };
-            this.Cards = new List<Card> { card };
+            this.GameId = gameId;
+            this.Cards = new List<Card>();
         }
         public string Id { get; set; }
         public string Name { get; set; }
 
         public string GameId { get; set; }
-        
+
         public List<Card> Cards { get; set; }
 
         public override string ToString()
         {
             return String.Format("(Id={0}, Name={1}, GameId={2}, Piece={3})",
                 this.Id, this.Name, this.GameId, this.Cards);
+        }
+
+        public override bool Equals(object obj)
+        {
+            Player other = obj as Player;
+
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.Name.Equals(other.Name) && this.Id.Equals(other.Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode() * this.Id.GetHashCode();
         }
     }
 }
