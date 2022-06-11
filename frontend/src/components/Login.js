@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { login } from "../slices/auth";
@@ -16,19 +15,21 @@ const Login = (props) => {
   }, [dispatch]);
 
   const initialValues = {
-    username: "",
+    email: "",
     password: "",
   };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Wpisz nazwę użytkownika."),
+    email: Yup.string()
+    .email("Ten adres e-mail nie jest poprawny.")
+    .required("Wpisz adres e-mail."),
     password: Yup.string().required("Wpisz hasło."),
   });
 
   const handleLogin = (formValue) => {
-    const { username, password } = formValue;
+    const { email, password } = formValue;
     setLoading(true);
-    dispatch(login({ username, password }))
+    dispatch(login({ email, password }))
       .unwrap()
       .then(() => {
         props.history.push("/profile");
@@ -40,7 +41,7 @@ const Login = (props) => {
   };
 
   if (isLoggedIn) {
-    return <Navigate to="/profile" />;
+    console.log("LOGGED IN")
   }
   if (props.showLogin) {
     return (
@@ -57,9 +58,9 @@ const Login = (props) => {
             <Form>
               <div className="form-group">
                 <Field
-                  name="username"
-                  placeholder="Nazwa użytkownika"
-                  type="text"
+                  name="email"
+                  placeholder="Adres e-mail"
+                  type="email"
                   className="form-control"
                 />
               </div>
@@ -84,7 +85,7 @@ const Login = (props) => {
                 </button>
               </div>
                 <ErrorMessage
-                  name="username"
+                  name="email"
                   component="div"
                   className="alert alert-danger"
                 />
