@@ -21,14 +21,16 @@ const Login = (props) => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-    .email("Ten adres e-mail nie jest poprawny.")
-    .required("Wpisz adres e-mail."),
+      .email("Ten adres e-mail nie jest poprawny.")
+      .required("Wpisz adres e-mail."),
     password: Yup.string().required("Wpisz hasło."),
   });
 
   const handleLogin = (formValue) => {
     const { email, password } = formValue;
     setLoading(true);
+    console.log(email);
+    console.log(password);
     dispatch(login({ email, password }))
       .unwrap()
       .then(() => {
@@ -41,7 +43,7 @@ const Login = (props) => {
   };
 
   if (isLoggedIn) {
-    console.log("LOGGED IN")
+    console.log("LOGGED IN");
   }
   if (props.showLogin) {
     return (
@@ -81,19 +83,19 @@ const Login = (props) => {
                   {loading && (
                     <span className="spinner-border spinner-border-sm"></span>
                   )}
-                  <span>Zaloguj się</span>
+                  {!loading && <span>Zaloguj się</span>}
                 </button>
               </div>
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="alert alert-danger"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="alert alert-danger"
-                />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="alert alert-danger"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="alert alert-danger"
+              />
             </Form>
           </Formik>
         </div>

@@ -47,6 +47,8 @@ const Register = (props) => {
   const handleRegister = (formValue) => {
     const { username, email, password } = formValue;
     setSuccessful(false);
+    console.log(email);
+    console.log(password);
     dispatch(register({ username, email, password }))
       .unwrap()
       .then(() => {
