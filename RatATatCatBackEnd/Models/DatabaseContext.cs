@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+
 namespace RatATatCatBackEnd.Models
 {
     public partial class DatabaseContext : DbContext
@@ -14,6 +15,7 @@ namespace RatATatCatBackEnd.Models
         }
 
         public virtual DbSet<UserInfo>? UserInfos { get; set; }
+        public virtual DbSet<BoardInstance>? BoardInstances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +29,15 @@ namespace RatATatCatBackEnd.Models
                 entity.Property(e => e.Email).HasMaxLength(50).IsUnicode(false);
                 entity.Property(e => e.Password).HasMaxLength(20).IsUnicode(false);
                 entity.Property(e => e.CreatedDate).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<BoardInstance>(entity =>
+            {
+                //entity.HasNoKey();
+                entity.ToTable("Boards");
+                entity.Property(e => e.Id).HasColumnName("Id"); ;
+                entity.Property(e => e.BoardType);
+                entity.Property(e => e.BoardMode);
             });
 
             OnModelCreatingPartial(modelBuilder);
