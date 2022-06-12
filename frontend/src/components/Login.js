@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { login } from "../slices/auth";
 import { clearMessage } from "../slices/message";
+import userService from "../services/user.service";
 
 const Login = (props) => {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,23 @@ const Login = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(clearMessage());
-  }, [dispatch]);
+  }, [dispatch])
+  const [content, setContent] = useState("cont");
+  useEffect(() => {
+    userService.getPublicContent().then(
+      (response) => {
+        setContent(response.data);
+      },
+      (error) => {
+        const _content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+        setContent(_content);
+      }
+    );
+  }, []);
+  console.log(content);
 
   const initialValues = {
     email: "",
@@ -29,8 +46,6 @@ const Login = (props) => {
   const handleLogin = (formValue) => {
     const { email, password } = formValue;
     setLoading(true);
-    console.log(email);
-    console.log(password);
     dispatch(login({ email, password }))
       .unwrap()
       .then(() => {
@@ -43,7 +58,7 @@ const Login = (props) => {
   };
 
   if (isLoggedIn) {
-    console.log("LOGGED IN");
+    <h1>LOGGED IN</h1>;
   }
   if (props.showLogin) {
     return (

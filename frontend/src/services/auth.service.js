@@ -2,19 +2,18 @@ import axios from "axios";
 
 const API_URL = "https://localhost:7297/api/";
 
+
 const register = (username, email, password) => {  
-  console.log(email);
-  console.log(password);
-  return axios.post(API_URL + "signup", {
+  console.log(username, email, password, )
+  return axios.post(API_URL + "authentication", {
     username,
     email,
     password,
+    "displayName" : username,
   });
 };
 
 const login = (email, password) => {
-  console.log(email);
-  console.log(password);
   return axios
     .post(API_URL + "token", {
       email,
