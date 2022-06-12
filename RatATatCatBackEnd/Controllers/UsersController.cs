@@ -39,6 +39,7 @@ namespace RatATatCatBackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<UserInfo>> Post(UserInfo user)
         {
+            user.CreatedDate = DateTime.Now;
             _IUserInfo.AddUser(user);
             return await Task.FromResult(user);
         }
