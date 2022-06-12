@@ -4,9 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Models;
 using RatATatCatBackEnd.Repository;
+using RatATatCatBackEnd.Hubs;
 using System.Text;
 
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<DatabaseContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("dbConnection")));
@@ -62,6 +66,7 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHub<GameHub>("/GameHub");
 app.MapControllers();
 
 app.Run();
