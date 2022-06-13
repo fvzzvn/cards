@@ -7,6 +7,7 @@ import Login from "./Login.js";
 import Register from "./Register.js";
 import CloseButton from "react-bootstrap/CloseButton";
 import Boards from "./Boards.js";
+import HeaderBar from "./HeaderBar.js";
 
 const Home = () => {
   const [content, setContent] = useState("");
@@ -75,8 +76,8 @@ const Home = () => {
 
   return (
     <div className="cards-bg">
-        {!isLoggedIn ? (
-      <div className="home-wrapper">
+      {!isLoggedIn ? (
+        <div className="home-wrapper">
           <div className="home-container">
             <div className="home-logo"></div>
             <div className="buttons-wrapper">
@@ -105,11 +106,14 @@ const Home = () => {
               </div>
             </div>
           </div>
-          </div>
-        ) : (
+        </div>
+      ) : (
+        <>
+          <HeaderBar></HeaderBar>
           <Boards></Boards>
-        )}
-      </div>
+        </>
+      )}
+    </div>
   );
 };
 

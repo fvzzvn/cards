@@ -5,7 +5,6 @@ $secondary-hover: #d32013;
 $major: #f87d09;
 $button-text-color: #FFFFFF;
 $font-family-sans-serif: "Comfortaa", sans-serif;
-
 $btn-close-hover-opacity:    1;
 $btn-close-opacity:          .9;
 
@@ -271,6 +270,28 @@ $btn-close-opacity:          .9;
 
 .card-ranking {
   width: 100%;
+}
+
+/*********************************************/
+/*              HEADER BAR CSS               "/
+/*********************************************/
+
+.header-bar-container {
+  position: absolute;
+  height: 100px;
+  width: 100%;
+  background-color: rgba(0,0,0,0.8);
+  overflow: hidden;
+}
+
+.header-bar-logo {
+height: 100%;
+width: 250px;
+margin: auto;
+background-image: url("./assets/img/logo_transparent_slim.png");
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center center;
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
