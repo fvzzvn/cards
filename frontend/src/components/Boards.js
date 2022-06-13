@@ -12,8 +12,8 @@ const Boards = () => {
         <ToggleButton variant="outline-primary" className="home-board-fliter filter">Wolne miejsca</ToggleButton>
         <ToggleButton variant="outline-primary" className="home-board-fliter filter">Rozpoczęte</ToggleButton>
         <Button variant="secondary" className="home-board-fliter">Stwórz nową grę</Button>
-        {[...Array(17)].map((e, i) => (
-          <Board key={i}> </Board>
+        {[100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117].map((e, i) => (
+          <Board id={e} key={i}> </Board>
         ))}
       </div>
     </div>

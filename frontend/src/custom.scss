@@ -304,7 +304,7 @@ $btn-close-opacity: 0.9;
   margin: 2px;
   font-family: "Bungee Inline", cursive;
   text-align: center;
-  font-size: 20px;
+  font-size: 21px;
   overflow: hidden;
 }
 
@@ -314,7 +314,7 @@ $btn-close-opacity: 0.9;
   margin: 2px;
   font-family: "Bungee Inline", cursive;
   text-align: center;
-  font-size: 20px;
+  font-size: 22px;
   overflow: hidden;
 }
 
@@ -347,6 +347,25 @@ $btn-close-opacity: 0.9;
   margin: auto;
 }
 
+.low {
+  color: green;
+}
+
+.medium-low {
+  color: blue;
+}
+
+.medium {
+  color: yellow;
+}
+
+.medium-high {
+  color: purple;
+}
+
+.high {
+  color: red;
+}
 
 
 /*********************************************/

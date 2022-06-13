@@ -98,7 +98,6 @@ const Home = () => {
                 )}
                 {showRegisterButton && (
                   <Button variant="secondary" onClick={handleRegisterClick}>
-                    {" "}
                     Utwórz nowe konto
                   </Button>
                 )}

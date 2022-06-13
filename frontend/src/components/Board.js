@@ -1,11 +1,13 @@
-const Board = () => {
+const Board = (props) => {
+  const ranking = Math.floor(800 + Math.random() * (3200 - 800));
+
   return (
     <div className="board-card">
       <div className="board-card-id">
-        <div className="card-id">101</div>
+        <div className="card-id">{props.id}</div>
       </div>
       <div className="board-card-ranking">
-        <div className="card-ranking">1386</div>
+        {(ranking > 2600) ? (<div className="card-ranking high">{ranking}</div>) : (ranking > 2000) ? (<div className="card-ranking medium-high">{ranking}</div>) : ((ranking > 1500) ? (<div className="card-ranking medium">{ranking}</div>) : (((ranking > 1000) ? (<div className="card-ranking medium-low">{ranking}</div>) : (<div className="card-ranking low">{ranking}</div>)))) }
       </div>
       <div className="board-card-name">
         <div className="card-name">Nazwa gry</div>
