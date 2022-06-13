@@ -6,8 +6,9 @@ import { register } from "../slices/auth";
 import { clearMessage } from "../slices/message";
 import Button from "react-bootstrap/Button";
 
-const Register = (props) => {
+const Register = () => {
   const [successful, setSuccessful] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -40,26 +41,34 @@ const Register = (props) => {
           val && val.toString().length >= 6 && val.toString().length <= 40
       )
       .required("To pole jest wymagane."),
-      password2: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Hasła muszą się zgadzać')
+    password2: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Hasła muszą się zgadzać"
+    ),
   });
 
   const handleRegister = (formValue) => {
-    const { username, email, password} = formValue;
+    const { username, email, password } = formValue;
     setSuccessful(false);
-    dispatch(register({ username, email, password}))
+    dispatch(register({ username, email, password }))
       .unwrap()
       .then(() => {
         setSuccessful(true);
+        setShowMessage(true);
       })
       .catch(() => {
         setSuccessful(false);
       });
   };
 
-  if (props.showRegister) {
     return (
       <div>
+        {showMessage && (
+          <div className="confirmation-message">
+            Rejestracja użytkownika przebiegła pomyślnie. Na podany adres e-mail
+            zostanie wysłany link aktywacyjny. Użyj go w celu aktywacji konta.
+          </div>
+        )}
         <div className="formik-div">
           <Formik
             initialValues={initialValues}
@@ -107,27 +116,26 @@ const Register = (props) => {
                       Utwórz nowe konto
                     </Button>
                   </div>
-                    <ErrorMessage
-                      name="username"
-                      component="div"
-                      className="alert alert-danger"
-                    />
                   <ErrorMessage
-                      name="email"
-                      component="div"
-                      className="alert alert-danger"
-                    />
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="alert alert-danger"
-                    />
-                    <ErrorMessage
-                      name="password2"
-                      component="div"
-                      className="alert alert-danger"
-                    />
-                    
+                    name="username"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                  <ErrorMessage
+                    name="password2"
+                    component="div"
+                    className="alert alert-danger"
+                  />
                 </div>
               )}
             </Form>
@@ -147,7 +155,6 @@ const Register = (props) => {
         )}
       </div>
     );
-  }
-};
+  };
 
 export default Register;

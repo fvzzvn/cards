@@ -160,6 +160,10 @@ $btn-close-opacity:          .9;
   text-align: center;
 } 
 
+.confirmation-message {
+  color: white;
+  padding: 1rem;
+}
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap');

@@ -29,7 +29,6 @@ const Login = (props) => {
       }
     );
   }, []);
-  console.log(content);
 
   const initialValues = {
     email: "",
@@ -57,10 +56,6 @@ const Login = (props) => {
       });
   };
 
-  if (isLoggedIn) {
-    <h1>LOGGED IN</h1>;
-  }
-  if (props.showLogin) {
     return (
       <div>
         <div className="login-title">
@@ -123,7 +118,6 @@ const Login = (props) => {
         )}
       </div>
     );
-  }
-};
+  };
 
 export default Login;

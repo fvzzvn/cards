@@ -61,8 +61,8 @@ const Home = () => {
               <div />
             )}
             <div className="home-buttons-container">
-              <Login showLogin={showLogin}></Login>
-              <Register showRegister={showRegister}></Register>
+              {showLogin && <Login></Login>}
+              {showRegister && <Register></Register>}
               {showLoginButton ? (
                 <Button variant="primary" onClick={handleLoginClick}>
                   Zaloguj się
