@@ -2,7 +2,7 @@ $primary: #FAAD2D;
 $primary-hover: #ffa600;
 $secondary: #FA392D;
 $secondary-hover: #d32013;
-$major: rgb(248,125,9);
+$major: #f87d09;
 $button-text-color: #FFFFFF;
 $font-family-sans-serif: "Comfortaa", sans-serif;
 
@@ -174,18 +174,20 @@ $btn-close-opacity:          .9;
   min-height: 800px;
   // overflow:hidden;
   margin-top: 150px;
-  background: $primary;
-  clip-path: polygon(
-    0 4%,
-    4% 0,
-    96% 0,
-    100% 4%,
-    100% 96%,
-    96% 100%,
-    4% 100%,
-    0% 96%,
-    0% 4%
-  )
+  background-image: linear-gradient(to right top, #faad2d, #faa525, #fa9c1e, #f99317, #f98a10, #f9890c, #fa8808, #fa8704, #fc8f01, #fd9700, #fe9e00, #ffa600);
+  // clip-path: polygon(
+  //   0 4%,
+  //   4% 0,
+  //   96% 0,
+  //   100% 4%,
+  //   100% 96%,
+  //   96% 100%,
+  //   4% 100%,
+  //   0% 96%,
+  //   0% 4%
+  // );
+  border-radius: 5px;
+  box-shadow: 20px 20px 50px black;
 }
 
 .home-boards-title {
@@ -206,13 +208,71 @@ $btn-close-opacity:          .9;
 
 .board-card {
   display: grid;
-  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-columns: 30% 15% 55%;
+  grid-template-rows: 20% 20% 60%;
+  grid-template-areas:
+  "id ranking ranking"
+  "name name name"
+  "players players players";
   height: 90%;
   width: 90%;
-  padding: 15px;
+  padding: 4%;
   background-color: white;
+  color: white;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.4);
 }
 
+.board-card > * {
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.board-card-id {
+  grid-area: id;
+  background-color: $major;
+  margin: 2px;
+  font-family: 'Bungee Inline', cursive;
+  text-align: center;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.board-card-ranking {
+  grid-area: ranking;
+  background-color: $major;
+  margin: 2px;
+  font-family: 'Bungee Inline', cursive;
+  text-align: center;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.board-card-name {
+  grid-area: name;
+  background-color: $major;
+  margin: 2px;
+  padding-left: 5px;
+  overflow: hidden;
+}
+
+.board-card-players {
+  grid-area: players;
+  background-color: $major;
+  margin: 2px;
+  overflow: hidden;
+  padding-left: 5px;
+}
+
+.card-id {
+  width: 100%;
+}
+
+.card-ranking {
+  width: 100%;
+}
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap');

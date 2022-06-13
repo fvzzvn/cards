@@ -2,6 +2,7 @@
 /*              GENERAL CSS                 "/
 /*********************************************/
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");
 .btn.btn-primary {
   color: #FFFFFF;
   -webkit-transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
@@ -192,9 +193,11 @@
   height: 85%;
   min-height: 800px;
   margin-top: 150px;
-  background: #FAAD2D;
-  -webkit-clip-path: polygon(0 4%, 4% 0, 96% 0, 100% 4%, 100% 96%, 96% 100%, 4% 100%, 0% 96%, 0% 4%);
-          clip-path: polygon(0 4%, 4% 0, 96% 0, 100% 4%, 100% 96%, 96% 100%, 4% 100%, 0% 96%, 0% 4%);
+  background-image: -webkit-gradient(linear, left bottom, right top, from(#faad2d), color-stop(#faa525), color-stop(#fa9c1e), color-stop(#f99317), color-stop(#f98a10), color-stop(#f9890c), color-stop(#fa8808), color-stop(#fa8704), color-stop(#fc8f01), color-stop(#fd9700), color-stop(#fe9e00), to(#ffa600));
+  background-image: linear-gradient(to right top, #faad2d, #faa525, #fa9c1e, #f99317, #f98a10, #f9890c, #fa8808, #fa8704, #fc8f01, #fd9700, #fe9e00, #ffa600);
+  border-radius: 5px;
+  -webkit-box-shadow: 20px 20px 50px black;
+          box-shadow: 20px 20px 50px black;
 }
 
 .home-boards-title {
@@ -219,12 +222,88 @@
 .board-card {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 20% 20% 20% 20% 20%;
-      grid-template-columns: 20% 20% 20% 20% 20%;
+  -ms-grid-columns: 30% 15% 55%;
+      grid-template-columns: 30% 15% 55%;
+  -ms-grid-rows: 20% 20% 60%;
+      grid-template-rows: 20% 20% 60%;
+      grid-template-areas: "id ranking ranking" "name name name" "players players players";
   height: 90%;
   width: 90%;
-  padding: 15px;
+  padding: 4%;
   background-color: white;
+  color: white;
+  -webkit-box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.4);
+          box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.board-card > * {
+  -webkit-box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
+          box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.board-card-id {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: id;
+  background-color: #f87d09;
+  margin: 2px;
+  font-family: 'Bungee Inline', cursive;
+  text-align: center;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.board-card-ranking {
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 2;
+  grid-area: ranking;
+  background-color: #f87d09;
+  margin: 2px;
+  font-family: 'Bungee Inline', cursive;
+  text-align: center;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.board-card-name {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: name;
+  background-color: #f87d09;
+  margin: 2px;
+  padding-left: 5px;
+  overflow: hidden;
+}
+
+.board-card-players {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: players;
+  background-color: #f87d09;
+  margin: 2px;
+  overflow: hidden;
+  padding-left: 5px;
+}
+
+.card-id {
+  width: 100%;
+}
+
+.card-ranking {
+  width: 100%;
 }
 
 /*!
