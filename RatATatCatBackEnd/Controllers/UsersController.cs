@@ -19,7 +19,7 @@ namespace RatATatCatBackEnd.Controllers
             _IUserInfo = IUserInfo;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
         {
@@ -40,6 +40,7 @@ namespace RatATatCatBackEnd.Controllers
         public async Task<ActionResult<UserInfo>> Post(UserInfo user)
         {
             user.CreatedDate = DateTime.Now;
+            user.Role = "Player";
             _IUserInfo.AddUser(user);
             return await Task.FromResult(user);
         }

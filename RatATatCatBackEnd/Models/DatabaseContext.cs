@@ -29,6 +29,7 @@ namespace RatATatCatBackEnd.Models
                 entity.Property(e => e.Email).HasMaxLength(50).IsUnicode(false);
                 entity.Property(e => e.Password).HasMaxLength(20).IsUnicode(false);
                 entity.Property(e => e.CreatedDate).IsUnicode(false);
+                entity.Property(e => e.Role).HasMaxLength(50);
             });
 
             modelBuilder.Entity<BoardInstance>(entity =>
