@@ -67,7 +67,7 @@ $btn-close-opacity:          .9;
 
 
 /*********************************************/
-/*              HOME CSS                     "/
+/*          HOME LOGIN REGISTER CSS          "/
 /*********************************************/
 
 .home-wrapper {
@@ -134,11 +134,6 @@ $btn-close-opacity:          .9;
     box-shadow:rgba(5, 5, 5, 0.5);
   }
 
-  
-/*********************************************/
-/*              LOGIN REGISTER CSS           "/
-/*********************************************/
-
 .x-holder {
     padding: 2.727px 2.727px 0 2.727px;
     background-color: brown;
@@ -164,6 +159,60 @@ $btn-close-opacity:          .9;
   color: white;
   padding: 1rem;
 }
+
+/*********************************************/
+/*              HOME BOARDS CSS              "/
+/*********************************************/
+
+.home-boards-bg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 1200px;
+  height: 85%;
+  min-height: 800px;
+  // overflow:hidden;
+  margin-top: 150px;
+  background: $primary;
+  clip-path: polygon(
+    0 4%,
+    4% 0,
+    96% 0,
+    100% 4%,
+    100% 96%,
+    96% 100%,
+    4% 100%,
+    0% 96%,
+    0% 4%
+  )
+}
+
+.home-boards-title {
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.home-boards-container {
+  height: 100%;
+  width: 100%;
+  padding: 4%;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 25% 25% 25% 25%;
+}
+
+.board-card {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  height: 90%;
+  width: 90%;
+  padding: 15px;
+  background-color: white;
+}
+
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap');

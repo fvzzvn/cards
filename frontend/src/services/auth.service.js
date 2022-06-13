@@ -3,8 +3,7 @@ import axios from "axios";
 const API_URL = "https://localhost:7297/api/";
 
 
-const register = (username, email, password) => {  
-  console.log(username, email, password, )
+const register = (username, email, password) => {
   return axios.post(API_URL + "authentication", {
     username,
     email,
@@ -23,6 +22,7 @@ const login = (email, password) => {
       if (response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
+      console.log(response.data);
       return response.data;
     });
 };

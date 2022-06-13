@@ -8,7 +8,6 @@ import Button from "react-bootstrap/Button";
 
 const Register = () => {
   const [successful, setSuccessful] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -54,7 +53,6 @@ const Register = () => {
       .unwrap()
       .then(() => {
         setSuccessful(true);
-        setShowMessage(true);
       })
       .catch(() => {
         setSuccessful(false);
@@ -63,7 +61,7 @@ const Register = () => {
 
     return (
       <div>
-        {showMessage && (
+        {successful && (
           <div className="confirmation-message">
             Rejestracja użytkownika przebiegła pomyślnie. Na podany adres e-mail
             zostanie wysłany link aktywacyjny. Użyj go w celu aktywacji konta.

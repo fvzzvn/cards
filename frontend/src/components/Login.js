@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 import { login } from "../slices/auth";
 import { clearMessage } from "../slices/message";
@@ -8,9 +9,9 @@ import userService from "../services/user.service";
 
 const Login = (props) => {
   const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
+  const history = useNavigate();
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch])
@@ -48,7 +49,8 @@ const Login = (props) => {
     dispatch(login({ email, password }))
       .unwrap()
       .then(() => {
-        window.location.reload();
+        setLoading(false);
+        //  history('/');
       })
       .catch(() => {
         setLoading(false);
