@@ -48,7 +48,6 @@ const Login = (props) => {
     dispatch(login({ email, password }))
       .unwrap()
       .then(() => {
-        props.history.push("/profile");
         window.location.reload();
       })
       .catch(() => {

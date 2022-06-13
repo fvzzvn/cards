@@ -36,14 +36,12 @@ const App = () => {
 
   return (
       <Router>
-        <div className="cards-bg">
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="/profile" element={<Profile />} />
               <Route path="/user" element={<BoardUser />} />
               <Route path="/admin" element={<BoardAdmin />} />
             </Routes>
-          </div>
       </Router>
   );
 };

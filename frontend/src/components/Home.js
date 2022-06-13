@@ -48,41 +48,41 @@ const Home = () => {
   };
 
   return (
-    <header>
-      <div className="home-wrapper">
-        <div className="home-container">
-          <div className="home-logo"></div>
-          <div className="buttons-wrapper">
-            {showLogin || showRegister ? (
-              <div className="x-holder">
-                <CloseButton variant="white" onClick={handleExitButton} />
+      <div className="cards-bg">
+        <div className="home-wrapper">
+          <div className="home-container">
+            <div className="home-logo"></div>
+            <div className="buttons-wrapper">
+              {showLogin || showRegister ? (
+                <div className="x-holder">
+                  <CloseButton variant="white" onClick={handleExitButton} />
+                </div>
+              ) : (
+                <div />
+              )}
+              <div className="home-buttons-container">
+                {showLogin && <Login></Login>}
+                {showRegister && <Register></Register>}
+                {showLoginButton ? (
+                  <Button variant="primary" onClick={handleLoginClick}>
+                    Zaloguj się
+                  </Button>
+                ) : (
+                  <div />
+                )}
+                {showRegisterButton ? (
+                  <Button variant="secondary" onClick={handleRegisterClick}>
+                    {" "}
+                    Utwórz nowe konto
+                  </Button>
+                ) : (
+                  <div />
+                )}
               </div>
-            ) : (
-              <div />
-            )}
-            <div className="home-buttons-container">
-              {showLogin && <Login></Login>}
-              {showRegister && <Register></Register>}
-              {showLoginButton ? (
-                <Button variant="primary" onClick={handleLoginClick}>
-                  Zaloguj się
-                </Button>
-              ) : (
-                <div />
-              )}
-              {showRegisterButton ? (
-                <Button variant="secondary" onClick={handleRegisterClick}>
-                  {" "}
-                  Utwórz nowe konto
-                </Button>
-              ) : (
-                <div />
-              )}
             </div>
           </div>
         </div>
       </div>
-    </header>
   );
 };
 
