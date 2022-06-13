@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import UserService from "../services/user.service";
 import "../custom.scss";
 import Button from "react-bootstrap/Button";
 import Login from "./Login.js";
@@ -10,7 +9,6 @@ import Boards from "./Boards.js";
 import HeaderBar from "./HeaderBar.js";
 
 const Home = () => {
-  const [content, setContent] = useState("");
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showLoginButton, setShowLoginButton] = useState(true);
@@ -40,20 +38,6 @@ const Home = () => {
   //   };
   // }, [currentUser, logOut]);
 
-  useEffect(() => {
-    UserService.getPublicContent().then(
-      (response) => {
-        setContent(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-        setContent(_content);
-      }
-    );
-  }, []);
 
   const handleLoginClick = () => {
     setShowLogin((showLogin) => !showLogin);
