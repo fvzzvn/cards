@@ -71,7 +71,10 @@ namespace RatATatCatBackEnd.Repository
             {
                 avg = avg + _IUserInfo.GetUserInfo(p.UserId).Mmr;
             }
-            avg = avg / participants.Count;
+            if (participants.Count > 0)
+            {
+                avg = avg / participants.Count;
+            }
 
             return avg;
         }

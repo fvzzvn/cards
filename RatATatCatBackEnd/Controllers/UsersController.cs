@@ -21,28 +21,19 @@ namespace RatATatCatBackEnd.Controllers
             _IUserInfo = IUserInfo;
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserInfo>>> Get()
-        {
-            return await Task.FromResult(_IUserInfo.GetUsers());
-        }
         [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserInfo>> Get(int id)
+        [HttpGet]
+        public async Task<ActionResult<UserInfo>> Get()
         {
             int uId = Int32.Parse(User.FindFirst("UserId").Value);
-            if(uId != id)
+            var user = await Task.FromResult(_IUserInfo.GetUserInfo(uId));
+            if (user == null)
             {
-                return BadRequest();
-            }
-            var user = await Task.FromResult(_IUserInfo.GetUserInfo(id));
-            if (user == null){
                 return NotFound();
             }
             return user;
         }
-        
+
         [HttpPost]
         public async Task<ActionResult<UserInfo>> Post(UserInfo user)
         {
