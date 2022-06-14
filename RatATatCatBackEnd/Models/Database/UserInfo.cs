@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RatATatCatBackEnd.Models
+namespace RatATatCatBackEnd.Models.Database
 {
     public class UserInfo
     {
@@ -11,6 +11,8 @@ namespace RatATatCatBackEnd.Models
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? Role { get; set; }
+        public int ?Mmr { get; set; }
         public DateTime? CreatedDate { get; set; }
+
     }
 }

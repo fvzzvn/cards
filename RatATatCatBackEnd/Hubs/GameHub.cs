@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using RatATatCatBackEnd.Interfaces;
-using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.GameModels;
 
 namespace RatATatCatBackEnd.Hubs
 {

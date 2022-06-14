@@ -1,4 +1,5 @@
 ﻿using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.Database;
 
 namespace RatATatCatBackEnd.Interface
 {

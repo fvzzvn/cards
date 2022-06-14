@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.Database;
 
 namespace RatATatCatBackEnd.Controllers
 {
@@ -41,6 +42,7 @@ namespace RatATatCatBackEnd.Controllers
         {
             user.CreatedDate = DateTime.Now;
             user.Role = "Player";
+            user.Mmr = 500;
             _IUserInfo.AddUser(user);
             return await Task.FromResult(user);
         }

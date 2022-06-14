@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RatATatCatBackEnd.Interface;
-using RatATatCatBackEnd.Models;
 using RatATatCatBackEnd.Repository;
 using RatATatCatBackEnd.Hubs;
 using System.Text;
+using RatATatCatBackEnd.Models.Database;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

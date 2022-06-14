@@ -1,4 +1,4 @@
-﻿using RatATatCatBackEnd.Models;
+﻿using RatATatCatBackEnd.Models.GameModels;
 using System.Collections.Concurrent;
 
 namespace RatATatCatBackEnd

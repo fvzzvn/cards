@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.Database;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

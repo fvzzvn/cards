@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RatATatCatBackEnd.Interface;
-using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.Database;
 
 namespace RatATatCatBackEnd.Repository
 {

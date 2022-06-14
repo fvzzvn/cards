@@ -1,4 +1,4 @@
-﻿namespace RatATatCatBackEnd.Models
+﻿namespace RatATatCatBackEnd.Models.GameModels
 {
     public class Card
     {
