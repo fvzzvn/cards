@@ -35,6 +35,7 @@ builder.Services.AddDbContext<DatabaseContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("dbConnection")));
 builder.Services.AddTransient<IUserInfo, UserInfoRepository>();
 builder.Services.AddTransient<IBoardInstance, BoardInstanceRepository>();
+builder.Services.AddTransient<IParticipant, ParticipantRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

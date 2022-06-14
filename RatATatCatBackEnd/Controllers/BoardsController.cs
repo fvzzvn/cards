@@ -13,10 +13,11 @@ namespace RatATatCatBackEnd.Controllers
     public class BoardsController : ControllerBase
     {
         private readonly IBoardInstance _IBoardInstance;
-
-        public BoardsController(IBoardInstance IBoardInstance)
+        private readonly IParticipant _IParticipant;
+        public BoardsController(IBoardInstance IBoardInstance, IParticipant IParticipant)
         {
             _IBoardInstance = IBoardInstance;
+            _IParticipant = IParticipant;
         }
 
         // GET: api/<Boards>
@@ -31,11 +32,13 @@ namespace RatATatCatBackEnd.Controllers
         public async Task<ActionResult<BoardInstance>> Get(int id)
         {
             var board = await Task.FromResult(_IBoardInstance.GetBoard(id));
+            var participants = _IParticipant.GetParticipantNamesByBoard(id);
+            var mmr = _IParticipant.GetBoardMmr(id);
             if (board == null)
             {
                 return NotFound();
             }
-            return board;
+            return Ok(new { board, participants, mmr});
         }
 
         // POST api/<Boards>
@@ -81,6 +84,7 @@ namespace RatATatCatBackEnd.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<BoardInstance>> Delete(int id)
         {
+            _IParticipant.DeletePlayerFromBoard(id);
             var board = _IBoardInstance.RemoveBoard(id);
             return await Task.FromResult(board);
         }

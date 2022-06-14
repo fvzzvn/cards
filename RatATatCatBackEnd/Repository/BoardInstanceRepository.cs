@@ -7,7 +7,6 @@ namespace RatATatCatBackEnd.Repository
     public class BoardInstanceRepository: IBoardInstance
     {
         readonly DatabaseContext _dbContext = new();
-
         public BoardInstanceRepository(DatabaseContext dbContext)
         {
             _dbContext = dbContext;

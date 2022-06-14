@@ -16,7 +16,6 @@ namespace RatATatCatBackEnd.Models.Database
 
         public virtual DbSet<UserInfo>? UserInfos { get; set; }
         public virtual DbSet<BoardInstance>? BoardInstances { get; set; }
-
         public virtual DbSet<Participant> Participants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,7 +48,6 @@ namespace RatATatCatBackEnd.Models.Database
                 entity.ToTable("Participants");
                 entity.Property(e => e.ParticipantId);
                 entity.Property(e => e.UserId);
-                entity.Property(e => e.BoardId);
             });
 
             OnModelCreatingPartial(modelBuilder);
