@@ -24,7 +24,21 @@ namespace RatATatCatBackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BoardInstance>>> Get()
         {
-            return await Task.FromResult(_IBoardInstance.GetBoards());
+            var boards = await Task.FromResult(_IBoardInstance.GetBoards());
+            var participants = new List<List<string>>();
+            var mmrs = new List<int>();
+
+            if (boards.Count == 0)
+            {
+                return NotFound();
+            }
+
+            foreach (BoardInstance board in boards)
+            {
+                participants.Add(_IParticipant.GetParticipantNamesByBoard(board.Id));
+                mmrs.Add(_IParticipant.GetBoardMmr(board.Id));
+            }
+            return Ok(new {boards, participants, mmrs});
         }
 
         // GET api/<Boards>/5

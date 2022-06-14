@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Models;
 using RatATatCatBackEnd.Models.Database;
+using System.Net;
 
 namespace RatATatCatBackEnd.Controllers
 {
@@ -30,6 +31,11 @@ namespace RatATatCatBackEnd.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserInfo>> Get(int id)
         {
+            int uId = Int32.Parse(User.FindFirst("UserId").Value);
+            if(uId != id)
+            {
+                return BadRequest();
+            }
             var user = await Task.FromResult(_IUserInfo.GetUserInfo(id));
             if (user == null){
                 return NotFound();
@@ -75,6 +81,11 @@ namespace RatATatCatBackEnd.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<UserInfo>> Delete(int id)
         {
+            int uId = Int32.Parse(User.FindFirst("UserId").Value);
+            if (uId != id)
+            {
+                return BadRequest();
+            }
             var user = _IUserInfo.DeleteUser(id);
             return await Task.FromResult(user);
         }

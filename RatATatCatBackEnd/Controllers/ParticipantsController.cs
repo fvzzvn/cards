@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Models.Database;
 
@@ -18,6 +19,7 @@ namespace RatATatCatBackEnd.Controllers
         }
 
         // GET api/<Participants>/5
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Participant>> Get(int id)
         {
@@ -29,6 +31,7 @@ namespace RatATatCatBackEnd.Controllers
             return p;
         }
         // POST api/<Participants>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Participant>> Post(Participant p)
         {
@@ -37,10 +40,17 @@ namespace RatATatCatBackEnd.Controllers
         }
 
         // DELETE api/<Participants>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Participant>> Delete(int id)
         {
-            var user = _IParticipant.DeleteParticipant(id);
+            var user = _IParticipant.GetParticipant(id);
+            int uId = Int32.Parse(User.FindFirst("UserId").Value);
+            if (uId != user.UserId)
+            {
+                return BadRequest();
+            }
+            _IParticipant.DeleteParticipant(id);
             return await Task.FromResult(user);
         }
     }
