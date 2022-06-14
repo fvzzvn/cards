@@ -31,7 +31,6 @@ namespace RatATatCatBackEnd.Controllers
             return p;
         }
         // POST api/<Participants>
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Participant>> Post(Participant p)
         {
@@ -40,7 +39,6 @@ namespace RatATatCatBackEnd.Controllers
         }
 
         // DELETE api/<Participants>/5
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Participant>> Delete(int id)
         {
