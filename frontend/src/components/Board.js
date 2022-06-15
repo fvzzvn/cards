@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 
 const Board = (props) => {
-  // let ranking = Math.floor(800 + Math.random() * (3200 - 800));
+  const [loading, setLoading] = useState(false);
   const [ranking, setRanking] = useState(
     Math.floor(800 + Math.random() * (3200 - 800))
   );
+  const [participants, setParticipants] = useState(["-","-","-","-"]);
+
   useEffect(() => {
+    setLoading(true);
     if (props.ranking) {
       setRanking(props.ranking);
     }
-    // if (props.participants) {
-    //   props.participants.map((player, i) => {
-    //     console.log(player, i);
-    //   });
-    // }
-  }, []);
+    while (props.participants.length < 4) {
+      props.participants.push("-");
+    }
+    setParticipants(props.participants);
+    setLoading(false);
+  }, [props.ranking, props.participants]);
 
   return (
     <div className="board-card">
@@ -38,17 +41,16 @@ const Board = (props) => {
         <div className="card-name">Nazwa gry</div>
       </div>
       <div className="board-card-players">
-        {/* {props.participants &&
-          props.participants.map((player, i) => {
-            console.log("log:", player, i);
+        {loading && (
+          <span className="board-loader spinner-border spinner-border-sm"></span>
+        )}
+        {!loading &&
+          participants &&
+          participants.map((player, i) => (
             <div className="player-name" key={i}>
-              {player} saodkaosdk
-            </div>;
-          })}l */}
-        {/* <div cassName="player-1">player1</div>
-        <div className="player-2">player2</div>
-        <div className="player-3">player3</div>
-        <div className="player-4">-</div> */}
+              {player}
+            </div>
+          ))}
       </div>
     </div>
   );

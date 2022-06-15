@@ -65,9 +65,9 @@ const Boards = () => {
           Stwórz nową grę
         </Button>
         {loading && (
-                    <span className="board-loader spinner-border spinner-border-sm"></span>
-                  )}
-        {!loading &&
+          <span className="board-loader spinner-border spinner-border-sm"></span>
+        )}
+        {!loading && boards && rankings && participants &&
           boards.map((item, i) => (
             <Board
               id={item.id}
@@ -77,7 +77,7 @@ const Boards = () => {
             ></Board>
           ))}
         {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
-          <Board id={e} key={i}></Board>
+          <Board id={e} key={i} participants={['user1', 'player34', 'test21']}></Board>
         ))}
       </div>
       {/* <Game></Game> */}

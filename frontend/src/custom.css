@@ -65,7 +65,8 @@
 }
 
 .btn.btn-outline-primary {
-  border-color: #cfcfcf;
+  border-color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.7);
   -webkit-transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
   transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
 }
@@ -75,10 +76,12 @@
   -webkit-box-shadow: none;
           box-shadow: none;
   background-color: white;
+  color: #f87d09;
 }
 
 .btn.btn-outline-primary:hover {
   background-color: white;
+  color: #f87d09;
   -webkit-transform: translateY(-2px);
           transform: translateY(-2px);
   -webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
@@ -86,6 +89,7 @@
 }
 
 .btn.btn-outline-primary:active {
+  color: #f87d09;
   background-color: white;
 }
 
@@ -268,6 +272,7 @@
   color: white;
   text-align: center;
   text-transform: capitalize;
+  margin-top: 5px;
 }
 
 .home-boards-title {
@@ -337,7 +342,7 @@
   margin: 2px;
   font-family: "Bungee Inline", cursive;
   text-align: center;
-  font-size: 20px;
+  font-size: 21px;
   overflow: hidden;
 }
 
@@ -350,7 +355,7 @@
   margin: 2px;
   font-family: "Bungee Inline", cursive;
   text-align: center;
-  font-size: 20px;
+  font-size: 22px;
   overflow: hidden;
 }
 
@@ -376,6 +381,10 @@
   padding-left: 5px;
 }
 
+.board-card-players .player {
+  display: block;
+}
+
 .card-id {
   width: 100%;
 }
@@ -387,6 +396,31 @@
 .home-board-fliter {
   width: 90%;
   margin: auto;
+}
+
+.low {
+  color: green;
+}
+
+.medium-low {
+  color: blue;
+}
+
+.medium {
+  color: yellow;
+}
+
+.medium-high {
+  color: purple;
+}
+
+.high {
+  color: red;
+}
+
+.board-loader {
+  font-size: 50px;
+  text-align: center;
 }
 
 /*********************************************/
@@ -408,6 +442,10 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.vu {
+  padding: 0;
 }
 
 /*!
