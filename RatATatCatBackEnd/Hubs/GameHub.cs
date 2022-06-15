@@ -15,7 +15,7 @@ namespace RatATatCatBackEnd.Hubs
 
             Player player =
                 GameState.Instance.CreatePlayer(gameId, username, Context.ConnectionId);
-            await Clients.Caller.playerJoined(player);
+            await Clients.All.playerJoined(player);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
 
