@@ -15,21 +15,6 @@ const Login = (props) => {
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch])
-  const [content, setContent] = useState("cont");
-  useEffect(() => {
-    userService.getPublicContent().then(
-      (response) => {
-        setContent(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-        setContent(_content);
-      }
-    );
-  }, []);
 
   const initialValues = {
     email: "",

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board.js";
-import { useNavigate } from "react-router-dom";
 import UserService from "../services/user.service";
 import Button from "react-bootstrap/Button";
 import ToggleButton from "react-bootstrap/ToggleButton";
@@ -8,13 +7,20 @@ import Game from "./Game.js";
 
 const Boards = () => {
   const [content, setContent] = useState("");
-
-
+  const [boards, setBoards] = useState("");
+  const [rankings, setRankings] = useState("");
+  const [participants, setParticipants] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     UserService.getPublicContent().then(
       (response) => {
         setContent(response.data);
+        setBoards(content["boards"]);
+        setRankings(content["mmrs"]);
+        setParticipants(content["participants"]);
+        setLoading(false);
       },
       (error) => {
         const _content =
@@ -22,13 +28,14 @@ const Boards = () => {
           error.message ||
           error.toString();
         setContent(_content);
+        setLoading(false);
       }
     );
   }, []);
 
   return (
     <div className="home-boards-bg">
-      {console.log(content[0])};<div className="home-boards-title">stoły</div>
+      <div className="home-boards-title">stoły</div>
       <div className="home-boards-container">
         <ToggleButton
           variant="outline-primary"
@@ -57,14 +64,23 @@ const Boards = () => {
         <Button variant="secondary" className="home-board-fliter">
           Stwórz nową grę
         </Button>
-        {[
-          100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
-          114, 115, 116, 117,
-        ].map((e, i) => (
-            <Board id={e} key={i}></Board>
+        {loading && (
+                    <span className="board-loader spinner-border spinner-border-sm"></span>
+                  )}
+        {!loading &&
+          boards.map((item, i) => (
+            <Board
+              id={item.id}
+              key={i}
+              ranking={rankings[i]}
+              participants={participants[i]}
+            ></Board>
+          ))}
+        {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
+          <Board id={e} key={i}></Board>
         ))}
-        <Game></Game>
       </div>
+      {/* <Game></Game> */}
     </div>
   );
 };
