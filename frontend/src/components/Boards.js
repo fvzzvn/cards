@@ -4,17 +4,12 @@ import { useNavigate } from "react-router-dom";
 import UserService from "../services/user.service";
 import Button from "react-bootstrap/Button";
 import ToggleButton from "react-bootstrap/ToggleButton";
+import Game from "./Game.js";
 
 const Boards = () => {
   const [content, setContent] = useState("");
 
-  //   const connection = new HubConnectionBuilder()
-  //   .configureLogging(LogLevel.Debug)
-  //   .withUrl('https://0.0.0.0:5001/testHub', {
-  //     skipNegotiation: true,
-  //     transport: HttpTransportType.WebSockets,
-  //   })
-  //   .build();
+
 
   useEffect(() => {
     UserService.getPublicContent().then(
@@ -68,6 +63,7 @@ const Boards = () => {
         ].map((e, i) => (
             <Board id={e} key={i}></Board>
         ))}
+        <Game></Game>
       </div>
     </div>
   );
