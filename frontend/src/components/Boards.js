@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import UserService from "../services/user.service";
 import Button from "react-bootstrap/Button";
 import ToggleButton from "react-bootstrap/ToggleButton";
 
 const Boards = () => {
   const [content, setContent] = useState("");
+
+  //   const connection = new HubConnectionBuilder()
+  //   .configureLogging(LogLevel.Debug)
+  //   .withUrl('https://0.0.0.0:5001/testHub', {
+  //     skipNegotiation: true,
+  //     transport: HttpTransportType.WebSockets,
+  //   })
+  //   .build();
 
   useEffect(() => {
     UserService.getPublicContent().then(
@@ -25,8 +33,7 @@ const Boards = () => {
 
   return (
     <div className="home-boards-bg">
-      {console.log(content[0])};
-      <div className="home-boards-title">stoły</div>
+      {console.log(content[0])};<div className="home-boards-title">stoły</div>
       <div className="home-boards-container">
         <ToggleButton
           variant="outline-primary"
@@ -59,9 +66,7 @@ const Boards = () => {
           100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
           114, 115, 116, 117,
         ].map((e, i) => (
-          <Board id={e} key={i}>
-            {" "}
-          </Board>
+            <Board id={e} key={i}></Board>
         ))}
       </div>
     </div>
