@@ -1,10 +1,14 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "https://localhost:7297/api/boards";
+const API_URL = "https://localhost:7297/api/";
 
-const getPublicContent = () => {
-  return axios.get(API_URL);
+const getBoards = () => {
+  return axios
+    .get(API_URL + "boards")
+    .then((response) => {
+      return response.data;
+  });
 };
 
 const getUserBoard = () => {
@@ -16,9 +20,9 @@ const getAdminBoard = () => {
 };
 
 const userService = {
-  getPublicContent,
+  getBoards,
   getUserBoard,
   getAdminBoard,
 };
 
-export default userService
+export default userService;

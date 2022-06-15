@@ -7,6 +7,8 @@ import Register from "./Register.js";
 import CloseButton from "react-bootstrap/CloseButton";
 import Boards from "./Boards.js";
 import HeaderBar from "./HeaderBar.js";
+import { clearMessage } from "../slices/message";
+import { getBoards } from "../slices/boards";
 
 const Home = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -38,6 +40,26 @@ const Home = () => {
   //   };
   // }, [currentUser, logOut]);
 
+  const [loading, setLoading] = useState(false);
+  // const boardsLoaded = useSelector((state) => state.boardsLoaded);
+  const { boards } = useSelector((state) => state.boards);
+  const mmrs = useSelector((state) => state.boards.mmrs);
+  const participants = useSelector((state) => state.boards.participants);
+  // const { message } = useSelector((state) => state.message);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearMessage());
+    setLoading(true);
+    dispatch(getBoards())
+      .unwrap()
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, [dispatch]);
 
   const handleLoginClick = () => {
     setShowLogin((showLogin) => !showLogin);
@@ -90,10 +112,16 @@ const Home = () => {
             </div>
           </div>
         </div>
+      ) : loading ? (
+        <span className="board-loader spinner-border spinner-border-sm"></span>
       ) : (
         <>
           <HeaderBar></HeaderBar>
-          <Boards></Boards>
+          <Boards
+            boards={boards}
+            mmrs={mmrs}
+            participants={participants}
+          ></Boards>
         </>
       )}
     </div>

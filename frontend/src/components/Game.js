@@ -23,9 +23,9 @@ const Game = (props) => {
         }
     };
 
-    connection.onclose(async () => {
-        await start();
-    });
+    // connection.onclose(async () => {
+    //     await start();
+    // });
 
     connection.on("playerPlayedCard", (player, card, game) =>{
         console.log("player", player, "played", card);
@@ -48,6 +48,7 @@ const Game = (props) => {
 
 
     start();
+    // handlePlayCard();
 
     return(
         <div>GAME:</div>

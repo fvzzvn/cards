@@ -1,38 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board.js";
-import UserService from "../services/user.service";
+// import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import ToggleButton from "react-bootstrap/ToggleButton";
-import Game from "./Game.js";
+// import Game from "./Game.js";
+// import { clearMessage } from "../slices/message";
+// import { getBoards } from "../slices/boards";
 
-const Boards = () => {
-  const [content, setContent] = useState("");
-  const [boards, setBoards] = useState("");
-  const [rankings, setRankings] = useState("");
-  const [participants, setParticipants] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    UserService.getPublicContent().then(
-      (response) => {
-        setContent(response.data);
-        setBoards(content["boards"]);
-        setRankings(content["mmrs"]);
-        setParticipants(content["participants"]);
-        setLoading(false);
-      },
-      (error) => {
-        const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-        setContent(_content);
-        setLoading(false);
-      }
-    );
-  }, []);
-
+const Boards = (props) => {
   return (
     <div className="home-boards-bg">
       <div className="home-boards-title">stoły</div>
@@ -64,23 +39,26 @@ const Boards = () => {
         <Button variant="secondary" className="home-board-fliter">
           Stwórz nową grę
         </Button>
-        {loading && (
-          <span className="board-loader spinner-border spinner-border-sm"></span>
-        )}
-        {!loading && boards && rankings && participants &&
-          boards.map((item, i) => (
+        {!props.loading ? (
+          props.boards.map((item, i) => (
             <Board
               id={item.id}
               key={i}
-              ranking={rankings[i]}
-              participants={participants[i]}
+              ranking={props.mmrs[i]}
+              participants={props.participants[i]}
             ></Board>
-          ))}
+          ))
+        ) : (
+          <span className="board-loader spinner-border spinner-border-sm"></span>
+        )}
         {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
-          <Board id={e} key={i} participants={['user1', 'player34', 'test21']}></Board>
+          <Board
+            id={e}
+            key={i}
+            participants={['username23','player606','cards102']}
+          ></Board>
         ))}
       </div>
-      {/* <Game></Game> */}
     </div>
   );
 };

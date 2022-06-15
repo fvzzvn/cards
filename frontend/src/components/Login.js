@@ -35,7 +35,6 @@ const Login = (props) => {
       .unwrap()
       .then(() => {
         setLoading(false);
-        //  history('/');
       })
       .catch(() => {
         setLoading(false);

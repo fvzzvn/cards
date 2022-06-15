@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from "react";
 
 const Board = (props) => {
-  const [loading, setLoading] = useState(false);
   const [ranking, setRanking] = useState(
     Math.floor(800 + Math.random() * (3200 - 800))
   );
-  const [participants, setParticipants] = useState(["-","-","-","-"]);
+  const [len, setLen] = useState(0);
 
   useEffect(() => {
-    setLoading(true);
     if (props.ranking) {
       setRanking(props.ranking);
     }
-    while (props.participants.length < 4) {
-      props.participants.push("-");
+    if (props.participants) {
+      setLen(props.participants.length);
     }
-    setParticipants(props.participants);
-    setLoading(false);
-  }, [props.ranking, props.participants]);
+  }, []);
 
   return (
     <div className="board-card">
@@ -41,16 +37,37 @@ const Board = (props) => {
         <div className="card-name">Nazwa gry</div>
       </div>
       <div className="board-card-players">
-        {loading && (
-          <span className="board-loader spinner-border spinner-border-sm"></span>
+        {props.participants.map((player, i) => (
+          <div className="player-name" key={i}>
+            {player}
+          </div>
+        ))}
+        {len === 3 && (
+          <>
+            <div className="player-name">-</div>
+          </>
         )}
-        {!loading &&
-          participants &&
-          participants.map((player, i) => (
-            <div className="player-name" key={i}>
-              {player}
-            </div>
-          ))}
+        {len === 2 && (
+          <>
+            <div className="player-name">-</div>
+            <div className="player-name">-</div>
+          </>
+        )}
+        {len === 1 && (
+          <>
+            <div className="player-name">-</div>
+            <div className="player-name">-</div>
+            <div className="player-name">-</div>
+          </>
+        )} 
+        {len === 0 && (
+          <>
+            <div className="player-name">-</div>
+            <div className="player-name">-</div>
+            <div className="player-name">-</div>
+            <div className="player-name">-</div>
+          </>
+        )}
       </div>
     </div>
   );
