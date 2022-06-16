@@ -13,7 +13,7 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", 5, "aaa@aaa.com");
+    await connection.invoke("JoinRoom", "5", "aaa@aaa.com");
   };
 
   useEffect(() => {
