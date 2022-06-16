@@ -444,8 +444,33 @@
   background-position: center center;
 }
 
-.vu {
-  padding: 0;
+/*********************************************/
+/*               GAME  CSS                   "/
+/*********************************************/
+.game-wrapper {
+  padding-top: 150px;
+}
+
+.game-table {
+  margin: auto;
+  width: 1400px;
+  height: 1000px;
+  background-color: #006d31;
+  -webkit-box-shadow: 0px 20px 150px black;
+          box-shadow: 0px 20px 150px black;
+  border-radius: 150px;
+  border: solid #faad2d;
+  border-width: 50px;
+  padding: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 /*!

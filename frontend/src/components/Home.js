@@ -7,6 +7,7 @@ import Register from "./Register.js";
 import CloseButton from "react-bootstrap/CloseButton";
 import Boards from "./Boards.js";
 import HeaderBar from "./HeaderBar.js";
+import Game from "./Game.js";
 import { clearMessage } from "../slices/message";
 import { getBoards } from "../slices/boards";
 
@@ -16,6 +17,7 @@ const Home = () => {
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showRegisterButton, setShowRegisterButton] = useState(true);
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { inGame } = useSelector((state) => state.game.inGame);
 
   // FUTURE ADMIN AND LOGOUT COMPONENTS
   // const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -41,7 +43,7 @@ const Home = () => {
   // }, [currentUser, logOut]);
 
   const [loading, setLoading] = useState(false);
-  // const boardsLoaded = useSelector((state) => state.boardsLoaded);
+  const [go, setGo] = useState(false);
   const { boards } = useSelector((state) => state.boards);
   const mmrs = useSelector((state) => state.boards.mmrs);
   const participants = useSelector((state) => state.boards.participants);
@@ -80,6 +82,10 @@ const Home = () => {
     setShowRegisterButton((showRegisterButton) => true);
   };
 
+  const handleGo = () => {
+    setGo(!go);
+  }
+
   return (
     <div className="cards-bg">
       {!isLoggedIn ? (
@@ -112,9 +118,9 @@ const Home = () => {
             </div>
           </div>
         </div>
-      ) : loading ? (
+      ) : (isLoggedIn && loading) ? (
         <span className="board-loader spinner-border spinner-border-sm"></span>
-      ) : (
+      ) : (isLoggedIn && !inGame && !go) ? (
         <>
           <HeaderBar></HeaderBar>
           <Boards
@@ -123,7 +129,11 @@ const Home = () => {
             participants={participants}
           ></Boards>
         </>
+      ) : ( go && (
+        <Game></Game>
+      )
       )}
+      <Button onClick={handleGo}>GO!!!</Button>
     </div>
   );
 };

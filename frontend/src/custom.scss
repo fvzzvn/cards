@@ -398,8 +398,27 @@ $btn-close-opacity: 0.9;
   background-position: center center;
 }
 
-.vu {
-  padding: 0;
+/*********************************************/
+/*               GAME  CSS                   "/
+/*********************************************/
+
+.game-wrapper {
+  padding-top: 150px;
+}
+
+.game-table {
+  margin: auto;
+  width: 1400px;
+  height: 1000px;
+  background-color: rgb(0, 109, 49);
+  box-shadow: 0px 20px 150px black;
+  border-radius: 150px;
+  border: solid $primary;
+  border-width: 50px;
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");

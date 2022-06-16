@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 import userService from "../services/user.service";
 
-const user = JSON.parse(localStorage.getItem("user"));
 
 export const getBoards = createAsyncThunk(
     "boards/getBoards",
