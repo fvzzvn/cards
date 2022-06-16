@@ -16,6 +16,7 @@ const Game = (props) => {
     await connection.invoke("JoinRoom", "5", "aaa@aaa.com");
   };
 
+
   useEffect(() => {
     const connection = new HubConnectionBuilder()
       .withUrl("https://localhost:7297/GameHub", {
@@ -27,6 +28,32 @@ const Game = (props) => {
       .build();
 
     setConnection(connection);
+
+    connection.on("playerJoined", player => {
+        console.log(player, "joined");
+    });
+
+    connection.on("start", game => {
+        console.log(game, "started");
+    });
+
+    connection.on("playerPlayedCard", (player, card, game) => {
+        console.log(player, "played", card, "game:", game);
+    });
+
+    connection.on("playerTookCard", (player, card, game) => {
+        console.log(player, "took", card, "game:", game);
+    });
+
+    connection.on("stackEmpty", () => {
+        console.log("stack empty");
+    });
+
+    connection.on("gameEnding", () => {
+        console.log("game ending");
+    });
+
+
   }, []);
 
   useEffect(() => {
@@ -35,11 +62,13 @@ const Game = (props) => {
         console.log("SignalR Connected!");
 
         invokeJoinRoom(connection).catch(console.error);
+
       });
     }
   }, [connection]);
 
   const handlePlayCard = async (card) => {
+    card = 0;
     try {
       await connection.invoke("PlayCard", card);
     } catch (err) {
