@@ -2,9 +2,9 @@
 {
     public class Stack
     {
-        public int stackSize = 0;
+        public int stackSize { get; set; }
 
-        public Stack<Card> cards;
+        public Stack<Card> cards { get; set; }
 
         public Stack()
         {

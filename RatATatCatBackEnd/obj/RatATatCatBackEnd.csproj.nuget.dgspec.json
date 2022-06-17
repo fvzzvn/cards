@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "D:\\git\\new\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj": {}
+    "D:\\git\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj": {}
   },
   "projects": {
-    "D:\\git\\new\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj": {
+    "D:\\git\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\git\\new\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
+        "projectUniqueName": "D:\\git\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
         "projectName": "RatATatCatBackEnd",
-        "projectPath": "D:\\git\\new\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
+        "projectPath": "D:\\git\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
         "packagesPath": "C:\\Users\\BBB\\.nuget\\packages\\",
-        "outputPath": "D:\\git\\new\\RatATatCat\\RatATatCatBackEnd\\obj\\",
+        "outputPath": "D:\\git\\RatATatCat\\RatATatCatBackEnd\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\BBB\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -102,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -127,3 +127,9 @@ D:\git\new\RatATatCat\RatATatCatBackEnd\obj\Debug\net6.0\refint\RatATatCatBackEn
 D:\git\new\RatATatCat\RatATatCatBackEnd\obj\Debug\net6.0\RatATatCatBackEnd.pdb
 D:\git\new\RatATatCat\RatATatCatBackEnd\obj\Debug\net6.0\RatATatCatBackEnd.genruntimeconfig.cache
 D:\git\new\RatATatCat\RatATatCatBackEnd\obj\Debug\net6.0\ref\RatATatCatBackEnd.dll
+D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Microsoft.AspNet.SignalR.Core.dll
+D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Microsoft.Owin.dll
+D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Microsoft.Owin.Security.dll
+D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Owin.dll
+D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
