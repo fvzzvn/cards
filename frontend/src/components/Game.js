@@ -13,7 +13,7 @@ const Game = (props) => {
   const [leftPlayerCards, setLeftCards] = useState("");
   const [rightPlayerCards, setRightCards] = useState("");
   const [topPlayerCards, setTopCards] = useState("");
-  const [stackCards, setStackCards] = useState("");
+  const [stack, setStack] = useState("");
   const [gameState, setGameState] = useState("");
   const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
@@ -45,7 +45,7 @@ const Game = (props) => {
       setLeftCards(game.player2.cards);
       setTopCards(game.player3.cards);
       setRightCards(game.player4.cards);
-      setStackCards(game.stack);
+      setStack(game.stack);
       setActiveCard(game.player1.cards[0]);
       console.log(game, "started");
     });
@@ -57,7 +57,7 @@ const Game = (props) => {
       setLeftCards(game.player2.cards);
       setTopCards(game.player3.cards);
       setRightCards(game.player4.cards);
-      setStackCards(game.stack.cards);
+      setStack(game.stack);
       setActiveCard(game.player1.cards[0]);
     });
 
@@ -68,7 +68,7 @@ const Game = (props) => {
       setLeftCards(game.player2.cards);
       setTopCards(game.player3.cards);
       setRightCards(game.player4.cards);
-      setStackCards(game.stack.cards);
+      setStack(game.stack);
       setActiveCard(game.player1.cards[0]);
     });
 
@@ -189,10 +189,10 @@ const Game = (props) => {
                   ))}
               </div>
               <div className="center-stack">
-                {stackCards.cards && (
+                {stack.cards && (
                   <Card
-                    value={stackCards.cards.at(-1).card.text}
-                    suit={stackCards.cards.at(-1).card.suit}
+                    value={stack.cards.at(-1).text}
+                    suit={stack.cards.at(-1).suit}
                   ></Card>
                 )}
               </div>
