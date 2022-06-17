@@ -2,15 +2,21 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 import userService from "../services/user.service";
 
+export const resetCredentials = createAsyncThunk(
+  "userCredentials/resetCredentials",
+  async (thunkAPI) => {
+    return true;
+  }
+);
 
 export const getUserCredentials = createAsyncThunk(
-    "userCredentials/getCredentials",
-    async (thunkAPI) => {
-        try {
-            const data = await userService.getUserCredentials();
-            return{ data };
-        } catch (error) {
-            const message =
+  "userCredentials/getCredentials",
+  async (thunkAPI) => {
+    try {
+      const data = await userService.getUserCredentials();
+      return { data };
+    } catch (error) {
+      const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
@@ -18,11 +24,16 @@ export const getUserCredentials = createAsyncThunk(
         error.toString();
       thunkAPI.dispatch(setMessage(message));
       return thunkAPI.rejectWithValue();
-        }
     }
+  }
 );
 
-const initialState = { userName: "", userEmail: "", userId: "", displayName: "" };
+const initialState = {
+  userName: "",
+  userEmail: "",
+  userId: "",
+  displayName: "",
+};
 
 const userCredentialsSlice = createSlice({
   name: "userCredentials",
@@ -35,7 +46,13 @@ const userCredentialsSlice = createSlice({
       state.displayName = action.payload.data.displayName;
     },
     [getUserCredentials.rejected]: (state, action) => {
-      state.username = "";
+      state.userName = "";
+      state.userEmail = "";
+      state.userId = "";
+      state.displayName = "";
+    },
+    [resetCredentials.fulfilled]: (state, action) => {
+      state.userName = "";
       state.userEmail = "";
       state.userId = "";
       state.displayName = "";

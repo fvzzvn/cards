@@ -3,6 +3,25 @@
 /*********************************************/
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #131313;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #faad2d;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #f87d09;
+}
+
 .btn.btn-primary {
   color: #ffffff;
   -webkit-transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
@@ -433,6 +452,7 @@
   display: flex;
   height: 100px;
   width: 100vw;
+  min-width: 1400px;
   background-color: rgba(0, 0, 0, 0.8);
   overflow: hidden;
 }
@@ -478,6 +498,10 @@
           flex-direction: column;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+}
+
+.card-container * {
+  width: 100px;
 }
 
 /*!

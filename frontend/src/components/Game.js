@@ -6,6 +6,7 @@ import {
 } from "@microsoft/signalr";
 import HeaderBar from "./HeaderBar";
 import Button from "react-bootstrap/Button";
+import Card from "./Card";
 
 const Game = (props) => {
   const [handCards, setHandCards] = useState("");
@@ -13,7 +14,7 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "5", "aaa@aaa.com");
+    await connection.invoke("JoinRoom", "104", `${props.username}`);
   };
 
 
@@ -31,6 +32,8 @@ const Game = (props) => {
 
     connection.on("playerJoined", player => {
         console.log(player, "joined");
+        setHandCards(player.cards);
+        console.log(player.cards);
     });
 
     connection.on("start", game => {
@@ -68,7 +71,7 @@ const Game = (props) => {
   }, [connection]);
 
   const handlePlayCard = async (card) => {
-    card = 0;
+    card = "0";
     try {
       await connection.invoke("PlayCard", card);
     } catch (err) {
@@ -111,7 +114,7 @@ const Game = (props) => {
 
   return (
     <div className="game-component">
-      <HeaderBar></HeaderBar>
+      <HeaderBar username={props.username}></HeaderBar>
       <div className="game-wrapper">
         <div className="game-container">
           <div className="game-table">
@@ -130,6 +133,11 @@ const Game = (props) => {
             <Button variant="secondary" onClick={handleEndGame}>
               EndGame
             </Button>
+            {handCards && (
+                handCards.map((card, i) => (
+                  <Card value={card.text} suit={card.suit}></Card>
+                ))
+            )}
           </div>
         </div>
       </div>

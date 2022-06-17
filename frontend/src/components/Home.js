@@ -12,14 +12,17 @@ import { clearMessage } from "../slices/message";
 import { getBoards } from "../slices/boards";
 import { getUserCredentials } from "../slices/userCredentials";
 
+
 const Home = () => {
   const dispatch = useDispatch();
-  //REDUX
+  //REDUX STATES
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { inGame } = useSelector((state) => state.game.inGame);
   const { boards } = useSelector((state) => state.boards);
   const participants = useSelector((state) => state.boards.participants);
   const mmrs = useSelector((state) => state.boards.mmrs);
+  const username = useSelector((state) => state.userCredentials.userName);
+  const userId = useSelector((state) => state.userCredentials.userId);
   //COMPONENT STATES
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -33,6 +36,12 @@ const Home = () => {
     dispatch(clearMessage());
     setLoading(true);
     dispatch(getBoards())
+      .unwrap()
+      .then(() => {
+      })
+      .catch(() => {
+      });
+    dispatch(getUserCredentials())
       .unwrap()
       .then(() => {
         setLoading(false);
@@ -63,18 +72,7 @@ const Home = () => {
 
   const handleGo = () => {
     setGo(!go);
-  }
-
-  const handleAsk = () => {
-    dispatch(getUserCredentials())
-      .unwrap()
-      .then(() => {
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }
+  };
 
   return (
     <div className="cards-bg">
@@ -108,23 +106,21 @@ const Home = () => {
             </div>
           </div>
         </div>
-      ) : (isLoggedIn && loading) ? (
+      ) : isLoggedIn && loading ? (
         <span className="board-loader spinner-border spinner-border-sm"></span>
-      ) : (isLoggedIn && !inGame && !go) ? (
+      ) : isLoggedIn && !loading && !inGame && !go ? (
         <>
-          <HeaderBar></HeaderBar>
+          <HeaderBar username={username}></HeaderBar>
           <Boards
             boards={boards}
             mmrs={mmrs}
             participants={participants}
           ></Boards>
         </>
-      ) : ( go && (
-        <Game></Game>
-      )
+      ) : (
+        go && <Game username={username}></Game>
       )}
       <Button onClick={handleGo}>GO!!!</Button>
-      <Button onClick={handleAsk}>Ask for credentials</Button>
     </div>
   );
 };
