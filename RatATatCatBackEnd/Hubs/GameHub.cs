@@ -57,7 +57,7 @@ namespace RatATatCatBackEnd.Hubs
                 if (from == "dealer")
                 {
                     game.Dealer.GiveCard(player);
-                    await Clients.All.playerTookCard(player, card, from);
+                    await Clients.All.playerTookCard(player, card, game);
                     game.NextTurn();
                 }
                 else if (from == "stack")
@@ -65,7 +65,7 @@ namespace RatATatCatBackEnd.Hubs
                     if (game.Stack.NotEmpty())
                     {
                         card = game.GetCardFromStack(player);
-                        await Clients.All.playerTookCard(player, card, from);
+                        await Clients.All.playerTookCard(player, card, game);
                         game.NextTurn();
                     }
                     else

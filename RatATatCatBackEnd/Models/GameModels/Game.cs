@@ -53,7 +53,7 @@
                 player.Cards.Remove(card);
                 this.Stack.PlaceCard(card);
             }
-            else if (Stack.PeekTop() == card)
+            else if (Stack.PeekTop().Equals(card))
             {
                 player.Cards.Remove(card);
                 this.Stack.PlaceCard(card);
