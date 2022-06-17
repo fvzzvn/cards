@@ -427,7 +427,7 @@ $btn-close-opacity: 0.9;
 /*********************************************/
 
 .game-wrapper {
-  padding-top: 150px;
+  padding-top: 100px;
 }
 
 .game-table {
@@ -439,14 +439,70 @@ $btn-close-opacity: 0.9;
   border-radius: 150px;
   border: solid $primary;
   border-width: 50px;
-  padding: 100px;
+  padding: 30px;
+}
+
+.game-grid {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: 30% 40% 30%;
+  grid-template-areas:
+    "left top right"
+    "left mid right"
+    "left bot right";
+}
+
+.center-stack {
+  grid-area: mid;
+}
+
+.left-player {
+  grid-area: left;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left-player * {
+  transform: rotate(90deg);
+}
+
+.top-player {
+  grid-area: top;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
+}
+
+.right-player {
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.right-player * {
+  transform: rotate(90deg);
+}
+
+.bottom-player {
+  grid-area: bot;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .card-container * {
+  margin: 0 10px 0;
   width: 100px;
+}
+
+.bottom-player .card-container img:hover {
+  transform: translateY(-6px);
+  box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
