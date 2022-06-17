@@ -20,12 +20,12 @@
 
             if (other == null) return false;
 
-            return this.Text.Equals(other.Text) && this.Suit.Equals(other.Suit);
+            return this.Text.Equals(other.Text)
         }
 
         public override int GetHashCode()
         {
-            return this.Text.GetHashCode() * this.Suit.GetHashCode();
+            return this.Text.GetHashCode();
         }
     }
 }
