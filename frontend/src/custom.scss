@@ -526,11 +526,23 @@ $btn-close-opacity: 0.9;
 .bottom-player .card-container img:hover, .top-player .card-container img:hover {
   transform: translateY(-6px);
   box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.bottom-player .card-container img:focus, .top-player .card-container img:focus {
+  transform: translateY(-6px);
+  box-shadow: 6px 8px 24px $major;
+}
+
+.bottom-player .card-container img:active, .top-player .card-container img:active {
+  transform: translateY(-6px);
+  box-shadow: 6px 8px 24px $major;
 }
 
 .right-player .card-container img:hover, .left-player .card-container img:hover {
   transform: translateY(6px) rotate(90deg);
   box-shadow: -8px -6px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
 }
 
 

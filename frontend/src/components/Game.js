@@ -20,7 +20,7 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "120", `${props.username}`);
+    await connection.invoke("JoinRoom", "121", `${props.username}`);
   };
 
   useEffect(() => {
@@ -181,8 +181,8 @@ const Game = (props) => {
               <div className="center-stack">
                 {stack.stackSize > 0 && (
                   <Card
-                    value={stack.cards.at(-1).text}
-                    suit={stack.cards.at(-1).suit}
+                    value={stack.cards[0].text}
+                    suit={stack.cards[0].suit}
                   ></Card>
                 )}
               </div>

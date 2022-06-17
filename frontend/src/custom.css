@@ -623,6 +623,21 @@
           transform: translateY(-6px);
   -webkit-box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
           box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.bottom-player .card-container img:focus, .top-player .card-container img:focus {
+  -webkit-transform: translateY(-6px);
+          transform: translateY(-6px);
+  -webkit-box-shadow: 6px 8px 24px #f87d09;
+          box-shadow: 6px 8px 24px #f87d09;
+}
+
+.bottom-player .card-container img:active, .top-player .card-container img:active {
+  -webkit-transform: translateY(-6px);
+          transform: translateY(-6px);
+  -webkit-box-shadow: 6px 8px 24px #f87d09;
+          box-shadow: 6px 8px 24px #f87d09;
 }
 
 .right-player .card-container img:hover, .left-player .card-container img:hover {
@@ -630,6 +645,7 @@
           transform: translateY(6px) rotate(90deg);
   -webkit-box-shadow: -8px -6px 14px rgba(0, 0, 0, 0.6);
           box-shadow: -8px -6px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
 }
 
 /*!
