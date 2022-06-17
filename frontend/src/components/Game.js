@@ -20,7 +20,7 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "108", `${props.username}`);
+    await connection.invoke("JoinRoom", "109", `${props.username}`);
   };
 
   useEffect(() => {
@@ -45,17 +45,31 @@ const Game = (props) => {
       setLeftCards(game.player2.cards);
       setTopCards(game.player3.cards);
       setRightCards(game.player4.cards);
-      setStackCards(game.stack.cards);
+      setStackCards(game.stack);
       setActiveCard(game.player1.cards[0]);
       console.log(game, "started");
     });
 
     connection.on("playerPlayedCard", (player, card, game) => {
       console.log(player, "played", card, "game:", game);
+      setGameState(game);
+      setHandCards(game.player1.cards);
+      setLeftCards(game.player2.cards);
+      setTopCards(game.player3.cards);
+      setRightCards(game.player4.cards);
+      setStackCards(game.stack.cards);
+      setActiveCard(game.player1.cards[0]);
     });
 
     connection.on("playerTookCard", (player, card, game) => {
       console.log(player, "took", card, "game:", game);
+      setGameState(game);
+      setHandCards(game.player1.cards);
+      setLeftCards(game.player2.cards);
+      setTopCards(game.player3.cards);
+      setRightCards(game.player4.cards);
+      setStackCards(game.stack.cards);
+      setActiveCard(game.player1.cards[0]);
     });
 
     connection.on("stackEmpty", () => {
@@ -175,10 +189,10 @@ const Game = (props) => {
                   ))}
               </div>
               <div className="center-stack">
-                {stackCards && (
+                {stackCards.cards && (
                   <Card
-                    value={stackCards.at(-1).card.text}
-                    suit={stackCards.at(-1).card.suit}
+                    value={stackCards.cards.at(-1).card.text}
+                    suit={stackCards.cards.at(-1).card.suit}
                   ></Card>
                 )}
               </div>
