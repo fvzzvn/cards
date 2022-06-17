@@ -20,7 +20,7 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "113", `${props.username}`);
+    await connection.invoke("JoinRoom", "120", `${props.username}`);
   };
 
   useEffect(() => {
@@ -75,6 +75,9 @@ const Game = (props) => {
       setActiveCard(game.player1.cards[0]);
     });
 
+    connection.on("notPlayersTurn", () => {
+      console.log("Not players turn");
+    });
     connection.on("stackEmpty", () => {
       console.log("stack empty");
     });
@@ -141,22 +144,6 @@ const Game = (props) => {
       <HeaderBar username={props.username}></HeaderBar>
       <div className="game-wrapper">
         <div className="game-container">
-          <Button variant="secondary" onClick={handlePlayCard}>
-            playCard
-          </Button>
-          <Button variant="secondary" onClick={handlePlayCardAfterGet}>
-            PlayCardAfterGet
-          </Button>
-          <Button variant="secondary" onClick={handleGetCardDealer}>
-            GetCardDealer
-          </Button>
-          <Button variant="secondary" onClick={handleGetCardStack}>
-            GetCardStack
-          </Button>
-          <Button variant="secondary" onClick={handleEndGame}>
-            EndGame
-          </Button>
-
           <div className="game-table">
             <div className="game-grid">
               <div className="left-player">
@@ -192,7 +179,7 @@ const Game = (props) => {
                   ))}
               </div>
               <div className="center-stack">
-                {stack.cards && (
+                {stack.stackSize > 0 && (
                   <Card
                     value={stack.cards.at(-1).text}
                     suit={stack.cards.at(-1).suit}
@@ -216,20 +203,41 @@ const Game = (props) => {
                   ))}
               </div>
               <div className="bottom-player">
-                {handCards &&
-                  handCards.map((card, i) => (
-                    <div
-                      onClick={() =>
-                        setActiveCard({
-                          text: card.text,
-                          suit: card.suit,
-                          isSpecial: card.isSpecial,
-                        })
-                      }
-                    >
-                      <Card value={card.text} suit={card.suit} key={i}></Card>
-                    </div>
-                  ))}
+                <div className="bottom-cards">
+                  {handCards &&
+                    handCards.map((card, i) => (
+                      <div
+                        onClick={() =>
+                          setActiveCard({
+                            text: card.text,
+                            suit: card.suit,
+                            isSpecial: card.isSpecial,
+                          })
+                        }
+                      >
+                        <Card value={card.text} suit={card.suit} key={i}></Card>
+                      </div>
+                    ))}
+                </div>
+                {handCards && 
+                <div className="bottom-buttons">
+                  <Button variant="secondary" onClick={handlePlayCard}>
+                    playCard
+                  </Button>
+                  <Button variant="secondary" onClick={handlePlayCardAfterGet}>
+                    PlayCardAfterGet
+                  </Button>
+                  <Button variant="secondary" onClick={handleGetCardDealer}>
+                    GetCardDealer
+                  </Button>
+                  <Button variant="secondary" onClick={handleGetCardStack}>
+                    GetCardStack
+                  </Button>
+                  <Button variant="secondary" onClick={handleEndGame}>
+                    EndGame
+                  </Button>
+                </div>
+                }
               </div>
             </div>
           </div>

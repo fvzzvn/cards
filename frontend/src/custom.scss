@@ -422,12 +422,18 @@ $btn-close-opacity: 0.9;
 .logout-wrapper {
   width: 200px;
 }
+
+.logout-button {
+  width: 150px;
+  margin: 25px;
+}
+
 /*********************************************/
 /*               GAME  CSS                   "/
 /*********************************************/
 
 .game-wrapper {
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 .game-table {
@@ -491,9 +497,25 @@ $btn-close-opacity: 0.9;
 
 .bottom-player {
   grid-area: bot;
+}
+
+.bottom-cards {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.bottom-buttons {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bottom-buttons * {
+  margin: 10px 20px;
+  width: 200px;
 }
 
 .card-container * {
@@ -501,10 +523,17 @@ $btn-close-opacity: 0.9;
   width: 100px;
 }
 
-.bottom-player .card-container img:hover {
+.bottom-player .card-container img:hover, .top-player .card-container img:hover {
   transform: translateY(-6px);
   box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
 }
+
+.right-player .card-container img:hover, .left-player .card-container img:hover {
+  transform: translateY(6px) rotate(90deg);
+  box-shadow: -8px -6px 14px rgba(0, 0, 0, 0.6);
+}
+
+
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");

@@ -19,12 +19,17 @@ const HeaderBar = (props) => {
   return (
     <div className="header-bar-container">
       <div className="logout-wrapper">
-        <Button onClick={handleLogOut}>LOGOUT</Button>
+        <Button className="logout-button" onClick={handleLogOut}>
+          Wyloguj się
+        </Button>
       </div>
       <div className="header-bar-logo"></div>
-      {props.username &&
-        <div style={{ color: "white", fontSize: "40px" }}> {props.username}</div>
-      }
+      {props.username && (
+        <div style={{ color: "white", fontSize: "40px" }}>
+          {" "}
+          {props.username}
+        </div>
+      )}
     </div>
   );
 };

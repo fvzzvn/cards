@@ -471,11 +471,16 @@
   width: 200px;
 }
 
+.logout-button {
+  width: 150px;
+  margin: 25px;
+}
+
 /*********************************************/
 /*               GAME  CSS                   "/
 /*********************************************/
 .game-wrapper {
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 .game-table {
@@ -575,6 +580,10 @@
   -ms-grid-row: 3;
   -ms-grid-column: 2;
   grid-area: bot;
+}
+
+.bottom-cards {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -587,16 +596,40 @@
           justify-content: center;
 }
 
+.bottom-buttons {
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.bottom-buttons * {
+  margin: 10px 20px;
+  width: 200px;
+}
+
 .card-container * {
   margin: 0 10px 0;
   width: 100px;
 }
 
-.bottom-player .card-container img:hover {
+.bottom-player .card-container img:hover, .top-player .card-container img:hover {
   -webkit-transform: translateY(-6px);
           transform: translateY(-6px);
   -webkit-box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
           box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
+}
+
+.right-player .card-container img:hover, .left-player .card-container img:hover {
+  -webkit-transform: translateY(6px) rotate(90deg);
+          transform: translateY(6px) rotate(90deg);
+  -webkit-box-shadow: -8px -6px 14px rgba(0, 0, 0, 0.6);
+          box-shadow: -8px -6px 14px rgba(0, 0, 0, 0.6);
 }
 
 /*!
