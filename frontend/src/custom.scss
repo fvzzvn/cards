@@ -382,8 +382,9 @@ $btn-close-opacity: 0.9;
 
 .header-bar-container {
   position: absolute;
+  display: flex;
   height: 100px;
-  width: 100%;
+  width: 100vw;
   background-color: rgba(0, 0, 0, 0.8);
   overflow: hidden;
 }
@@ -398,6 +399,9 @@ $btn-close-opacity: 0.9;
   background-position: center center;
 }
 
+.logout-wrapper {
+  width: 200px;
+}
 /*********************************************/
 /*               GAME  CSS                   "/
 /*********************************************/
