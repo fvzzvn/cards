@@ -4,15 +4,17 @@ import authHeader from "./auth-header";
 const API_URL = "https://localhost:7297/api/";
 
 const getBoards = () => {
-  return axios
-    .get(API_URL + "boards")
-    .then((response) => {
-      return response.data;
+  return axios.get(API_URL + "boards").then((response) => {
+    return response.data;
   });
 };
 
-const getUserBoard = () => {
-  return axios.get(API_URL + "user", { headers: authHeader() });
+const getUserCredentials = () => {
+  return axios
+    .get(API_URL + "authentication", { headers: authHeader() })
+    .then((response) => {
+      return response.data;
+    });
 };
 
 const getAdminBoard = () => {
@@ -21,7 +23,7 @@ const getAdminBoard = () => {
 
 const userService = {
   getBoards,
-  getUserBoard,
+  getUserCredentials,
   getAdminBoard,
 };
 

@@ -10,45 +10,24 @@ import HeaderBar from "./HeaderBar.js";
 import Game from "./Game.js";
 import { clearMessage } from "../slices/message";
 import { getBoards } from "../slices/boards";
+import { getUserCredentials } from "../slices/userCredentials";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  //REDUX
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { inGame } = useSelector((state) => state.game.inGame);
+  const { boards } = useSelector((state) => state.boards);
+  const participants = useSelector((state) => state.boards.participants);
+  const mmrs = useSelector((state) => state.boards.mmrs);
+  //COMPONENT STATES
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showRegisterButton, setShowRegisterButton] = useState(true);
-  const { isLoggedIn } = useSelector((state) => state.auth);
-  const { inGame } = useSelector((state) => state.game.inGame);
-
-  // FUTURE ADMIN AND LOGOUT COMPONENTS
-  // const [showAdminBoard, setShowAdminBoard] = useState(false);
-  // const { user: currentUser } = useSelector((state) => state.auth);
-  // const dispatch = useDispatch();
-
-  // const logOut = useCallback(() => {
-  //   dispatch(logout());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
-  //   } else {
-  //     setShowAdminBoard(false);
-  //   }
-  //   EventBus.on("logout", () => {
-  //     logOut();
-  //   });
-  //   return () => {
-  //     EventBus.remove("logout");
-  //   };
-  // }, [currentUser, logOut]);
-
   const [loading, setLoading] = useState(false);
   const [go, setGo] = useState(false);
-  const { boards } = useSelector((state) => state.boards);
-  const mmrs = useSelector((state) => state.boards.mmrs);
-  const participants = useSelector((state) => state.boards.participants);
-  // const { message } = useSelector((state) => state.message);
-  const dispatch = useDispatch();
+  // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
 
   useEffect(() => {
     dispatch(clearMessage());
@@ -84,6 +63,17 @@ const Home = () => {
 
   const handleGo = () => {
     setGo(!go);
+  }
+
+  const handleAsk = () => {
+    dispatch(getUserCredentials())
+      .unwrap()
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }
 
   return (
@@ -134,6 +124,7 @@ const Home = () => {
       )
       )}
       <Button onClick={handleGo}>GO!!!</Button>
+      <Button onClick={handleAsk}>Ask for credentials</Button>
     </div>
   );
 };
