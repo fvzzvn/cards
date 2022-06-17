@@ -181,84 +181,84 @@ const Card = (props) => {
           <img alt="" src="/cards/10_of_clubs.png"></img>
         </div>
       )}
-      {props.value == "J" && props.suit == "hearts" && (
-        <div className="J-hearts">
-          <img alt="" src="/cards/J_of_hearts.png"></img>
+      {props.value == "Jack" && props.suit == "hearts" && (
+        <div className="Jack-hearts">
+          <img alt="" src="/cards/Jack_of_hearts.png"></img>
         </div>
       )}
-      {props.value == "J" && props.suit == "spades" && (
-        <div className="J-spades">
-          <img alt="" src="/cards/J_of_spades.png"></img>
+      {props.value == "Jack" && props.suit == "spades" && (
+        <div className="Jack-spades">
+          <img alt="" src="/cards/Jack_of_spades.png"></img>
         </div>
       )}
-      {props.value == "J" && props.suit == "diamonds" && (
-        <div className="J-diamonds">
-          <img alt="" src="/cards/J_of_diamonds.png"></img>
+      {props.value == "Jack" && props.suit == "diamonds" && (
+        <div className="Jack-diamonds">
+          <img alt="" src="/cards/Jack_of_diamonds.png"></img>
         </div>
       )}
-      {props.value == "J" && props.suit == "clubs" && (
-        <div className="J-clubs">
-          <img alt="" src="/cards/J_of_clubs.png"></img>
+      {props.value == "Jack" && props.suit == "clubs" && (
+        <div className="Jack-clubs">
+          <img alt="" src="/cards/Jack_of_clubs.png"></img>
         </div>
       )}
-      {props.value == "Q" && props.suit == "hearts" && (
-        <div className="Q-hearts">
-          <img alt="" src="/cards/Q_of_hearts.png"></img>
+      {props.value == "Queen" && props.suit == "hearts" && (
+        <div className="Queen-hearts">
+          <img alt="" src="/cards/Queen_of_hearts.png"></img>
         </div>
       )}
-      {props.value == "Q" && props.suit == "spades" && (
-        <div className="Q-spades">
-          <img alt="" src="/cards/Q_of_spades.png"></img>
+      {props.value == "Queen" && props.suit == "spades" && (
+        <div className="Queen-spades">
+          <img alt="" src="/cards/Queen_of_spades.png"></img>
         </div>
       )}
-      {props.value == "Q" && props.suit == "diamonds" && (
-        <div className="Q-diamonds">
-          <img alt="" src="/cards/Q_of_diamonds.png"></img>
+      {props.value == "Queen" && props.suit == "diamonds" && (
+        <div className="Queen-diamonds">
+          <img alt="" src="/cards/Queen_of_diamonds.png"></img>
         </div>
       )}
-      {props.value == "Q" && props.suit == "clubs" && (
-        <div className="Q-clubs">
-          <img alt="" src="/cards/Q_of_clubs.png"></img>
+      {props.value == "Queen" && props.suit == "clubs" && (
+        <div className="Queen-clubs">
+          <img alt="" src="/cards/Queen_of_clubs.png"></img>
         </div>
       )}
-      {props.value == "K" && props.suit == "hearts" && (
-        <div className="K-hearts">
-          <img alt="" src="/cards/K_of_hearts.png"></img>
+      {props.value == "King" && props.suit == "hearts" && (
+        <div className="King-hearts">
+          <img alt="" src="/cards/King_of_hearts.png"></img>
         </div>
       )}
-      {props.value == "K" && props.suit == "spades" && (
-        <div className="K-spades">
-          <img alt="" src="/cards/K_of_spades.png"></img>
+      {props.value == "King" && props.suit == "spades" && (
+        <div className="King-spades">
+          <img alt="" src="/cards/King_of_spades.png"></img>
         </div>
       )}
-      {props.value == "K" && props.suit == "diamonds" && (
-        <div className="K-diamonds">
-          <img alt="" src="/cards/K_of_diamonds.png"></img>
+      {props.value == "King" && props.suit == "diamonds" && (
+        <div className="King-diamonds">
+          <img alt="" src="/cards/King_of_diamonds.png"></img>
         </div>
       )}
-      {props.value == "K" && props.suit == "clubs" && (
-        <div className="K-clubs">
-          <img alt="" src="/cards/K_of_clubs.png"></img>
+      {props.value == "King" && props.suit == "clubs" && (
+        <div className="King-clubs">
+          <img alt="" src="/cards/King_of_clubs.png"></img>
         </div>
       )}
-      {props.value == "A" && props.suit == "hearts" && (
-        <div className="A-hearts">
-          <img alt="" src="/cards/A_of_hearts.png"></img>
+      {props.value == "Ace" && props.suit == "hearts" && (
+        <div className="Ace-hearts">
+          <img alt="" src="/cards/Ace_of_hearts.png"></img>
         </div>
       )}
-      {props.value == "A" && props.suit == "spades" && (
-        <div className="A-spades">
-          <img alt="" src="/cards/A_of_spades.png"></img>
+      {props.value == "Ace" && props.suit == "spades" && (
+        <div className="Ace-spades">
+          <img alt="" src="/cards/Ace_of_spades.png"></img>
         </div>
       )}
-      {props.value == "A" && props.suit == "diamonds" && (
-        <div className="A-diamonds">
-          <img alt="" src="/cards/A_of_diamonds.png"></img>
+      {props.value == "Ace" && props.suit == "diamonds" && (
+        <div className="Ace-diamonds">
+          <img alt="" src="/cards/Ace_of_diamonds.png"></img>
         </div>
       )}
-      {props.value == "A" && props.suit == "clubs" && (
-        <div className="A-clubs">
-          <img alt="" src="/cards/A_of_clubs.png"></img>
+      {props.value == "Ace" && props.suit == "clubs" && (
+        <div className="Ace-clubs">
+          <img alt="" src="/cards/Ace_of_clubs.png"></img>
         </div>
       )}
     </div>
