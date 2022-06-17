@@ -20,7 +20,7 @@
 
             if (other == null) return false;
 
-            return this.Text.Equals(other.Text)
+            return this.Text.Equals(other.Text);
         }
 
         public override int GetHashCode()
