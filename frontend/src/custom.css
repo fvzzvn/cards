@@ -507,6 +507,7 @@
   -ms-grid-row: 2;
   -ms-grid-column: 2;
   grid-area: mid;
+  margin: auto;
 }
 
 .left-player {

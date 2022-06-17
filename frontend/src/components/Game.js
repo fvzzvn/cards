@@ -20,7 +20,7 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "109", `${props.username}`);
+    await connection.invoke("JoinRoom", "113", `${props.username}`);
   };
 
   useEffect(() => {
@@ -46,6 +46,7 @@ const Game = (props) => {
       setTopCards(game.player3.cards);
       setRightCards(game.player4.cards);
       setStack(game.stack);
+      console.log(stack);
       setActiveCard(game.player1.cards[0]);
       console.log(game, "started");
     });
@@ -58,6 +59,7 @@ const Game = (props) => {
       setTopCards(game.player3.cards);
       setRightCards(game.player4.cards);
       setStack(game.stack);
+      console.log(stack);
       setActiveCard(game.player1.cards[0]);
     });
 
@@ -69,6 +71,7 @@ const Game = (props) => {
       setTopCards(game.player3.cards);
       setRightCards(game.player4.cards);
       setStack(game.stack);
+      console.log(stack);
       setActiveCard(game.player1.cards[0]);
     });
 
