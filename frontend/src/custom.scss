@@ -466,7 +466,7 @@ $btn-close-opacity: 0.9;
   justify-content: center;
 }
 
-.left-player * {
+.left-player * * {
   transform: rotate(90deg);
 }
 
@@ -484,7 +484,7 @@ $btn-close-opacity: 0.9;
   justify-content: center;
 }
 
-.right-player * {
+.right-player * *{
   transform: rotate(90deg);
 }
 

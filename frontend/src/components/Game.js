@@ -13,12 +13,14 @@ const Game = (props) => {
   const [leftPlayerCards, setLeftCards] = useState("");
   const [rightPlayerCards, setRightCards] = useState("");
   const [topPlayerCards, setTopCards] = useState("");
+  const [stackCards, setStackCards] = useState("");
   const [gameState, setGameState] = useState("");
+  const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "105", `${props.username}`);
+    await connection.invoke("JoinRoom", "108", `${props.username}`);
   };
 
   useEffect(() => {
@@ -43,6 +45,8 @@ const Game = (props) => {
       setLeftCards(game.player2.cards);
       setTopCards(game.player3.cards);
       setRightCards(game.player4.cards);
+      setStackCards(game.stack.cards);
+      setActiveCard(game.player1.cards[0]);
       console.log(game, "started");
     });
 
@@ -73,18 +77,18 @@ const Game = (props) => {
     }
   }, [connection]);
 
-  const handlePlayCard = async (card) => {
-    card = "0";
+  const handlePlayCard = async () => {
+    console.log("playing", activeCard);
     try {
-      await connection.invoke("PlayCard", card);
+      await connection.invoke("PlayCard", activeCard);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handlePlayCardAfterGet = async (card) => {
+  const handlePlayCardAfterGet = async () => {
     try {
-      await connection.invoke("PlayCardAfterGet", card);
+      await connection.invoke("PlayCardAfterGet", activeCard);
     } catch (err) {
       console.log(err);
     }
@@ -135,31 +139,79 @@ const Game = (props) => {
           <Button variant="secondary" onClick={handleEndGame}>
             EndGame
           </Button>
+
           <div className="game-table">
             <div className="game-grid">
               <div className="left-player">
                 {leftPlayerCards &&
                   leftPlayerCards.map((card, i) => (
-                    <Card value={card.text} suit={card.suit} key={i}></Card>
+                    <div
+                      onClick={() =>
+                        setActiveCard({
+                          text: card.text,
+                          suit: card.suit,
+                          isSpecial: card.isSpecial,
+                        })
+                      }
+                    >
+                      <Card value={card.text} suit={card.suit} key={i}></Card>
+                    </div>
                   ))}
               </div>
               <div className="top-player">
                 {topPlayerCards &&
                   topPlayerCards.map((card, i) => (
-                    <Card value={card.text} suit={card.suit} key={i}></Card>
+                    <div
+                      onClick={() =>
+                        setActiveCard({
+                          text: card.text,
+                          suit: card.suit,
+                          isSpecial: card.isSpecial,
+                        })
+                      }
+                    >
+                      <Card value={card.text} suit={card.suit} key={i}></Card>
+                    </div>
                   ))}
               </div>
-              <div className="center-stack"></div>
+              <div className="center-stack">
+                {stackCards && (
+                  <Card
+                    value={stackCards.at(-1).card.text}
+                    suit={stackCards.at(-1).card.suit}
+                  ></Card>
+                )}
+              </div>
               <div className="right-player">
                 {rightPlayerCards &&
                   rightPlayerCards.map((card, i) => (
-                    <Card value={card.text} suit={card.suit} key={i}></Card>
+                    <div
+                      onClick={() =>
+                        setActiveCard({
+                          text: card.text,
+                          suit: card.suit,
+                          isSpecial: card.isSpecial,
+                        })
+                      }
+                    >
+                      <Card value={card.text} suit={card.suit} key={i}></Card>
+                    </div>
                   ))}
               </div>
               <div className="bottom-player">
                 {handCards &&
                   handCards.map((card, i) => (
-                    <Card value={card.text} suit={card.suit} key={i}></Card>
+                    <div
+                      onClick={() =>
+                        setActiveCard({
+                          text: card.text,
+                          suit: card.suit,
+                          isSpecial: card.isSpecial,
+                        })
+                      }
+                    >
+                      <Card value={card.text} suit={card.suit} key={i}></Card>
+                    </div>
                   ))}
               </div>
             </div>
