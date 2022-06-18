@@ -92,5 +92,12 @@ namespace RatATatCatBackEnd.Hubs
         {
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId);
         }
+
+        public async Task SendMessage(string message)
+        {
+            Player player = GameState.Instance.GetPlayer(Context.ConnectionId);
+
+            await Clients.All.recieveMessage(player.Name, message);
+        }
     }
 }
