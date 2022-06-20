@@ -567,6 +567,7 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin-left: auto;
 }
 
 .bottom-player {
@@ -602,8 +603,7 @@
 }
 
 .bottom-buttons * {
-  margin: 10px 20px;
-  width: 200px;
+  margin: 10px 15px;
 }
 
 .bottom-cards .card-container *, .top-player .card-container * {
@@ -613,7 +613,7 @@
 }
 
 .left-player .card-container *, .right-player .card-container * {
-  margin: 0;
+  margin: 5px auto 0;
   max-height: 100px;
 }
 

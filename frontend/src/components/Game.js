@@ -20,7 +20,7 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "125", `${props.username}`);
+    await connection.invoke("JoinRoom", "127", `${props.username}`);
   };
 
   useEffect(() => {
@@ -222,19 +222,19 @@ const Game = (props) => {
                 {handCards && 
                 <div className="bottom-buttons">
                   <Button variant="secondary" onClick={handlePlayCard}>
-                    playCard
+                    Zagraj kartę
                   </Button>
                   <Button variant="secondary" onClick={handlePlayCardAfterGet}>
-                    PlayCardAfterGet
+                    Zagraj kartę po dobraniu
                   </Button>
                   <Button variant="secondary" onClick={handleGetCardDealer}>
-                    GetCardDealer
+                    Weź kartę od dealera
                   </Button>
                   <Button variant="secondary" onClick={handleGetCardStack}>
-                    GetCardStack
+                    Weź kartę z wierzchu stosu
                   </Button>
                   <Button variant="secondary" onClick={handleEndGame}>
-                    EndGame
+                    Zakończ grę
                   </Button>
                 </div>
                 }

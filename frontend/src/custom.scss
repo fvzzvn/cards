@@ -474,12 +474,9 @@ $btn-close-opacity: 0.9;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // height: 100%;
 }
 
-.left-player * * {
-  // transform: translate(0, -50%);
-}
+
 
 .top-player {
   grid-area: top;
@@ -493,11 +490,9 @@ $btn-close-opacity: 0.9;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: auto;
 }
 
-.right-player * * {
-  // transform: translate(0, -50%);}
-}
 .bottom-player {
   grid-area: bot;
 }
@@ -517,9 +512,9 @@ $btn-close-opacity: 0.9;
 }
 
 .bottom-buttons * {
-  margin: 10px 20px;
-  width: 200px;
+  margin: 10px 15px;
 }
+
 
 .bottom-cards .card-container *, .top-player .card-container * {
   margin: 0 5px 0;
@@ -529,7 +524,7 @@ $btn-close-opacity: 0.9;
 
 
 .left-player .card-container *, .right-player .card-container * {
-  margin: 0;
+  margin: 5px auto 0;
   max-height: 100px;
 }
 
