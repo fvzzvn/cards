@@ -465,16 +465,20 @@ $btn-close-opacity: 0.9;
   margin: auto;
 }
 
+.center-stack * {
+  width: 100px;
+}
+
 .left-player {
   grid-area: left;
   display: flex;
-  display: flex;
   flex-direction: column;
   justify-content: center;
+  // height: 100%;
 }
 
 .left-player * * {
-  transform: rotate(90deg);
+  // transform: translate(0, -50%);
 }
 
 .top-player {
@@ -491,10 +495,9 @@ $btn-close-opacity: 0.9;
   justify-content: center;
 }
 
-.right-player * *{
-  transform: rotate(90deg);
+.right-player * * {
+  // transform: translate(0, -50%);}
 }
-
 .bottom-player {
   grid-area: bot;
 }
@@ -518,9 +521,16 @@ $btn-close-opacity: 0.9;
   width: 200px;
 }
 
-.card-container * {
-  margin: 0 10px 0;
-  width: 100px;
+.bottom-cards .card-container *, .top-player .card-container * {
+  margin: 0 5px 0;
+  max-width: 100px;
+  width: 100%;
+}
+
+
+.left-player .card-container *, .right-player .card-container * {
+  margin: 0;
+  max-height: 100px;
 }
 
 .bottom-player .card-container img:hover, .top-player .card-container img:hover {
@@ -531,21 +541,45 @@ $btn-close-opacity: 0.9;
 
 .bottom-player .card-container img:focus, .top-player .card-container img:focus {
   transform: translateY(-6px);
-  box-shadow: 6px 8px 24px $major;
+  box-shadow: 6px 8px 34px black;
 }
 
 .bottom-player .card-container img:active, .top-player .card-container img:active {
   transform: translateY(-6px);
-  box-shadow: 6px 8px 24px $major;
+  box-shadow: 6px 8px 34px black;
 }
 
-.right-player .card-container img:hover, .left-player .card-container img:hover {
-  transform: translateY(6px) rotate(90deg);
-  box-shadow: -8px -6px 14px rgba(0, 0, 0, 0.6);
+.left-player .card-container img:hover {
+  transform: translateX(6px);
+  box-shadow: -8px 6px 14px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 }
 
+.right-player .card-container img:hover {
+  transform: translateX(-6px);
+  box-shadow: 8px 6px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
 
+.left-player .card-container img:focus {
+  transform: translateX(6px);
+  box-shadow: -8px 6px 34px black;
+}
+
+.right-player .card-container img:focus {
+  transform: translateX(-6px);
+  box-shadow: 8px 6px 14px rgba(0, 0, 0, 0.6);
+}
+
+.left-player .card-container img:active {
+  transform: translateX(6px);
+  box-shadow: -8px 6px 14px rgba(0, 0, 0, 0.6);
+}
+
+.right-player .card-container img:active {
+  transform: translateX(-6px);
+  box-shadow: 8px 6px 14px rgba(0, 0, 0, 0.6);
+}
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");
