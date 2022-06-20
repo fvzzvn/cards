@@ -7,8 +7,7 @@ import {
 import HeaderBar from "./HeaderBar";
 import Button from "react-bootstrap/Button";
 import Card from "./Card";
-import { v4 as uuid } from 'uuid';
-
+import { v4 as uuid } from "uuid";
 
 const Game = (props) => {
   const [handCards, setHandCards] = useState("");
@@ -20,10 +19,11 @@ const Game = (props) => {
   const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
   const [cheat, setCheat] = useState(false);
+  const [showPlayerCards, setShowPlayerCards] = useState(false);
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "138", `${props.username}`);
+    await connection.invoke("JoinRoom", "142", `${props.username}`);
   };
 
   useEffect(() => {
@@ -52,6 +52,10 @@ const Game = (props) => {
       console.log(stack);
       setActiveCard(game.player1.cards[0]);
       console.log(game, "started");
+      setShowPlayerCards(true);
+      setTimeout(() => {
+        setShowPlayerCards(false);
+      },5000);
     });
 
     connection.on("playerPlayedCard", (player, card, game) => {
@@ -144,7 +148,7 @@ const Game = (props) => {
 
   const handleCheatCode = () => {
     setCheat(!cheat);
-  }
+  };
 
   return (
     <div className="game-component">
@@ -164,7 +168,13 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card cheat={cheat} rotated={true} value={card.text} suit={card.suit} key={card.text+card.suit}></Card>
+                      <Card
+                        cheat={cheat}
+                        rotated={true}
+                        value={card.text}
+                        suit={card.suit}
+                        key={card.text + card.suit}
+                      ></Card>
                     </div>
                   ))}
               </div>
@@ -180,7 +190,12 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card cheat={cheat} value={card.text} suit={card.suit} key={card.text+card.suit}></Card>
+                      <Card
+                        cheat={cheat}
+                        value={card.text}
+                        suit={card.suit}
+                        key={card.text + card.suit}
+                      ></Card>
                     </div>
                   ))}
               </div>
@@ -206,7 +221,13 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card cheat={cheat} rotated={true} value={card.text} suit={card.suit} key={card.text+card.suit}></Card>
+                      <Card
+                        cheat={cheat}
+                        rotated={true}
+                        value={card.text}
+                        suit={card.suit}
+                        key={card.text + card.suit}
+                      ></Card>
                     </div>
                   ))}
               </div>
@@ -223,31 +244,64 @@ const Game = (props) => {
                           })
                         }
                       >
-                        <Card cheat={cheat} value={card.text} suit={card.suit} key={card.text+card.suit}></Card>
+                        {showPlayerCards ? (
+                          <Card
+                            cheat={true}
+                            value={card.text}
+                            suit={card.suit}
+                            key={card.text + card.suit}
+                          ></Card>
+                        ) : (
+                          <Card
+                            cheat={cheat}
+                            value={card.text}
+                            suit={card.suit}
+                            key={card.text + card.suit}
+                          ></Card>
+                        )}
                       </div>
                     ))}
                 </div>
-                {handCards && 
-                <div className="bottom-buttons">
-                  <Button variant="secondary" onClick={handlePlayCard}>
-                    Zagraj kartę
-                  </Button>
-                  <Button variant="secondary" onClick={handlePlayCardAfterGet}>
-                    Zagraj kartę po dobraniu
-                  </Button>
-                  <Button variant="secondary" onClick={handleGetCardDealer}>
-                    Weź kartę od dealera
-                  </Button>
-                  <Button variant="secondary" onClick={handleGetCardStack}>
-                    Weź kartę z wierzchu stosu
-                  </Button>
-                  <Button variant="secondary" onClick={handleEndGame}>
-                    Zakończ grę
-                  </Button>
-                  {(!cheat && <Button style={{color: "transparent"}} variant="outlined" onClick={handleCheatCode}>Cheat</Button>)}
-                  {(cheat && <Button style={{color: "transparent"}} variant="outlined secondary"  onClick={handleCheatCode}>Cheat</Button>)}
-                </div>
-                }
+                {handCards && (
+                  <div className="bottom-buttons">
+                    <Button variant="secondary" onClick={handlePlayCard}>
+                      Zagraj kartę
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={handlePlayCardAfterGet}
+                    >
+                      Zagraj kartę po dobraniu
+                    </Button>
+                    <Button variant="secondary" onClick={handleGetCardDealer}>
+                      Weź kartę od dealera
+                    </Button>
+                    <Button variant="secondary" onClick={handleGetCardStack}>
+                      Weź kartę z wierzchu stosu
+                    </Button>
+                    <Button variant="secondary" onClick={handleEndGame}>
+                      Zakończ grę
+                    </Button>
+                    {!cheat && (
+                      <Button
+                        style={{ color: "transparent" }}
+                        variant="outlined"
+                        onClick={handleCheatCode}
+                      >
+                        Cheat
+                      </Button>
+                    )}
+                    {cheat && (
+                      <Button
+                        style={{ color: "transparent" }}
+                        variant="outlined secondary"
+                        onClick={handleCheatCode}
+                      >
+                        Cheat
+                      </Button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
