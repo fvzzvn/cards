@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../custom.scss";
 import Button from "react-bootstrap/Button";
+import ToggleButton from "react-bootstrap/ToggleButton";
 import Login from "./Login.js";
 import Register from "./Register.js";
 import CloseButton from "react-bootstrap/CloseButton";
@@ -11,7 +12,6 @@ import Game from "./Game.js";
 import { clearMessage } from "../slices/message";
 import { getBoards } from "../slices/boards";
 import { getUserCredentials } from "../slices/userCredentials";
-
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -37,10 +37,8 @@ const Home = () => {
     setLoading(true);
     dispatch(getBoards())
       .unwrap()
-      .then(() => {
-      })
-      .catch(() => {
-      });
+      .then(() => {})
+      .catch(() => {});
     dispatch(getUserCredentials())
       .unwrap()
       .then(() => {
@@ -111,16 +109,56 @@ const Home = () => {
       ) : isLoggedIn && !loading && !inGame && !go ? (
         <>
           <HeaderBar username={username}></HeaderBar>
-          <Boards
-            boards={boards}
-            mmrs={mmrs}
-            participants={participants}
-          ></Boards>
+          <div className="home-boards-bg">
+            <div className="home-boards-title">stoły</div>
+            <div className="home-boards-container">
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Rankingowe
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Nierankingowe
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Wolne miejsca
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Rozpoczęte
+              </ToggleButton>
+              <Button
+                variant="secondary"
+                className="home-board-fliter"
+                onClick={handleGo}
+              >
+                Stwórz nową grę
+              </Button>
+              <Boards
+                boards={boards}
+                mmrs={mmrs}
+                participants={participants}
+              ></Boards>
+            </div>
+          </div>
         </>
       ) : (
-        go && <Game username={username}></Game>
+        go && (
+          <>
+            <HeaderBar setGo={setGo} username={username} game={true}></HeaderBar>
+            <Game username={username}></Game>
+          </>
+        )
       )}
-      <Button onClick={handleGo}>GO!!!</Button>
     </div>
   );
 };

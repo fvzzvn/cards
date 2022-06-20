@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearMessage } from "../slices/message";
-import { getUserCredentials } from "../slices/userCredentials";
 import { logout } from "../slices/auth";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { resetCredentials } from "../slices/userCredentials";
+import handleGo from "./Home";
 
-const HeaderBar = (props) => {
+const HeaderBar = (props, {setGo}) => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
@@ -24,12 +23,12 @@ const HeaderBar = (props) => {
         </Button>
       </div>
       <div className="header-bar-logo"></div>
-      {props.username && (
-        <div style={{ color: "white", fontSize: "40px" }}>
-          {" "}
-          {props.username}
+      {props.game && (
+        <div className="leave-wrapper">
+          <Button className="leave-button" onClick={(e) => {props.setGo(!e)}}>Opuść stół</Button>
         </div>
       )}
+      {props.username && <div className="username-box">{props.username}</div>}
     </div>
   );
 };

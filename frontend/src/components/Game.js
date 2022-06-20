@@ -7,6 +7,8 @@ import {
 import HeaderBar from "./HeaderBar";
 import Button from "react-bootstrap/Button";
 import Card from "./Card";
+import { v4 as uuid } from 'uuid';
+
 
 const Game = (props) => {
   const [handCards, setHandCards] = useState("");
@@ -17,10 +19,12 @@ const Game = (props) => {
   const [gameState, setGameState] = useState("");
   const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
+  const unique_id = uuid();
+
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "127", `${props.username}`);
+    await connection.invoke("JoinRoom", "133", `${props.username}`);
   };
 
   useEffect(() => {
@@ -141,7 +145,6 @@ const Game = (props) => {
 
   return (
     <div className="game-component">
-      <HeaderBar username={props.username}></HeaderBar>
       <div className="game-wrapper">
         <div className="game-container">
           <div className="game-table">
@@ -158,7 +161,7 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card rotated={true} value={card.text} suit={card.suit} key={i}></Card>
+                      <Card rotated={true} value={card.text} suit={card.suit} key={card+i}></Card>
                     </div>
                   ))}
               </div>
@@ -174,13 +177,14 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card value={card.text} suit={card.suit} key={i}></Card>
+                      <Card value={card.text} suit={card.suit} key={card+i}></Card>
                     </div>
                   ))}
               </div>
               <div className="center-stack">
                 {stack.stackSize > 0 && (
                   <Card
+                    id={stack.cards[0]}
                     value={stack.cards[0].text}
                     suit={stack.cards[0].suit}
                   ></Card>
@@ -198,7 +202,7 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card rotated={true} value={card.text} suit={card.suit} key={i}></Card>
+                      <Card rotated={true} value={card.text} suit={card.suit} key={card+i}></Card>
                     </div>
                   ))}
               </div>
@@ -215,7 +219,7 @@ const Game = (props) => {
                           })
                         }
                       >
-                        <Card value={card.text} suit={card.suit} key={i}></Card>
+                        <Card value={card.text} suit={card.suit} key={card+i}></Card>
                       </div>
                     ))}
                 </div>

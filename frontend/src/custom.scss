@@ -401,7 +401,10 @@ $btn-close-opacity: 0.9;
 
 .header-bar-container {
   position: absolute;
-  display: flex;
+  display: grid;
+  grid-template-columns: 10% 30% 20% 30% 10%;
+  grid-template-areas: 
+    "logout button1 logo button2 username";
   height: 100px;
   width: 100vw;
   min-width: 1400px;
@@ -410,6 +413,7 @@ $btn-close-opacity: 0.9;
 }
 
 .header-bar-logo {
+  grid-area: logo;
   height: 100%;
   width: 250px;
   margin: auto;
@@ -420,10 +424,21 @@ $btn-close-opacity: 0.9;
 }
 
 .logout-wrapper {
+  grid-area: logout;
   width: 200px;
 }
 
 .logout-button {
+  width: 150px;
+  margin: 25px;
+}
+
+.leave-wrapper {
+  grid-area: button2;
+  margin: auto;
+}
+
+.leave-button {
   width: 150px;
   margin: 25px;
 }

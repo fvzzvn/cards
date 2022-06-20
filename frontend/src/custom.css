@@ -447,9 +447,11 @@
 /*********************************************/
 .header-bar-container {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 10% 30% 20% 30% 10%;
+      grid-template-columns: 10% 30% 20% 30% 10%;
+      grid-template-areas: "logout button1 logo button2 username";
   height: 100px;
   width: 100vw;
   min-width: 1400px;
@@ -458,6 +460,9 @@
 }
 
 .header-bar-logo {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  grid-area: logo;
   height: 100%;
   width: 250px;
   margin: auto;
@@ -468,10 +473,25 @@
 }
 
 .logout-wrapper {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: logout;
   width: 200px;
 }
 
 .logout-button {
+  width: 150px;
+  margin: 25px;
+}
+
+.leave-wrapper {
+  -ms-grid-row: 1;
+  -ms-grid-column: 4;
+  grid-area: button2;
+  margin: auto;
+}
+
+.leave-button {
   width: 150px;
   margin: 25px;
 }
