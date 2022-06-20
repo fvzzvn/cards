@@ -468,7 +468,7 @@ $btn-close-opacity: 0.9;
   height: 100%;
   width: 100%;
   grid-template-columns: 20% 60% 20%;
-  grid-template-rows: 30% 40% 30%;
+  grid-template-rows: 30% 30% 40%;
   grid-template-areas:
     "left top right"
     "left mid right"
@@ -510,6 +510,9 @@ $btn-close-opacity: 0.9;
 
 .bottom-player {
   grid-area: bot;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 
 .bottom-cards {
@@ -527,7 +530,7 @@ $btn-close-opacity: 0.9;
 }
 
 .bottom-buttons * {
-  margin: 10px 15px;
+  margin: 5px 10px;
 }
 
 
@@ -545,6 +548,7 @@ $btn-close-opacity: 0.9;
 
 .bottom-player .card-container img:hover, .top-player .card-container img:hover {
   transform: translateY(-6px);
+  border-radius: 7px;
   box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 }

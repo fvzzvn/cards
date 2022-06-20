@@ -523,8 +523,8 @@
   width: 100%;
   -ms-grid-columns: 20% 60% 20%;
       grid-template-columns: 20% 60% 20%;
-  -ms-grid-rows: 30% 40% 30%;
-      grid-template-rows: 30% 40% 30%;
+  -ms-grid-rows: 30% 30% 40%;
+      grid-template-rows: 30% 30% 40%;
       grid-template-areas: "left top right" "left mid right" "left bot right";
 }
 
@@ -594,6 +594,16 @@
   -ms-grid-row: 3;
   -ms-grid-column: 2;
   grid-area: bot;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
 }
 
 .bottom-cards {
@@ -623,7 +633,7 @@
 }
 
 .bottom-buttons * {
-  margin: 10px 15px;
+  margin: 5px 10px;
 }
 
 .bottom-cards .card-container *, .top-player .card-container * {
@@ -640,6 +650,7 @@
 .bottom-player .card-container img:hover, .top-player .card-container img:hover {
   -webkit-transform: translateY(-6px);
           transform: translateY(-6px);
+  border-radius: 7px;
   -webkit-box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
           box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
   cursor: pointer;

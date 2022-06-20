@@ -19,12 +19,11 @@ const Game = (props) => {
   const [gameState, setGameState] = useState("");
   const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
-  const unique_id = uuid();
-
+  const [cheat, setCheat] = useState(false);
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", "133", `${props.username}`);
+    await connection.invoke("JoinRoom", "138", `${props.username}`);
   };
 
   useEffect(() => {
@@ -143,6 +142,10 @@ const Game = (props) => {
     }
   };
 
+  const handleCheatCode = () => {
+    setCheat(!cheat);
+  }
+
   return (
     <div className="game-component">
       <div className="game-wrapper">
@@ -161,7 +164,7 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card rotated={true} value={card.text} suit={card.suit} key={card+i}></Card>
+                      <Card cheat={cheat} rotated={true} value={card.text} suit={card.suit} key={card.text+card.suit}></Card>
                     </div>
                   ))}
               </div>
@@ -177,13 +180,14 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card value={card.text} suit={card.suit} key={card+i}></Card>
+                      <Card cheat={cheat} value={card.text} suit={card.suit} key={card.text+card.suit}></Card>
                     </div>
                   ))}
               </div>
               <div className="center-stack">
                 {stack.stackSize > 0 && (
                   <Card
+                    cheat={true}
                     id={stack.cards[0]}
                     value={stack.cards[0].text}
                     suit={stack.cards[0].suit}
@@ -202,7 +206,7 @@ const Game = (props) => {
                         })
                       }
                     >
-                      <Card rotated={true} value={card.text} suit={card.suit} key={card+i}></Card>
+                      <Card cheat={cheat} rotated={true} value={card.text} suit={card.suit} key={card.text+card.suit}></Card>
                     </div>
                   ))}
               </div>
@@ -219,7 +223,7 @@ const Game = (props) => {
                           })
                         }
                       >
-                        <Card value={card.text} suit={card.suit} key={card+i}></Card>
+                        <Card cheat={cheat} value={card.text} suit={card.suit} key={card.text+card.suit}></Card>
                       </div>
                     ))}
                 </div>
@@ -240,6 +244,8 @@ const Game = (props) => {
                   <Button variant="secondary" onClick={handleEndGame}>
                     Zakończ grę
                   </Button>
+                  {(!cheat && <Button style={{color: "transparent"}} variant="outlined" onClick={handleCheatCode}>Cheat</Button>)}
+                  {(cheat && <Button style={{color: "transparent"}} variant="outlined secondary"  onClick={handleCheatCode}>Cheat</Button>)}
                 </div>
                 }
               </div>
