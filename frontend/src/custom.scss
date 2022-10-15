@@ -1,0 +1,600 @@
+$primary: #faad2d;
+$primary-hover: #ffa600;
+$secondary: #fa392d;
+$secondary-hover: #d32013;
+$major: #f87d09;
+$button-text-color: #ffffff;
+$font-family-sans-serif: "Comfortaa", sans-serif;
+$btn-close-hover-opacity: 1;
+$btn-close-opacity: 0.9;
+
+/*********************************************/
+/*              GENERAL CSS                 "/
+/*********************************************/
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #131313;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $major;
+}
+
+.btn.btn-primary {
+  color: $button-text-color;
+  transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+  outline: none;
+  &:focus{
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.btn.btn-primary:hover {
+  color: $button-text-color;
+  border-color: $primary-hover;
+  transform: translateY(-2px);
+  background-color: $primary-hover;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn.btn-primary:focus {
+  color: $button-text-color;
+  background-color: $primary-hover;
+  outline: none;
+}
+
+.btn.btn-secondary {
+  color: $button-text-color;
+  transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+  outline: none;
+  &:focus{
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.btn.btn-secondary:hover {
+  color: $button-text-color;
+  border-color: $secondary-hover;
+  background-color: $secondary-hover;
+  transform: translateY(-2px);
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn.btn-secondary:focus {
+  color: $button-text-color;
+  background-color: $secondary-hover;
+}
+
+.btn.btn-secondary:active {
+  background-color: $secondary-hover;
+}
+
+.btn.btn-outline-primary {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.7);
+  transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+  &:focus{
+    outline: none;
+    box-shadow: none;
+    background-color: white;
+    color: $major;
+  }
+  &:hover{
+    background-color: white;
+    color: $major;
+    transform: translateY(-2px);
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  &:active{
+    color: $major;
+    background-color: white;
+  }
+}
+
+.btn.btn-outline-secondary {
+  transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+  &:focus{
+    outline: none;
+    box-shadow: none;
+  }
+  &:hover{
+    transform: translateY(-2px);
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+  }
+}
+
+
+.cards-bg {
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url("./assets/img/card_bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: darken;
+  overflow: hidden;
+}
+
+/*********************************************/
+/*          HOME LOGIN REGISTER CSS          "/
+/*********************************************/
+
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  margin: 10vh auto 0;
+  transition: 0.5s;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  width: auto;
+  margin: auto;
+  width: 40vw;
+  height: 100%;
+}
+
+.home-logo {
+  height: 30vh;
+  width: 100%;
+  margin-bottom: 50px;
+  background-image: url("./assets/img/logo_transparent_slim.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.buttons-wrapper {
+  position: relative;
+  align-self: center;
+}
+
+.home-buttons-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 450px;
+  background-color: $major;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.home-buttons-container .btn {
+  width: calc(100% - 5px);
+  font-size: 1.25rem;
+  height: 50px;
+  margin: 5px auto;
+}
+
+.form-group {
+  margin: 10px auto;
+}
+
+.form-group:hover {
+  box-shadow: rgba(5, 5, 5, 0.5);
+}
+
+.x-holder {
+  padding: 2.727px 2.727px 0 2.727px;
+  background-color: brown;
+  border-radius: 15%;
+  transition: background-color 0.3s;
+  position: absolute;
+  right: -0.9em;
+  top: -0.9em;
+}
+
+.x-holder:hover {
+  background-color: $secondary;
+}
+
+.h4-title {
+  color: white;
+  text-align: center;
+}
+
+.confirmation-message {
+  color: white;
+  padding: 1rem;
+}
+
+/*********************************************/
+/*              HOME BOARDS CSS              "/
+/*********************************************/
+
+.home-boards-bg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 1200px;
+  height: 85%;
+  min-height: 800px;
+  // overflow:hidden;
+  margin-top: 150px;
+  background-image: linear-gradient(
+    to right top,
+    #faad2d,
+    #faa525,
+    #fa9c1e,
+    #f99317,
+    #f98a10,
+    #f9890c,
+    #fa8808,
+    #fa8704,
+    #fc8f01,
+    #fd9700,
+    #fe9e00,
+    #ffa600
+  );
+  // clip-path: polygon(
+  //   0 4%,
+  //   4% 0,
+  //   96% 0,
+  //   100% 4%,
+  //   100% 96%,
+  //   96% 100%,
+  //   4% 100%,
+  //   0% 96%,
+  //   0% 4%
+  // );
+  border-radius: 5px;
+  box-shadow: 20px 20px 50px black;
+}
+
+.home-boards-title {
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  text-transform: capitalize;
+  margin-top: 5px;
+}
+
+.home-boards-title {
+  cursor: default;
+}
+
+.home-boards-container {
+  height: 100%;
+  width: 100%;
+  padding: 0 4%;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 6% 22% 22% 22% 22%;
+}
+
+.board-card {
+  display: grid;
+  grid-template-columns: 30% 15% 55%;
+  grid-template-rows: 20% 20% 60%;
+  grid-template-areas:
+    "id ranking ranking"
+    "name name name"
+    "players players players";
+  height: 90%;
+  width: 90%;
+  padding: 4%;
+  margin: auto;
+  background-color: white;
+  color: white;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.board-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
+}
+
+.board-card > * {
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.board-card-id {
+  grid-area: id;
+  background-color: $major;
+  margin: 2px;
+  font-family: "Bungee Inline", cursive;
+  text-align: center;
+  font-size: 21px;
+  overflow: hidden;
+}
+
+.board-card-ranking {
+  grid-area: ranking;
+  background-color: $major;
+  margin: 2px;
+  font-family: "Bungee Inline", cursive;
+  text-align: center;
+  font-size: 22px;
+  overflow: hidden;
+}
+
+.board-card-name {
+  grid-area: name;
+  background-color: $major;
+  margin: 2px;
+  padding-left: 5px;
+  overflow: hidden;
+}
+
+.board-card-players {
+  grid-area: players;
+  background-color: $major;
+  margin: 2px;
+  overflow: hidden;
+  padding-left: 5px;
+}
+
+.board-card-players .player {
+  display: block;
+}
+
+.card-id {
+  width: 100%;
+}
+
+.card-ranking {
+  width: 100%;
+}
+
+.home-board-fliter {
+  width: 90%;
+  margin: auto;
+}
+
+.low {
+  color: green;
+}
+
+.medium-low {
+  color: blue;
+}
+
+.medium {
+  color: yellow;
+}
+
+.medium-high {
+  color: purple;
+}
+
+.high {
+  color: red;
+}
+
+.board-loader {
+  font-size: 50px;
+  text-align: center;
+}
+/*********************************************/
+/*              HEADER BAR CSS               "/
+/*********************************************/
+
+.header-bar-container {
+  position: absolute;
+  display: grid;
+  grid-template-columns: 10% 30% 20% 30% 10%;
+  grid-template-areas: 
+    "logout button1 logo button2 username";
+  height: 100px;
+  width: 100vw;
+  min-width: 1400px;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.header-bar-logo {
+  grid-area: logo;
+  height: 100%;
+  width: 250px;
+  margin: auto;
+  background-image: url("./assets/img/logo_transparent_slim.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.logout-wrapper {
+  grid-area: logout;
+  width: 200px;
+}
+
+.logout-button {
+  width: 150px;
+  margin: 25px;
+}
+
+.leave-wrapper {
+  grid-area: button2;
+  margin: auto;
+}
+
+.leave-button {
+  width: 150px;
+  margin: 25px;
+}
+
+/*********************************************/
+/*               GAME  CSS                   "/
+/*********************************************/
+
+.game-wrapper {
+  padding-top: 150px;
+}
+
+.game-table {
+  margin: auto;
+  width: 1400px;
+  height: 1000px;
+  background-color: rgb(0, 109, 49);
+  box-shadow: 0px 20px 150px black;
+  border-radius: 150px;
+  border: solid $primary;
+  border-width: 50px;
+  padding: 30px;
+}
+
+.game-grid {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: 30% 30% 40%;
+  grid-template-areas:
+    "left top right"
+    "left mid right"
+    "left bot right";
+}
+
+.center-stack {
+  grid-area: mid;
+  margin: auto;
+}
+
+.center-stack * {
+  width: 100px;
+}
+
+.left-player {
+  grid-area: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+
+.top-player {
+  grid-area: top;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.right-player {
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.bottom-player {
+  grid-area: bot;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.bottom-cards {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.bottom-buttons {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bottom-buttons * {
+  margin: 5px 10px;
+}
+
+
+.bottom-cards .card-container *, .top-player .card-container * {
+  margin: 0 5px 0;
+  max-width: 100px;
+  width: 100%;
+}
+
+
+.left-player .card-container *, .right-player .card-container * {
+  margin: 5px auto 0;
+  max-height: 100px;
+}
+
+.bottom-player .card-container img:hover, .top-player .card-container img:hover {
+  transform: translateY(-6px);
+  border-radius: 7px;
+  box-shadow: 6px 8px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.bottom-player .card-container img:focus, .top-player .card-container img:focus {
+  transform: translateY(-6px);
+  box-shadow: 6px 8px 34px black;
+}
+
+.bottom-player .card-container img:active, .top-player .card-container img:active {
+  transform: translateY(-6px);
+  box-shadow: 6px 8px 34px black;
+}
+
+.left-player .card-container img:hover {
+  transform: translateX(6px);
+  box-shadow: -8px 6px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.right-player .card-container img:hover {
+  transform: translateX(-6px);
+  box-shadow: 8px 6px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.left-player .card-container img:focus {
+  transform: translateX(6px);
+  box-shadow: -8px 6px 34px black;
+}
+
+.right-player .card-container img:focus {
+  transform: translateX(-6px);
+  box-shadow: 8px 6px 14px rgba(0, 0, 0, 0.6);
+}
+
+.left-player .card-container img:active {
+  transform: translateX(6px);
+  box-shadow: -8px 6px 14px rgba(0, 0, 0, 0.6);
+}
+
+.right-player .card-container img:active {
+  transform: translateX(-6px);
+  box-shadow: 8px 6px 14px rgba(0, 0, 0, 0.6);
+}
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");
