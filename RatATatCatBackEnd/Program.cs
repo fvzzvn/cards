@@ -6,6 +6,7 @@ using RatATatCatBackEnd.Repository;
 using RatATatCatBackEnd.Hubs;
 using System.Text;
 using RatATatCatBackEnd.Models.Database;
+using RatATatCatBackEnd;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -36,6 +37,7 @@ builder.Services.AddDbContext<DatabaseContext>
 builder.Services.AddTransient<IUserInfo, UserInfoRepository>();
 builder.Services.AddTransient<IBoardInstance, BoardInstanceRepository>();
 builder.Services.AddTransient<IParticipant, ParticipantRepository>();
+builder.Services.AddSingleton<IGameState, GameState>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

@@ -6,22 +6,27 @@ namespace RatATatCatBackEnd.Hubs
 {
     public class GameHub : Hub<IGameHub>
     {
+        private readonly GameState _gameState;
+        public GameHub(GameState gameState)
+        {
+            _gameState = gameState;
+        }
         public async Task JoinRoom(string gameId, string username)
         {
-            if (GameState.Instance.GetGame(gameId) == null)
+            if (_gameState.GetGame(gameId) == null)
             {
-                await GameState.Instance.CreateGame(gameId);
+                await _gameState.CreateGame(gameId);
             }
 
             Player player =
-                GameState.Instance.CreatePlayer(gameId, username, Context.ConnectionId);
+                _gameState.CreatePlayer(gameId, username, Context.ConnectionId);
             await Clients.All.playerJoined(player);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
 
-            if (GameState.Instance.IsPlayersReady(gameId))
+            if (_gameState.ArePlayersReady(gameId))
             {
-                Game game = GameState.Instance.GetGame(gameId);
+                Game game = _gameState.GetGame(gameId);
                 await Clients.All.start(game);
             }
 
@@ -29,8 +34,8 @@ namespace RatATatCatBackEnd.Hubs
 
         public async Task PlayCard(Card card)
         {
-            Player player = GameState.Instance.GetPlayer(Context.ConnectionId);
-            Game game = GameState.Instance.GetGame(player.GameId);
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
+            Game game = _gameState.GetGame(player.GameId);
 
             game.PlayCard(card, player);
 
@@ -38,8 +43,8 @@ namespace RatATatCatBackEnd.Hubs
         }
         public async Task PlayCardAfterGet(Card card)
         {
-            Player player = GameState.Instance.GetPlayer(Context.ConnectionId);
-            Game game = GameState.Instance.GetGame(player.GameId);
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
+            Game game = _gameState.GetGame(player.GameId);
 
             game.PlayCardAfterGet(card, player);
 
@@ -47,8 +52,8 @@ namespace RatATatCatBackEnd.Hubs
         }
         public async Task GetCard(string from)
         {
-            Player player = GameState.Instance.GetPlayer(Context.ConnectionId);
-            Game game = GameState.Instance.GetGame(player.GameId);
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
+            Game game = _gameState.GetGame(player.GameId);
 
             Card card = new Card();
 
@@ -81,7 +86,7 @@ namespace RatATatCatBackEnd.Hubs
         }
         public async Task EndGame(Player player)
         {
-            Game game = GameState.Instance.GetGame(player.GameId);
+            Game game = _gameState.GetGame(player.GameId);
 
             /* Todo
                 game.End();
@@ -95,9 +100,9 @@ namespace RatATatCatBackEnd.Hubs
 
         public async Task SendMessage(string message)
         {
-            Player player = GameState.Instance.GetPlayer(Context.ConnectionId);
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
 
-            await Clients.All.recieveMessage(player.Name, message);
+            await Clients.Group(player.GameId).recieveMessage(player.Name, message);
         }
     }
 }

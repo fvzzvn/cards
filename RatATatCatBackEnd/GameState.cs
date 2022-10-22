@@ -3,19 +3,15 @@ using System.Collections.Concurrent;
 
 namespace RatATatCatBackEnd
 {
-    public class GameState
+    public class GameState : IGameState
     {
-        private static readonly Lazy<GameState> lazy =
-             new Lazy<GameState>(() => new GameState());
-        public static GameState Instance { get { return lazy.Value; } }
-
         private readonly ConcurrentDictionary<string, Player> players =
              new ConcurrentDictionary<string, Player>(StringComparer.OrdinalIgnoreCase);
 
         private readonly ConcurrentDictionary<string, Game> games =
              new ConcurrentDictionary<string, Game>(StringComparer.OrdinalIgnoreCase);
 
-        private GameState()
+        public GameState()
         {
         }
 
@@ -40,12 +36,13 @@ namespace RatATatCatBackEnd
             Player foundPlayer;
             if (!this.players.TryGetValue(playerId, out foundPlayer))
             {
+                throw new Exception("Player not found");
                 return null;
             }
 
             return foundPlayer;
         }
-        public bool IsPlayersReady(string gameId)
+        public bool ArePlayersReady(string gameId)
         {
             Game game = GetGame(gameId);
 
@@ -55,10 +52,11 @@ namespace RatATatCatBackEnd
         }
         public Game GetGame(string roomId)
         {
-            Game foundGame = this.games.Values.FirstOrDefault(g => g.Id == roomId);
+            Game foundGame = games.Values.FirstOrDefault(g => g.Id == roomId);
 
             if (foundGame == null)
             {
+                throw new Exception("No game found");
                 return null;
             }
 
@@ -85,7 +83,6 @@ namespace RatATatCatBackEnd
             // Define the new game and add to waiting pool
             Game game = new Game(gameId);
             this.games[game.Id] = game;
-
 
             return game;
         }
