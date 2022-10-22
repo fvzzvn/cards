@@ -43,20 +43,33 @@ namespace RatATatCatBackEnd.Repository
             }
         }
 
-        public List<string> GetParticipantNamesByBoard(int id)
+        public Dictionary<int, string> GetParticipantNamesByBoard(int id)
         {
             List<Participant> participants;
-            List<string> names = new List<string>();
+            Dictionary<int, string> participantsInfo = new Dictionary<int, string>();
 
             participants = _dbContext.Participants.Where(p => p.BoardInstanceId == id)
                 .ToList();
             
             foreach (Participant p in participants)
             {
-                names.Add(_IUserInfo.GetUserInfo(p.UserId).DisplayName);
+                participantsInfo.Add(p.ParticipantId ,_IUserInfo.GetUserInfo(p.UserId).DisplayName);
             }
 
-            return names;
+            return participantsInfo;
+        }
+        public List<int> GetPlayersMmrByBoardId(int id)
+        {
+
+            List<Participant> participants;
+            List<int> mmrs = new List<int>();
+
+            participants = _dbContext.Participants.Where(p => p.BoardInstanceId == id).ToList();
+            foreach (Participant p in participants)
+            {
+                mmrs.Add(_IUserInfo.GetUserInfo(p.UserId).Mmr);
+            }
+            return mmrs;
         }
 
         public int GetBoardMmr(int id)

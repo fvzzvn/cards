@@ -133,3 +133,4 @@ D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Microsoft.Owin.Security.dll
 D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Owin.dll
 D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\git\RatATatCat\RatATatCatBackEnd\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
