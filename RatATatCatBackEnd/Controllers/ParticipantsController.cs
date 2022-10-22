@@ -42,14 +42,13 @@ namespace RatATatCatBackEnd.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Participant>> Delete(int id)
         {
-            var user = _IParticipant.GetParticipant(id);
-            int uId = Int32.Parse(User.FindFirst("UserId").Value);
-            if (uId != user.UserId)
+            var participant = _IParticipant.GetParticipant(id);
+            if(participant == null)
             {
-                return BadRequest();
+                throw new Exception("Participant not found");
             }
             _IParticipant.DeleteParticipant(id);
-            return await Task.FromResult(user);
+            return await Task.FromResult(participant);
         }
     }
 }

@@ -22,11 +22,10 @@ namespace RatATatCatBackEnd.Controllers
 
         // GET: api/<Boards>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BoardInstance>>> Get()
+        public async Task<ActionResult<IEnumerable<BoardToView>>> Get()
         {
+            List<BoardToView> toView = new List<BoardToView>();
             var boards = await Task.FromResult(_IBoardInstance.GetBoards());
-            var participants = new List<List<string>>();
-            var mmrs = new List<int>();
 
             if (boards.Count == 0)
             {
@@ -35,13 +34,16 @@ namespace RatATatCatBackEnd.Controllers
 
             foreach (BoardInstance board in boards)
             {
-                participants.Add(_IParticipant.GetParticipantNamesByBoard(board.Id));
-                mmrs.Add(_IParticipant.GetBoardMmr(board.Id));
+                BoardToView nbw = new BoardToView();
+                nbw.Board = board;
+                nbw.Participants = _IParticipant.GetParticipantNamesByBoard(board.Id);
+                nbw.PlayerMmrs = _IParticipant.GetPlayersMmrByBoardId(board.Id);
+                toView.Add(nbw);
             }
-            return Ok(new {boards, participants, mmrs});
+            return Ok(toView);
         }
 
-        // GET api/<Boards>/5
+        // GET api/<Boards>/5.
         [HttpGet("{id}")]
         public async Task<ActionResult<BoardInstance>> Get(int id)
         {

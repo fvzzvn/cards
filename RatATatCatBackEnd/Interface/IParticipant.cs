@@ -6,9 +6,10 @@ namespace RatATatCatBackEnd.Interface
     {
         public Participant GetParticipant(int id);
         void AddParticipant(Participant p);
-        public List<string> GetParticipantNamesByBoard(int id);
+        public Dictionary<int, string> GetParticipantNamesByBoard(int id);
         public void DeletePlayerFromBoard(int id);
         public int GetBoardMmr(int id);
         public Participant DeleteParticipant(int id);
+        public List<int> GetPlayersMmrByBoardId(int id);
     }
 }
