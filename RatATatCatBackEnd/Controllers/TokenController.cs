@@ -23,11 +23,11 @@ namespace RatATatCatBackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserInfo userInfo)
+        public async Task<IActionResult> Post(string Email, string Password)
         {
-            if (userInfo != null && userInfo.Email != null && userInfo.Password != null)
+            if (Email != null && Password != null)
             {
-                var user = await GetUser(userInfo.Email, userInfo.Password);
+                var user = await GetUser(Email, Password);
 
                 if (user != null)
                 {
