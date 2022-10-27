@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RatATatCatBackEnd.Interface;
+using RatATatCatBackEnd.Models;
 using RatATatCatBackEnd.Models.Database;
 
 namespace RatATatCatBackEnd.Repository
@@ -43,20 +44,22 @@ namespace RatATatCatBackEnd.Repository
             }
         }
 
-        public Dictionary<int, string> GetParticipantNamesByBoard(int id)
+        public List<ParticipantToView> GetParticipantNamesByBoard(int id)
         {
             List<Participant> participants;
-            Dictionary<int, string> participantsInfo = new Dictionary<int, string>();
+            List<ParticipantToView> participantToViews = new List<ParticipantToView>();
 
             participants = _dbContext.Participants.Where(p => p.BoardInstanceId == id)
                 .ToList();
             
             foreach (Participant p in participants)
             {
-                participantsInfo.Add(p.ParticipantId ,_IUserInfo.GetUserInfo(p.UserId).DisplayName);
+                UserInfo u = _IUserInfo.GetUserInfo(p.UserId);
+                ParticipantToView pw = new ParticipantToView { Mmr = u.Mmr, Name = u.DisplayName };
+                participantToViews.Add(pw);
             }
 
-            return participantsInfo;
+            return participantToViews;
         }
         public List<int> GetPlayersMmrByBoardId(int id)
         {

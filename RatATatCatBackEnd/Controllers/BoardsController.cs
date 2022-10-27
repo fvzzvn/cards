@@ -37,7 +37,6 @@ namespace RatATatCatBackEnd.Controllers
                 BoardToView nbw = new BoardToView();
                 nbw.Board = board;
                 nbw.Participants = _IParticipant.GetParticipantNamesByBoard(board.Id);
-                nbw.PlayerMmrs = _IParticipant.GetPlayersMmrByBoardId(board.Id);
                 toView.Add(nbw);
             }
             return Ok(toView);
