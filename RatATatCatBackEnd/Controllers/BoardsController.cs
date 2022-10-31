@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.APIModels;
 using RatATatCatBackEnd.Models.Database;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,7 +30,7 @@ namespace RatATatCatBackEnd.Controllers
 
             if (boards.Count == 0)
             {
-                return NotFound();
+                return Ok(toView);
             }
 
             foreach (BoardInstance board in boards)
@@ -48,18 +49,16 @@ namespace RatATatCatBackEnd.Controllers
         {
             var board = await Task.FromResult(_IBoardInstance.GetBoard(id));
             var participants = _IParticipant.GetParticipantNamesByBoard(id);
-            var mmr = _IParticipant.GetBoardMmr(id);
-            if (board == null)
-            {
-                return NotFound();
-            }
-            return Ok(new { board, participants, mmr});
+            BoardToView toView = new BoardToView { Board = board, Participants = participants };
+
+            return Ok(toView);
         }
 
         // POST api/<Boards>
         [HttpPost]
-        public async Task<ActionResult<BoardInstance>> Post(BoardInstance board)
+        public async Task<ActionResult<BoardInstance>> Post(BoardInput input)
         {
+            BoardInstance board = new BoardInstance { BoardMode = input.BoardMode, BoardType = input.BoardType };
             _IBoardInstance.AddBoard(board);
             return await Task.FromResult(board);
         }

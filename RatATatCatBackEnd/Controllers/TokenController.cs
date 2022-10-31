@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using RatATatCatBackEnd.Models.APIModels;
 using RatATatCatBackEnd.Models.Database;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -23,11 +24,11 @@ namespace RatATatCatBackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(string Email, string Password)
+        public async Task<IActionResult> Post(TokenInput input)
         {
-            if (Email != null && Password != null)
+            if (input.Email != null && input.Password != null)
             {
-                var user = await GetUser(Email, Password);
+                var user = await GetUser(input.Email, input.Password);
 
                 if (user != null)
                 {
