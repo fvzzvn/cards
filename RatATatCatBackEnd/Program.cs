@@ -69,7 +69,9 @@ app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHub<BoardHub>("/BoardHub");
 app.MapHub<GameHub>("/GameHub");
+
 app.MapControllers();
 
 app.Run();
