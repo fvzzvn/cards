@@ -48,7 +48,7 @@ namespace RatATatCatBackEnd.Controllers
                         _configuration["Jwt:Issuer"],
                         _configuration["Jwt:Audience"],
                         claims,
-                        expires: DateTime.UtcNow.AddDays(7),
+                        expires: DateTime.UtcNow.AddDays(21),
                         signingCredentials: signIn);
 
                     return Ok(new JwtSecurityTokenHandler().WriteToken(token));
