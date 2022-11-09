@@ -36,8 +36,14 @@ namespace RatATatCatBackEnd.Controllers
             foreach (BoardInstance board in boards)
             {
                 BoardToView nbw = new BoardToView();
-                nbw.Board = board;
-                nbw.Participants = _IParticipant.GetParticipantNamesByBoard(board.Id);
+                nbw.BoardId = board.Id;
+                nbw.BoardMode = board.BoardMode;
+                nbw.BoardType = board.BoardType;
+                var Participants = _IParticipant.GetParticipantNamesByBoard(board.Id);
+                foreach (var p in Participants)
+                {
+                    nbw.Players.Add(p.Name,p.Mmr);
+                }
                 toView.Add(nbw);
             }
             return Ok(toView);
@@ -49,8 +55,15 @@ namespace RatATatCatBackEnd.Controllers
         {
             var board = await Task.FromResult(_IBoardInstance.GetBoard(id));
             var participants = _IParticipant.GetParticipantNamesByBoard(id);
-            BoardToView toView = new BoardToView { Board = board, Participants = participants };
+            BoardToView toView = new BoardToView();
+            toView.BoardId = board.Id;
+            toView.BoardType = board.BoardType;
+            toView.BoardMode = board.BoardMode;
 
+            foreach (var p in participants)
+            {
+                toView.Players.Add(p.Name, p.Mmr);
+            }
             return Ok(toView);
         }
 
