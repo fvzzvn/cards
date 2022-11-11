@@ -1,27 +1,23 @@
-﻿using RatATatCatBackEnd.Models;
+﻿using RatATatCatBackEnd.Models.GameModels;
 using System.Collections.Concurrent;
 
 namespace RatATatCatBackEnd
 {
-    public class GameState
+    public class GameState : IGameState
     {
-        private static readonly Lazy<GameState> lazy =
-             new Lazy<GameState>(() => new GameState());
-        public static GameState Instance { get { return lazy.Value; } }
-
         private readonly ConcurrentDictionary<string, Player> players =
              new ConcurrentDictionary<string, Player>(StringComparer.OrdinalIgnoreCase);
 
-        private readonly ConcurrentDictionary<string, Game> games =
-             new ConcurrentDictionary<string, Game>(StringComparer.OrdinalIgnoreCase);
+        private readonly ConcurrentDictionary<string, IGame> games =
+             new ConcurrentDictionary<string, IGame>(StringComparer.OrdinalIgnoreCase);
 
-        private GameState()
+        public GameState()
         {
         }
 
         public Player CreatePlayer(string gameId, string username, string connectionId)
         {
-            Game foundGame;
+            IGame foundGame;
 
             foundGame = GetGame(gameId);
 
@@ -40,25 +36,27 @@ namespace RatATatCatBackEnd
             Player foundPlayer;
             if (!this.players.TryGetValue(playerId, out foundPlayer))
             {
+                throw new Exception("Player not found");
                 return null;
             }
 
             return foundPlayer;
         }
-        public bool IsPlayersReady(string gameId)
+        public bool ArePlayersReady(string gameId)
         {
-            Game game = GetGame(gameId);
+            IGame game = GetGame(gameId);
 
             game.PlayerTurn = game.Player1;
 
             return game.IsFull();
         }
-        public Game GetGame(string roomId)
+        public IGame GetGame(string roomId)
         {
-            Game foundGame = this.games.Values.FirstOrDefault(g => g.Id == roomId);
+            IGame foundGame = games.Values.FirstOrDefault(g => g.Id == roomId);
 
             if (foundGame == null)
             {
+                throw new Exception("No game found");
                 return null;
             }
 
@@ -68,7 +66,7 @@ namespace RatATatCatBackEnd
         public void RemoveGame(string gameId)
         {
             // Remove the game
-            Game foundGame;
+            IGame foundGame;
             if (!this.games.TryRemove(gameId, out foundGame))
             {
                 throw new InvalidOperationException("Game not found.");
@@ -80,12 +78,11 @@ namespace RatATatCatBackEnd
             this.players.TryRemove(foundGame.Player2.Id, out foundPlayer);
         }
 
-        public async Task<Game> CreateGame(string gameId)
+        public async Task<DefaultGame> CreateGame(string gameId)
         {
             // Define the new game and add to waiting pool
-            Game game = new Game(gameId);
+            DefaultGame game = new DefaultGame(gameId);
             this.games[game.Id] = game;
-
 
             return game;
         }
