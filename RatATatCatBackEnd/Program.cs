@@ -12,8 +12,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSignalR();
 
-builder.Services.AddSingleton<GameState>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
