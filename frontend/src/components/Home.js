@@ -31,6 +31,7 @@ const Home = () => {
   const [showRegisterButton, setShowRegisterButton] = useState(true);
   const [loading, setLoading] = useState(false);
   const [go, setGo] = useState(false);
+  const [currentBoardId, setCurrentBoardId] = useState(0)
   // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
 
   useEffect(() => {
@@ -69,9 +70,11 @@ const Home = () => {
     setShowRegisterButton((showRegisterButton) => true);
   };
 
-  const handleGo = () => {
+  const handleGo = (id) => {
+    setCurrentBoardId((currentBoardId) => id);
     setGo(!go);
   };
+
 
   return (
     <div className="cards-bg">
@@ -131,18 +134,25 @@ const Home = () => {
               >
                 Wolne miejsca
               </ToggleButton>
-              <ToggleButton
+              {/* <ToggleButton
                 variant="outline-primary"
                 className="home-board-fliter filter"
               >
                 Rozpoczęte
-              </ToggleButton>
+              </ToggleButton> */}
               <Button
                 variant="secondary"
                 className="home-board-fliter"
-                onClick={handleGo}
+                onClick={(e) => handleGo(44, e)}
               >
-                Stwórz nową grę
+                Board 1
+              </Button>
+              <Button
+                variant="secondary"
+                className="home-board-fliter"
+                onClick={(e) => handleGo(43, e)}
+              >
+                Board 2
               </Button>
               <Boards
                 boards={boards}
@@ -157,7 +167,7 @@ const Home = () => {
         go && (
           <>
             <HeaderBar setGo={setGo} username={username} game={true}></HeaderBar>
-            <Game username={username}></Game>
+            <Game username={username} boardId={currentBoardId}></Game>
           </>
         )
       )}
