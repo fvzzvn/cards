@@ -7,22 +7,25 @@ const Boards = (props) => {
         {!props.loading ? (
           props.boards.map((item, i) => (
             <Board
-              id={item.id}
+              // id={item.id}
+              id={item.boardId}
               key={i}
-              ranking={props.mmrs[i]}
-              participants={props.participants[i]}
+              // ranking={props.mmrs[i]}
+              // participants={props.participants[i]}
+              players={item.players}
             ></Board>
           ))
         ) : (
           <span className="board-loader spinner-border spinner-border-sm"></span>
         )}
-        {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
+        {/* {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
           <Board
             id={e}
             key={i}
             participants={['username23','player606','cards102']}
           ></Board>
-        ))}
+        ))
+        } */}
         </>
   );
 };

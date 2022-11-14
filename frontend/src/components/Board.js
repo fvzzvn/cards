@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from "react";
 
 const Board = (props) => {
-  const [ranking, setRanking] = useState(
-    Math.floor(800 + Math.random() * (3200 - 800))
-  );
+  // const players = [];
+  let avgRanking = 0;
+  const sumValues = obj => Object.values(obj).reduce((a, b) => a + b, 0);
+  if(Object.keys(props.players).length > 0){
+    avgRanking = sumValues(props.players)/Object.keys(props.players).length;
+    // console.log(avgRanking);
+  };
+  const [ranking, setRanking] = useState(0);
   const [len, setLen] = useState(0);
-
+  let [players, setPlayers] = useState([]);
+  // console.log(props.id);
+  // console.log(props.players);
+  
   useEffect(() => {
-    if (props.ranking) {
-      setRanking(props.ranking);
-    }
-    if (props.participants) {
-      setLen(props.participants.length);
+    if (props.players) {
+      Object.entries(props.players).forEach(([key, value]) => {
+        players.push([key, value]);
+      });
+      // console.log(players);
+      setLen(players.length);
+      setRanking(avgRanking);
+      setPlayers(players);
+      players = [];
     }
   }, []);
 
@@ -37,9 +49,11 @@ const Board = (props) => {
         <div className="card-name">Nazwa gry</div>
       </div>
       <div className="board-card-players">
-        {props.participants.map((player, i) => (
+        {console.log(players)}
+        {players.map((player, i) => (
           <div className="player-name" key={i}>
-            {player}
+            {console.log(player)}
+            {player[0]}
           </div>
         ))}
         {len === 3 && (
@@ -59,7 +73,7 @@ const Board = (props) => {
             <div className="player-name">-</div>
             <div className="player-name">-</div>
           </>
-        )} 
+        )}
         {len === 0 && (
           <>
             <div className="player-name">-</div>

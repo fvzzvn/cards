@@ -19,8 +19,9 @@ const Home = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { inGame } = useSelector((state) => state.game.inGame);
   const { boards } = useSelector((state) => state.boards);
-  const participants = useSelector((state) => state.boards.participants);
-  const mmrs = useSelector((state) => state.boards.mmrs);
+  // const participants = useSelector((state) => state.boards.participants);
+  // const mmrs = useSelector((state) => state.boards.mmrs);
+  // const players = useSelector((state) => state.boards);
   const username = useSelector((state) => state.userCredentials.userName);
   const userId = useSelector((state) => state.userCredentials.userId);
   //COMPONENT STATES
@@ -145,9 +146,10 @@ const Home = () => {
               </Button>
               <Boards
                 boards={boards}
-                mmrs={mmrs}
-                participants={participants}
-              ></Boards>
+                // mmrs={mmrs}
+                // participants={participants}
+              >
+              </Boards>
             </div>
           </div>
         </>
