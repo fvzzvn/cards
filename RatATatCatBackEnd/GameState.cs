@@ -56,7 +56,6 @@ namespace RatATatCatBackEnd
 
             if (foundGame == null)
             {
-                throw new Exception("No game found");
                 return null;
             }
 

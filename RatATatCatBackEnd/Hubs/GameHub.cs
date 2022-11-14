@@ -6,10 +6,12 @@ namespace RatATatCatBackEnd.Hubs
 {
     public class GameHub : Hub<IGameHub>
     {
-        private readonly GameState _gameState;
-        public GameHub(GameState gameState)
+        private readonly IGameState _gameState;
+        private readonly IServiceProvider _serviceProvider;
+        public GameHub(IServiceProvider serviceProvider)
         {
-            _gameState = gameState;
+            _serviceProvider = serviceProvider;
+            _gameState = _serviceProvider.GetRequiredService<IGameState>();
         }
         public async Task JoinRoom(string gameId, string username)
         {

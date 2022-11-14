@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "G1cZVUijCCfBe+fU1j0/yAwd82+X5ouBnR9E1Jz1BseK4o/66kwk+Uqm+BN9taBUUzpEoyLbKkCGYJgZZhBOeA==",
+  "dgSpecHash": "b/59Vo3vrrLGr8TenTZRphRPz+Y5JnBKBfADmIwS3ZjmSOw9SxPP1Qi2KM5R2flfqqcTZhQ/Jnzf8z6zjhpVsg==",
   "success": true,
-  "projectFilePath": "D:\\git\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
+  "projectFilePath": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\BBB\\.nuget\\packages\\microsoft.aspnet.signalr.core\\2.4.3\\microsoft.aspnet.signalr.core.2.4.3.nupkg.sha512",
     "C:\\Users\\BBB\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

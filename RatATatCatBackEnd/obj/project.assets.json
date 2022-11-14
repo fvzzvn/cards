@@ -3919,11 +3919,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\git\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
+      "projectUniqueName": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
       "projectName": "RatATatCatBackEnd",
-      "projectPath": "D:\\git\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
+      "projectPath": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\RatATatCatBackEnd.csproj",
       "packagesPath": "C:\\Users\\BBB\\.nuget\\packages\\",
-      "outputPath": "D:\\git\\RatATatCat\\RatATatCatBackEnd\\obj\\",
+      "outputPath": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
