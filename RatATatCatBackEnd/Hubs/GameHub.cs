@@ -21,14 +21,13 @@ namespace RatATatCatBackEnd.Hubs
             }
 
             Player player = _gameState.CreatePlayer(gameId, username, Context.ConnectionId);
-            await Clients.All.playerJoined(player);
-
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
+            await Clients.Group(gameId).playerJoined(player);
 
             if (_gameState.ArePlayersReady(gameId))
             {
                 Game game = _gameState.GetGame(gameId);
-                await Clients.All.start(game);
+                await Clients.Group(gameId).start(game);
             }
 
         }
@@ -40,7 +39,7 @@ namespace RatATatCatBackEnd.Hubs
 
             game.PlayCard(card, player);
 
-            await Clients.All.playerPlayedCard(player, card, game);
+            await Clients.Group(game.Id).playerPlayedCard(player, card, game);
         }
         public async Task PlayCardAfterGet(Card card)
         {
@@ -49,7 +48,7 @@ namespace RatATatCatBackEnd.Hubs
 
             game.PlayCardAfterGet(card, player);
 
-            await Clients.All.playerPlayedCard(player, card, game);
+            await Clients.Group(game.Id).playerPlayedCard(player, card, game);
         }
         public async Task GetCard(string from)
         {
@@ -63,7 +62,7 @@ namespace RatATatCatBackEnd.Hubs
                 if (from == "dealer")
                 {
                     game.Dealer.GiveCard(player);
-                    await Clients.All.playerTookCard(player, card, game);
+                    await Clients.Group(game.Id).playerTookCard(player, card, game);
                     game.NextTurn();
                 }
                 else if (from == "stack")
@@ -71,7 +70,7 @@ namespace RatATatCatBackEnd.Hubs
                     if (game.Stack.NotEmpty())
                     {
                         card = game.GetCardFromStack(player);
-                        await Clients.All.playerTookCard(player, card, game);
+                        await Clients.Group(game.Id).playerTookCard(player, card, game);
                         game.NextTurn();
                     }
                     else
@@ -92,7 +91,7 @@ namespace RatATatCatBackEnd.Hubs
             /* Todo
                 game.End();
             */
-            await Clients.All.gameEnding();
+            await Clients.Group(game.Id).gameEnding();
         }
         public Task LeaveRoom(string roomId)
         {
