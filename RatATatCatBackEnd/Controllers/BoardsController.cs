@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.APIModels;
 using RatATatCatBackEnd.Models.Database;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,15 +30,20 @@ namespace RatATatCatBackEnd.Controllers
 
             if (boards.Count == 0)
             {
-                return NotFound();
+                return Ok(toView);
             }
 
             foreach (BoardInstance board in boards)
             {
                 BoardToView nbw = new BoardToView();
-                nbw.Board = board;
-                nbw.Participants = _IParticipant.GetParticipantNamesByBoard(board.Id);
-                nbw.PlayerMmrs = _IParticipant.GetPlayersMmrByBoardId(board.Id);
+                nbw.BoardId = board.Id;
+                nbw.BoardMode = board.BoardMode;
+                nbw.BoardType = board.BoardType;
+                var Participants = _IParticipant.GetParticipantNamesByBoard(board.Id);
+                foreach (var p in Participants)
+                {
+                    nbw.Players.Add(p.Name,p.Mmr);
+                }
                 toView.Add(nbw);
             }
             return Ok(toView);
@@ -49,18 +55,23 @@ namespace RatATatCatBackEnd.Controllers
         {
             var board = await Task.FromResult(_IBoardInstance.GetBoard(id));
             var participants = _IParticipant.GetParticipantNamesByBoard(id);
-            var mmr = _IParticipant.GetBoardMmr(id);
-            if (board == null)
+            BoardToView toView = new BoardToView();
+            toView.BoardId = board.Id;
+            toView.BoardType = board.BoardType;
+            toView.BoardMode = board.BoardMode;
+
+            foreach (var p in participants)
             {
-                return NotFound();
+                toView.Players.Add(p.Name, p.Mmr);
             }
-            return Ok(new { board, participants, mmr});
+            return Ok(toView);
         }
 
         // POST api/<Boards>
         [HttpPost]
-        public async Task<ActionResult<BoardInstance>> Post(BoardInstance board)
+        public async Task<ActionResult<BoardInstance>> Post(BoardInput input)
         {
+            BoardInstance board = new BoardInstance { BoardMode = input.BoardMode, BoardType = input.BoardType };
             _IBoardInstance.AddBoard(board);
             return await Task.FromResult(board);
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RatATatCatBackEnd.Interface;
+using RatATatCatBackEnd.Models.APIModels;
 using RatATatCatBackEnd.Models.Database;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,8 +33,9 @@ namespace RatATatCatBackEnd.Controllers
         }
         // POST api/<Participants>
         [HttpPost]
-        public async Task<ActionResult<Participant>> Post(Participant p)
+        public async Task<ActionResult<Participant>> Post(ParticipantInput input)
         {
+            Participant p = new Participant { UserId = input.UserId, BoardInstanceId = input.BoardId };
             _IParticipant.AddParticipant(p);
             return await Task.FromResult(p);
         }

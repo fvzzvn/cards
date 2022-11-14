@@ -1,4 +1,5 @@
-﻿using RatATatCatBackEnd.Models.Database;
+﻿using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.Database;
 
 namespace RatATatCatBackEnd.Interface
 {
@@ -6,7 +7,7 @@ namespace RatATatCatBackEnd.Interface
     {
         public Participant GetParticipant(int id);
         void AddParticipant(Participant p);
-        public Dictionary<int, string> GetParticipantNamesByBoard(int id);
+        public List<ParticipantToView> GetParticipantNamesByBoard(int id);
         public void DeletePlayerFromBoard(int id);
         public int GetBoardMmr(int id);
         public Participant DeleteParticipant(int id);

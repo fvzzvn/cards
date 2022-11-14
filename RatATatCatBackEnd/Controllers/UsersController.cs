@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Models;
+using RatATatCatBackEnd.Models.APIModels;
 using RatATatCatBackEnd.Models.Database;
 using System.Net;
 
@@ -35,8 +36,9 @@ namespace RatATatCatBackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserInfo>> Post(UserInfo user)
+        public async Task<ActionResult<UserInfo>> Post(UserInput input)
         {
+            UserInfo user = new UserInfo { DisplayName = input.DisplayName, UserName = input.UserName, Email = input.Email, Password = input.Password };
             user.CreatedDate = DateTime.Now;
             user.Role = "Player";
             user.Mmr = 500;
