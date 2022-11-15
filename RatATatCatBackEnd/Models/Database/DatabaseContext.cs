@@ -17,6 +17,7 @@ namespace RatATatCatBackEnd.Models.Database
         public virtual DbSet<UserInfo> UserInfos { get; set; }
         public virtual DbSet<BoardInstance> BoardInstances { get; set; }
         public virtual DbSet<Participant> Participants { get; set; }
+        public virtual DbSet<UserImage> UserImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -6,9 +6,9 @@ namespace RatATatCatBackEnd.Interfaces
     public interface IGameHub
     {
         Task playerJoined(Player player);
-        Task start(Game game);
-        Task playerPlayedCard(Player player, Card card, Game game);
-        Task playerTookCard(Player player, Card card, Game game);
+        Task start(IGame game);
+        Task playerPlayedCard(Player player, Card card, IGame game);
+        Task playerTookCard(Player player, Card card, IGame game);
         Task stackEmpty();
         Task notPlayersTurn();
         Task gameEnding();

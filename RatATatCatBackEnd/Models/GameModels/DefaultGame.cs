@@ -1,8 +1,8 @@
 ﻿namespace RatATatCatBackEnd.Models.GameModels
 {
-    public class Game
+    public class DefaultGame : IGame
     {
-        public Game(string id)
+        public DefaultGame(string id)
         {
             this.Id = id;
             this.Stack = new Stack();

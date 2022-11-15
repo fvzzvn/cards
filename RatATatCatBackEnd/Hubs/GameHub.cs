@@ -26,8 +26,8 @@ namespace RatATatCatBackEnd.Hubs
 
             if (_gameState.ArePlayersReady(gameId))
             {
-                Game game = _gameState.GetGame(gameId);
-                await Clients.Group(gameId).start(game);
+                IGame game = _gameState.GetGame(gameId);
+                await Clients.All.start(game);
             }
 
         }
@@ -35,7 +35,7 @@ namespace RatATatCatBackEnd.Hubs
         public async Task PlayCard(Card card)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
-            Game game = _gameState.GetGame(player.GameId);
+            IGame game = _gameState.GetGame(player.GameId);
 
             game.PlayCard(card, player);
 
@@ -44,7 +44,7 @@ namespace RatATatCatBackEnd.Hubs
         public async Task PlayCardAfterGet(Card card)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
-            Game game = _gameState.GetGame(player.GameId);
+            IGame game = _gameState.GetGame(player.GameId);
 
             game.PlayCardAfterGet(card, player);
 
@@ -53,7 +53,7 @@ namespace RatATatCatBackEnd.Hubs
         public async Task GetCard(string from)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
-            Game game = _gameState.GetGame(player.GameId);
+            IGame game = _gameState.GetGame(player.GameId);
 
             Card card = new Card();
 
@@ -86,7 +86,7 @@ namespace RatATatCatBackEnd.Hubs
         }
         public async Task EndGame(Player player)
         {
-            Game game = _gameState.GetGame(player.GameId);
+            IGame game = _gameState.GetGame(player.GameId);
 
             /* Todo
                 game.End();
