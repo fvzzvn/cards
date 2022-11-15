@@ -37,6 +37,8 @@ builder.Services.AddDbContext<DatabaseContext>
 builder.Services.AddTransient<IUserInfo, UserInfoRepository>();
 builder.Services.AddTransient<IBoardInstance, BoardInstanceRepository>();
 builder.Services.AddTransient<IParticipant, ParticipantRepository>();
+builder.Services.AddTransient<IImageHandler, ImageHandler>();
+builder.Services.AddTransient<IUserImagesRepository, UserImagesRepository>();
 builder.Services.AddSingleton<IGameState, GameState>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Models.APIModels;
+using RatATatCatBackEnd.Models.Database;
+using System.Text.RegularExpressions;
 
 namespace RatATatCatBackEnd.Controllers
 {
@@ -9,36 +12,54 @@ namespace RatATatCatBackEnd.Controllers
     [ApiController]
     public class UserImageController : ControllerBase
     {
-        private readonly IWebHostEnvironment _env;
-
-        public UserImageController(IWebHostEnvironment env)
+        private readonly IImageHandler _imgHandler;
+        private readonly IUserImagesRepository _userImagesRepository;
+        public UserImageController(IImageHandler imgHandler, IUserImagesRepository userImagesRepository)
         {
-            _env = env;
+            _imgHandler = imgHandler;
+            _userImagesRepository = userImagesRepository;
+        }
+
+        [Route("GetImagesIds")]
+        [HttpGet]
+        public async Task<IActionResult> GetAvailableImages()
+        {
+            List<string> ids = new List<string>();
+            var images = _imgHandler.GetFilesPaths();
+
+            foreach(var image in images)
+            {
+                var resultString = Regex.Match(image, @"\d+").Value;
+                ids.Add(resultString);
+            }
+
+            return Ok(ids);
+        }
+        [Route("GetImageForId")]
+        [HttpGet]
+        public async Task<IActionResult> GetImageById(int id)
+        {
+            var path = _imgHandler.GetFilePath(id);
+
+            Byte[] b = System.IO.File.ReadAllBytes(path);
+
+            return File(b, "image/png");
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetImage(int id)
+        {
+            var image = _userImagesRepository.GetImageForUser(id);
+
+            Byte[] b = System.IO.File.ReadAllBytes(image.ImagePath);
+
+            return File(b, "image/png");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(IFormFile image)
+        public async Task<IActionResult> SaveImage(ImageInput input)
         {
-            try
-            {
-                if (image.Length > 0)
-                {
-                    string imagePath = _env.WebRootPath + "\\UserImages";
-                    if (!Directory.Exists(imagePath))
-                    {
-                        Directory.CreateDirectory(imagePath);
-                    }
+            _userImagesRepository.SaveImage(input);
 
-                    using (FileStream fileStream = System.IO.File.Create(imagePath + "\\"+ image.FileName))
-                    {
-                        await image.CopyToAsync(fileStream);
-                        await fileStream.FlushAsync();
-                    }
-                }
-            } catch (Exception ex)
-            {
-                throw ex;
-            }
             return Ok();
         }
     }

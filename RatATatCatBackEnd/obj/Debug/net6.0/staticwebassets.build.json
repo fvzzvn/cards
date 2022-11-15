@@ -1,11 +1,71 @@
 {
   "Version": 1,
-  "Hash": "bIHGYlqWR53jN6RZJatrBS4iLjdDQe4m/hlfa5P2iwc=",
+  "Hash": "MnfU+EOW/5mTHEBP26+G1dMhTwZKpptol0zRjbFqZbs=",
   "Source": "RatATatCatBackEnd",
   "BasePath": "_content/RatATatCatBackEnd",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "RatATatCatBackEnd\\wwwroot",
+      "Source": "RatATatCatBackEnd",
+      "ContentRoot": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\wwwroot\\",
+      "BasePath": "_content/RatATatCatBackEnd",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\wwwroot\\UserImages\\p1.png",
+      "SourceId": "RatATatCatBackEnd",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\wwwroot\\",
+      "BasePath": "_content/RatATatCatBackEnd",
+      "RelativePath": "UserImages/p1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UserImages\\p1.png"
+    },
+    {
+      "Identity": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\wwwroot\\UserImages\\p2.png",
+      "SourceId": "RatATatCatBackEnd",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\wwwroot\\",
+      "BasePath": "_content/RatATatCatBackEnd",
+      "RelativePath": "UserImages/p2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UserImages\\p2.png"
+    },
+    {
+      "Identity": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\wwwroot\\UserImages\\p3.png",
+      "SourceId": "RatATatCatBackEnd",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\git\\RatATatCat\\RatATatCat\\RatATatCatBackEnd\\wwwroot\\",
+      "BasePath": "_content/RatATatCatBackEnd",
+      "RelativePath": "UserImages/p3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UserImages\\p3.png"
+    }
+  ]
 }
