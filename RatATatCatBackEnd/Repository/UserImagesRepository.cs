@@ -2,6 +2,7 @@
 using RatATatCatBackEnd.Models.Database;
 using Microsoft.AspNetCore.Hosting;
 using RatATatCatBackEnd.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace RatATatCatBackEnd.Repository
 {
@@ -60,6 +61,21 @@ namespace RatATatCatBackEnd.Repository
             {
                 return _db.UserImages.Where(x => x.Id == id).First();
             }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void EditImage(UserImage input)
+        {
+            try
+            {
+                var u = _db.UserImages.Where(x => x.UserId == input.UserId).First();
+                u.ImagePath = input.ImagePath;
+                _db.SaveChanges();
+            }
+
             catch
             {
                 throw;

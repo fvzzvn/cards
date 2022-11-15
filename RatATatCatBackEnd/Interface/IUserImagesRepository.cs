@@ -9,5 +9,6 @@ namespace RatATatCatBackEnd.Interface
         List<UserImage> GetImages();
         UserImage GetImageById(int id);
         void SaveImage(ImageInput input);
+        void EditImage(UserImage input);
     }
 }

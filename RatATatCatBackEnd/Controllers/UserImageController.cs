@@ -62,5 +62,16 @@ namespace RatATatCatBackEnd.Controllers
 
             return Ok();
         }
+        [HttpPut]
+        public async Task<IActionResult> EditImage(ImageInput input)
+        {
+            UserImage current = _userImagesRepository.GetImageForUser(input.UserId);
+            var path = _imgHandler.GetFilePath(input.ImageId);
+
+            UserImage newEntry = new UserImage { Id = current.Id,ImagePath = path, UserId = current.UserId};
+            _userImagesRepository.EditImage(newEntry);
+
+            return Ok();
+        }
     }
 }
