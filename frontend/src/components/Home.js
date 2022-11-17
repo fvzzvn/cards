@@ -9,6 +9,7 @@ import CloseButton from "react-bootstrap/CloseButton";
 import Boards from "./Boards.js";
 import HeaderBar from "./HeaderBar.js";
 import Game from "./Game.js";
+import NewBoard from "./NewBoard.js";
 import { clearMessage } from "../slices/message";
 import { getBoards } from "../slices/boards";
 import { getUserCredentials } from "../slices/userCredentials";
@@ -29,6 +30,7 @@ const Home = () => {
   const [showRegister, setShowRegister] = useState(false);
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showRegisterButton, setShowRegisterButton] = useState(true);
+  const [showCreateBoard, setShowCreateBoard] = useState(false);
   const [loading, setLoading] = useState(false);
   const [go, setGo] = useState(false);
   const [currentBoardId, setCurrentBoardId] = useState(0)
@@ -74,8 +76,14 @@ const Home = () => {
     setCurrentBoardId((currentBoardId) => id);
     setGo(!go);
   };
+  
+  const handleShowCreateBoard = () => {
+    setShowCreateBoard((showCreateBoard) => true);
+  }
 
-
+  const handleExitCreateBoard = () => {
+    setShowCreateBoard((showCreateBoard) => false);
+  }
   return (
     <div className="cards-bg">
       {!isLoggedIn ? (
@@ -134,13 +142,13 @@ const Home = () => {
               >
                 Wolne miejsca
               </ToggleButton>
-              {/* <ToggleButton
+              <ToggleButton
                 variant="outline-primary"
                 className="home-board-fliter filter"
               >
                 Rozpoczęte
-              </ToggleButton> */}
-              <Button
+              </ToggleButton>
+              {/* <Button
                 variant="secondary"
                 className="home-board-fliter"
                 onClick={(e) => handleGo(44, e)}
@@ -153,6 +161,12 @@ const Home = () => {
                 onClick={(e) => handleGo(43, e)}
               >
                 Board 2
+              </Button> */}
+              <Button
+                variant="secondary"
+                className="home-board-fliter"
+                onClick={handleShowCreateBoard}>
+                  Stwórz nową grę
               </Button>
               <Boards
                 boards={boards}
@@ -162,6 +176,16 @@ const Home = () => {
               </Boards>
             </div>
           </div>
+          {showCreateBoard && (
+            <div className="dim-screen">
+              <div className="buttons-wrapper">
+                <NewBoard></NewBoard>
+                <div className="x-holder">
+                  <CloseButton variant="white" onClick={handleExitButton} />
+                </div>
+            </div>
+            </div>
+            )}
         </>
       ) : (
         go && (
