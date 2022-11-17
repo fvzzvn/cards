@@ -178,12 +178,12 @@ const Home = () => {
           </div>
           {showCreateBoard && (
             <div className="dim-screen">
-              <div className="buttons-wrapper">
-                <NewBoard></NewBoard>
-                <div className="x-holder">
-                  <CloseButton variant="white" onClick={handleExitButton} />
+              <div className="new-board-wrapper">
+                <div className="new-board-x-holder">
+                  <CloseButton variant="white" onClick={handleExitCreateBoard} />
                 </div>
-            </div>
+                <NewBoard></NewBoard>
+              </div>
             </div>
             )}
         </>

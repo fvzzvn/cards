@@ -402,9 +402,37 @@ $btn-close-opacity: 0.9;
     bottom:0;
     left:0;
     right:0;
-    background-color: #000000;
-    opacity: 0.5;
+    background-color: rgba(0,0,0,0.5);
     z-index: 1001;
+}
+
+.new-board-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.new-board-x-holder {
+  padding: 2.727px 2.727px 0 2.727px;
+  background-color: black;
+  border-radius: 15%;
+  transition: background-color 0.3s;
+  position: absolute;
+  right: -0.9em;
+  top: -0.9em;
+  z-index: 1001;
+}
+
+/*********************************************/
+/*         CREATE BOARD POPUP CSS            "/
+/*********************************************/
+
+.new-board-box {
+  height: 300px;
+  width: 400px;
+  background-color: $primary;
+
 }
 
 /*********************************************/

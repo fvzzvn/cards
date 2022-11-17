@@ -1,6 +1,6 @@
 const NewBoard = () => {
     return (
-        <div className="new-board-wrapper">
+        <div className="new-board-box">
                
         </div>
     )
