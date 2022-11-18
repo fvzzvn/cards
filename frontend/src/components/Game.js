@@ -45,8 +45,6 @@ const Game = (props) => {
     setConnection(connection);
 
     connection.on("playerJoined", (player) => {
-      console.log(player, "joined");
-      console.log("dispatching add participant " + userId + " " + boardId);
       dispatch(addParticipant({userId, boardId}));
     });
 

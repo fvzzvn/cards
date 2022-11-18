@@ -429,8 +429,8 @@ $btn-close-opacity: 0.9;
 /*********************************************/
 
 .new-board-box {
-  height: 300px;
-  width: 450px;
+  height: auto;
+  width: 250px;
   border-radius: 5px;
   background-color: $primary;
   display: flex;
@@ -441,6 +441,10 @@ $btn-close-opacity: 0.9;
   padding: 10px;
 }
 
+.new-board-box-button-wrapper {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
 /*********************************************/
 /*              HEADER BAR CSS               "/

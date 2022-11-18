@@ -50,7 +50,33 @@ const NewBoard = () => {
                 className="form-control"
               />
             </div>
-            <div className="form-group">
+            {/* <div className="checkbox-group">
+              <Field
+                name="ranked"
+                placeholder="Gra rankingowa"
+                type="checkbox"
+                className="form-control"
+              />
+            </div>
+            <div className="checkbox-group">
+            <div role="group" aria-labelledby="checkbox-group">
+              <label>
+                <Field
+                name="public"
+                placeholder="Stół publiczny"
+                type="checkbox"
+                className="form-control"
+              />
+              </label>
+            </div>
+              <Field
+                name="public"
+                placeholder="Stół publiczny"
+                type="checkbox"
+                className="form-control"
+              />
+            </div> */}
+            <div className="new-board-box-button-wrapper">
               <button
                 type="submit"
                 className="btn btn-secondary btn-block"
