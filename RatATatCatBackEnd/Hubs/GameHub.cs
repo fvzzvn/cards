@@ -102,7 +102,7 @@ namespace RatATatCatBackEnd.Hubs
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
 
-            await Clients.Group(player.GameId).recieveMessage(player.Name, message);
+            await Clients.Group(player.GameId).receiveMessage(player.Name, message);
         }
     }
 }
