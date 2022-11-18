@@ -53,7 +53,7 @@ const NewBoard = () => {
             <div className="form-group">
               <button
                 type="submit"
-                className="btn btn-primary btn-block"
+                className="btn btn-secondary btn-block"
                 disabled={loading}
               >
                 {loading && (
