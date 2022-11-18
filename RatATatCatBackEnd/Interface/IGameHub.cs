@@ -12,6 +12,6 @@ namespace RatATatCatBackEnd.Interfaces
         Task stackEmpty();
         Task notPlayersTurn();
         Task gameEnding();
-        Task recieveMessage(string username,string message);
+        Task receiveMessage(string username,string message);
     }
 }
