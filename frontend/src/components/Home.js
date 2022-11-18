@@ -170,6 +170,7 @@ const Home = () => {
               </Button>
               <Boards
                 boards={boards}
+                handleGo={handleGo}
                 // mmrs={mmrs}
                 // participants={participants}
               >

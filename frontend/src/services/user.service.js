@@ -30,11 +30,23 @@ const createBoard = () => {
   })
 }
 
+const addParticipant = (userId, boardId) => {
+  return axios.post(API_URL + "Participants", {
+    "userId": userId,
+    "boardId": boardId,
+  }).then((response) => {
+    console.log("addparticipant response data for " + API_URL + "Participants(" + userId + ", " + boardId + ") call")
+    console.log(response.data)
+    return response.data;
+  })
+}
+
 const userService = {
   getBoards,
   getUserCredentials,
   getAdminBoard,
   createBoard,
+  addParticipant,
 };
 
 export default userService;

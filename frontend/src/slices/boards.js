@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 import userService from "../services/user.service";
-
+// import addParticipant from "./participants.js";
 
 export const getBoards = createAsyncThunk(
     "boards/getBoards",
@@ -41,7 +41,8 @@ export const createBoard = createAsyncThunk(
   }
 );
 
-const initialState = { boardsLoaded: false, boards : [] };
+
+const initialState = { boardsLoaded: false, boards : [], lastBoardId: 0 };
 
 const boardsSlice = createSlice({
   name: "boards",
@@ -55,6 +56,12 @@ const boardsSlice = createSlice({
     },
     [getBoards.rejected]: (state, action) => {
       state.boardsLoaded = false;
+    },
+    [createBoard.fulfilled]: (state, action) => {
+      state.lastBoardId = action.payload.data.id;
+    },
+    [createBoard.rejected]: (state, action) => {
+      state.lastBoardId = 0;
     },
   },
 });

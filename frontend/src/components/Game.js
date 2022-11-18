@@ -8,6 +8,8 @@ import HeaderBar from "./HeaderBar";
 import Button from "react-bootstrap/Button";
 import Card from "./Card";
 import { v4 as uuid } from "uuid";
+import { addParticipant } from "../slices/participants";
+import { useDispatch, useSelector } from "react-redux";
 
 const Game = (props) => {
   const [handCards, setHandCards] = useState("");
@@ -20,7 +22,11 @@ const Game = (props) => {
   const [connection, setConnection] = useState(null);
   const [cheat, setCheat] = useState(false);
   const [showPlayerCards, setShowPlayerCards] = useState(false);
+  
+  const dispatch = useDispatch();
 
+  const userId = useSelector((state) => state.userCredentials.userId);
+  const boardId = props.boardId;
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
     await connection.invoke("JoinRoom", `${props.boardId}`, `${props.username}`);
@@ -40,6 +46,8 @@ const Game = (props) => {
 
     connection.on("playerJoined", (player) => {
       console.log(player, "joined");
+      console.log("dispatching add participant " + userId + " " + boardId);
+      dispatch(addParticipant({userId, boardId}));
     });
 
     connection.on("start", (game) => {

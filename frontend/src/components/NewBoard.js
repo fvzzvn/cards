@@ -12,6 +12,9 @@ const NewBoard = () => {
     boardName: "",
   };
 
+  // const userId = useSelector((state) => state.userCredentials.userId);
+  // const boardId = useSelector((state) => state.boards.lastBoardId);
+
   const validationSchema = Yup.object().shape({
     boardName: Yup.string().required("Podaj nazwę stołu."),
   });
@@ -27,7 +30,7 @@ const NewBoard = () => {
       })
       .catch(() => {
         setLoading(false);
-      });
+      })
   };
 
   return (

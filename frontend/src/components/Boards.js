@@ -4,8 +4,9 @@ import Board from "./Board.js";
 const Boards = (props) => {
   return (
     <>
-        {!props.loading ? (
-          props.boards.map((item, i) => (
+      {!props.loading ? (
+        props.boards.map((item, i) => (
+          <div onClick={(e) => props.handleGo(item.boardId, e)}>
             <Board
               // id={item.id}
               id={item.boardId}
@@ -14,11 +15,12 @@ const Boards = (props) => {
               // participants={props.participants[i]}
               players={item.players}
             ></Board>
-          ))
-        ) : (
-          <span className="board-loader spinner-border spinner-border-sm"></span>
-        )}
-        {/* {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
+          </div>
+        ))
+      ) : (
+        <span className="board-loader spinner-border spinner-border-sm"></span>
+      )}
+      {/* {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
           <Board
             id={e}
             key={i}
@@ -26,7 +28,7 @@ const Boards = (props) => {
           ></Board>
         ))
         } */}
-        </>
+    </>
   );
 };
 
