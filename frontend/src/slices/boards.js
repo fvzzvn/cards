@@ -22,6 +22,25 @@ export const getBoards = createAsyncThunk(
     }
 );
 
+export const createBoard = createAsyncThunk(
+  "boards/createBoard",
+  async (thunkAPI) => {
+    try {
+      const data = await userService.createBoard();
+      return{ data };
+    } catch (error) {
+      const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+    thunkAPI.dispatch(setMessage(message));
+    return thunkAPI.rejectWithValue();
+      }
+  }
+);
+
 const initialState = { boardsLoaded: false, boards : [] };
 
 const boardsSlice = createSlice({
