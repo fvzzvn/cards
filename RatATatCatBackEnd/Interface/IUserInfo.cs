@@ -7,6 +7,7 @@ namespace RatATatCatBackEnd.Interface
     {
         public List<UserInfo> GetUsers();
         public UserInfo GetUserInfo(int id);
+        public UserInfo GetUserInfoByUserName(string username);
         public void AddUser(UserInfo user);
         public void UpdateUser(UserInfo user);
         public UserInfo DeleteUser(int id);

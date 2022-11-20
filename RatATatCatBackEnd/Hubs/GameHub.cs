@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Interfaces;
 using RatATatCatBackEnd.Models.GameModels;
 
@@ -8,10 +9,12 @@ namespace RatATatCatBackEnd.Hubs
     {
         private readonly IGameState _gameState;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IParticipant _participants;
         public GameHub(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _gameState = _serviceProvider.GetRequiredService<IGameState>();
+            _participants = _serviceProvider.GetRequiredService<IParticipant>();
         }
         public async Task JoinRoom(string gameId, string username)
         {
@@ -93,9 +96,25 @@ namespace RatATatCatBackEnd.Hubs
             */
             await Clients.Group(game.Id).gameEnding();
         }
-        public Task LeaveRoom(string roomId)
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId);
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
+            IGame game = _gameState.GetGame(player.GameId);
+
+            if (_gameState.ArePlayersReady(game.Id))
+            {
+                // TODO, game is being played
+            }
+            else
+            {
+                game.RemovePlayer(player);
+                _participants.DeleteParticipant(
+                    _participants.GetParticipantByUserName(player.Name)
+                    .ParticipantId);
+            }
+
+            await base.OnDisconnectedAsync(exception);
         }
 
         public async Task SendMessage(string message)

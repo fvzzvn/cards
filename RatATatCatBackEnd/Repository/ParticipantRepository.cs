@@ -9,12 +9,10 @@ namespace RatATatCatBackEnd.Repository
     {
         readonly DatabaseContext _dbContext = new();
         readonly IUserInfo _IUserInfo;
-        readonly IBoardInstance _IBoardsInstance;
 
-        public ParticipantRepository(DatabaseContext dbContext, IUserInfo userInfo, IBoardInstance iboard)
+        public ParticipantRepository(DatabaseContext dbContext, IUserInfo userInfo)
         {
             _dbContext = dbContext;
-            _IBoardsInstance = iboard;
             _IUserInfo = userInfo;
         }
 
@@ -42,6 +40,23 @@ namespace RatATatCatBackEnd.Repository
             {
                 throw new ArgumentNullException("No user found");
             }
+        }
+
+        public Participant GetParticipantByUserName(string username)
+        {
+            try
+            {
+                UserInfo user = _IUserInfo.GetUserInfoByUserName(username);
+                Participant p = _dbContext.Participants.Where(p => p.UserId == user.UserId).First();
+
+                return p;
+            }
+            catch
+            {
+                throw;
+            }
+
+
         }
 
         public List<ParticipantToView> GetParticipantNamesByBoard(int id)

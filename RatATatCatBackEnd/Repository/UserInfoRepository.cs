@@ -74,6 +74,23 @@ namespace RatATatCatBackEnd.Repository
             }
         }
 
+        public UserInfo GetUserInfoByUserName(string username)
+        {
+            try
+            {
+                UserInfo user = _dbContext.UserInfos.Where(u => u.UserName == username).First();
+                if (user != null)
+                {
+                    return user;
+                }
+                throw new ArgumentNullException("No user found");
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
         public List<UserInfo> GetUsers()
         {
             try

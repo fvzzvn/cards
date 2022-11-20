@@ -13,6 +13,7 @@
         int TurnsLeft { get; set; }
 
         void AddPlayer(Player player);
+        void RemovePlayer(Player player);
         void End();
         Card GetCardFromStack(Player player);
         bool IsFull();

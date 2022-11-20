@@ -38,6 +38,27 @@
                 this.Player4 = player;
             }
         }
+        public void RemovePlayer(Player player)
+        {
+            if (this.Player1.Equals(player))
+            {
+                this.Player1 = null;
+            }
+            else if (this.Player2.Equals(player))
+            {
+                this.Player2 = null;
+            }
+
+            else if (this.Player3.Equals(player))
+            {
+                this.Player3 = null;
+            }
+
+            else if (this.Player4.Equals(player))
+            {
+                this.Player4 = null;
+            }
+        }
         public bool IsFull()
         {
             if (this.Player1 != null & this.Player2 != null & this.Player3 != null & this.Player4 != null)
