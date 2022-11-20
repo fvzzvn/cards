@@ -17,6 +17,7 @@
         public Player Player3 { get; set; }
         public Player Player4 { get; set; }
         public int TurnsLeft { get; set; }
+        private bool AfterGet = false;
         public void AddPlayer(Player player)
         {
             if (this.Player1 == null)
@@ -67,21 +68,31 @@
             }
             return false;
         }
+
         public void PlayCard(Card card, Player player)
         {
-            if (this.Stack.stackSize == 0)
+            if (AfterGet)
             {
                 player.Cards.Remove(card);
-                this.Stack.PlaceCard(card);
-            }
-            else if (Stack.PeekTop().Equals(card))
-            {
-                player.Cards.Remove(card);
-                this.Stack.PlaceCard(card);
+                Stack.PlaceCard(card);
+                AfterGet = false;
             }
             else
             {
-                GetCardFromStack(player);
+                if (Stack.IsEmpty)
+                {
+                    player.Cards.Remove(card);
+                    Stack.PlaceCard(card);
+                }
+                else if (Stack.PeekTop().Equals(card))
+                {
+                    player.Cards.Remove(card);
+                    Stack.PlaceCard(card);
+                }
+                else
+                {
+                    GetCardFromStack(player);
+                }
             }
         }
 
@@ -99,6 +110,7 @@
 
         public Player NextTurn()
         {
+            AfterGet = false;
             if (this.PlayerTurn == this.Player1)
             {
                 this.PlayerTurn = this.Player2;
@@ -130,6 +142,25 @@
         {
             return String.Format("(Id={0}, Player1={1}, Player2={2}, Player3={3},Player4={4}, Stack={5})",
                 this.Id, this.Player1, this.Player2, this.Player3, this.Player4, this.Stack);
+        }
+
+        public Card GiveCard(Player player, string from)
+        {
+            Card card;
+            if (from == "dealer")
+            {
+                card = Dealer.GiveCard(player);
+            }
+
+            else if (from == "stack")
+            {
+                if (Stack.NotEmpty())
+                {
+                    card = GetCardFromStack(player);
+                }
+            }
+            AfterGet = true;
+            return card;
         }
     }
 }

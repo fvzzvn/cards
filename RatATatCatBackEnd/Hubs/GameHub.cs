@@ -32,25 +32,15 @@ namespace RatATatCatBackEnd.Hubs
                 IGame game = _gameState.GetGame(gameId);
                 await Clients.All.start(game);
             }
-
         }
 
         public async Task PlayCard(Card card)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
-
+            
             game.PlayCard(card, player);
-
-            await Clients.Group(game.Id).playerPlayedCard(player, card, game);
-        }
-        public async Task PlayCardAfterGet(Card card)
-        {
-            Player player = _gameState.GetPlayer(Context.ConnectionId);
-            IGame game = _gameState.GetGame(player.GameId);
-
-            game.PlayCardAfterGet(card, player);
-
+            // invoke playerPlayedCard on front
             await Clients.Group(game.Id).playerPlayedCard(player, card, game);
         }
         public async Task GetCard(string from)
@@ -58,29 +48,17 @@ namespace RatATatCatBackEnd.Hubs
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
 
-            Card card = new Card();
+            // get card
+            Card card;
 
             if (game.PlayerTurn == player)
             {
-                if (from == "dealer")
-                {
-                    game.Dealer.GiveCard(player);
-                    await Clients.Group(game.Id).playerTookCard(player, card, game);
-                    game.NextTurn();
-                }
-                else if (from == "stack")
-                {
-                    if (game.Stack.NotEmpty())
-                    {
-                        card = game.GetCardFromStack(player);
-                        await Clients.Group(game.Id).playerTookCard(player, card, game);
-                        game.NextTurn();
-                    }
-                    else
-                    {
-                        await Clients.Caller.stackEmpty();
-                    }
-                }
+                // give card to player 
+                card = game.GiveCard(player, from);
+                // notify others that player took card
+                await Clients.Group(game.Id).playerTookCard(player, card, game);
+                // next players turn to play his card
+                game.NextTurn();
             }
             else
             {

@@ -3,12 +3,12 @@
     public class Stack
     {
         public int stackSize { get; set; }
-
         public Stack<Card> cards { get; set; }
-
+        public bool IsEmpty { get; set; }
         public Stack()
         {
             this.cards = new Stack<Card>();
+            this.IsEmpty = true;
         }
         public bool NotEmpty()
         {
