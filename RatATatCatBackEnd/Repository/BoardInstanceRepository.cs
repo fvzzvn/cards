@@ -7,9 +7,11 @@ namespace RatATatCatBackEnd.Repository
     public class BoardInstanceRepository: IBoardInstance
     {
         readonly DatabaseContext _dbContext = new();
-        public BoardInstanceRepository(DatabaseContext dbContext)
+        readonly IParticipant _participant;
+        public BoardInstanceRepository(DatabaseContext dbContext, IParticipant participant)
         {
             _dbContext = dbContext;
+            _participant = participant;
         }
 
         public void AddBoard(BoardInstance board)
@@ -71,6 +73,7 @@ namespace RatATatCatBackEnd.Repository
                 if (board != null)
                 {
                     _dbContext.BoardInstances.Remove(board);
+                    _dbContext.Participants.RemoveRange(_participant.GetParticipantsForBoard(id));
                     _dbContext.SaveChanges();
                     return board;
                 }

@@ -91,9 +91,8 @@ namespace RatATatCatBackEnd.Hubs
         {
             IGame game = _gameState.GetGame(player.GameId);
 
-            /* Todo
-                game.End();
-            */
+            _gameState.RemoveGame(player.GameId);
+
             await Clients.Group(game.Id).gameEnding();
         }
 

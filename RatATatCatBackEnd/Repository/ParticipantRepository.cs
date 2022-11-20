@@ -143,5 +143,18 @@ namespace RatATatCatBackEnd.Repository
                 throw;
             }
         }
+
+        public List<Participant> GetParticipantsForBoard(int boardId)
+        {
+            try
+            {
+                List<Participant> participants = _dbContext.Participants.Where(u => u.BoardInstanceId == boardId).ToList();
+                return participants;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

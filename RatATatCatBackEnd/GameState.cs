@@ -75,6 +75,8 @@ namespace RatATatCatBackEnd
             Player foundPlayer;
             this.players.TryRemove(foundGame.Player1.Id, out foundPlayer);
             this.players.TryRemove(foundGame.Player2.Id, out foundPlayer);
+            this.players.TryRemove(foundGame.Player3.Id, out foundPlayer);
+            this.players.TryRemove(foundGame.Player4.Id, out foundPlayer);
         }
 
         public async Task<DefaultGame> CreateGame(string gameId)

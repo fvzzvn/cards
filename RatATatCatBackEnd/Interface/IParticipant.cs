@@ -8,6 +8,7 @@ namespace RatATatCatBackEnd.Interface
         public Participant GetParticipant(int id);
         void AddParticipant(Participant p);
         public List<ParticipantToView> GetParticipantNamesByBoard(int id);
+        public List<Participant> GetParticipantsForBoard(int boardId);
         public void DeletePlayerFromBoard(int id);
         public int GetBoardMmr(int id);
         public Participant DeleteParticipant(int id);
