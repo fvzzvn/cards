@@ -54,7 +54,7 @@ namespace RatATatCatBackEnd.Hubs
 
             game.ApplySpecialCardEffect(card, players, cards);
 
-            await Clients.All.applySpecialCardEffect(card, players, cards);
+            await Clients.All.applySpecialCardEffect(card, player, game);
         }
         public async Task GetCard(string from)
         {
