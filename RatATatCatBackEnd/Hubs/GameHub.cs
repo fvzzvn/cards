@@ -42,6 +42,19 @@ namespace RatATatCatBackEnd.Hubs
             game.PlayCard(card, player);
             // invoke playerPlayedCard on front
             await Clients.Group(game.Id).playerPlayedCard(player, card, game);
+            if (card.IsSpecial)
+            {
+                await Clients.Caller.playerPlayedSpecialCard(player, card, game);
+            }
+        }
+        public async Task PlayedSpecialCard(Card card, List<Player>? players, List<Card>? cards)
+        {
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
+            IGame game = _gameState.GetGame(player.GameId);
+
+            game.ApplySpecialCardEffect(card, players, cards);
+
+            await Clients.All.applySpecialCardEffect(card, players, cards);
         }
         public async Task GetCard(string from)
         {

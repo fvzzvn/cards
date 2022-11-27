@@ -18,6 +18,8 @@
         public Player Player4 { get; set; }
         public int TurnsLeft { get; set; }
         private bool AfterGet = false;
+        private static Random rng = new Random();
+
         public void AddPlayer(Player player)
         {
             if (this.Player1 == null)
@@ -146,7 +148,7 @@
 
         public Card GiveCard(Player player, string from)
         {
-            Card card;
+            Card card = new Card();
             if (from == "dealer")
             {
                 card = Dealer.GiveCard(player);
@@ -161,6 +163,57 @@
             }
             AfterGet = true;
             return card;
+        }
+
+        public void ShuffleCards(Player player)
+        {
+            int n = player.Cards.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                Card value = player.Cards[k];
+                player.Cards[k] = player.Cards[n];
+                player.Cards[n] = value;
+            }
+        }
+
+        public void ApplySpecialCardEffect(Card card, List<Player> players, List<Card> cards)
+        {
+            Card Jack = new Card { Text = "Jack" };
+            Card Ace = new Card { Text = "Ace" };
+            if (card.Equals(Jack))
+            {
+                if (players.Count > 2 && cards.Count == 2)
+                {
+                    players[0].Cards.Remove(cards[0]);
+                    players[0].Cards.Add(cards[1]);
+                    players[1].Cards.Remove(cards[1]);
+                    players[1].Cards.Add(cards[0]);
+                }
+            }
+            //maybe more ?
+            //if (card.Equals(Ace)) 
+            //{
+            //    // randomly select one player and shuffle his cards
+            //    int r = rng.Next(1, 5);
+            //    if (r == 1)
+            //    {
+            //        ShuffleCards(Player1);
+            //    }
+            //    if (r == 2)
+            //    {
+            //        ShuffleCards(Player2);
+            //    }
+            //    if (r == 3)
+            //    {
+            //        ShuffleCards(Player3);
+            //    }
+            //    if (r == 4)
+            //    {
+            //        ShuffleCards(Player4);
+            //    }
+            //}
         }
     }
 }

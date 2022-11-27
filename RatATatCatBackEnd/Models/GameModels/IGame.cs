@@ -18,9 +18,10 @@
         Card GetCardFromStack(Player player);
         bool IsFull();
         Player NextTurn();
-        Card GiveCard(Player player, string from)
+        Card GiveCard(Player player, string from);
         void PlayCard(Card card, Player player);
         void PlayCardAfterGet(Card card, Player player);
+        void ApplySpecialCardEffect(Card card, List<Player> players, List<Card> cards);
         string ToString();
     }
 }
