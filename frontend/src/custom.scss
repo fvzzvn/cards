@@ -451,7 +451,7 @@ $btn-close-opacity: 0.9;
   display: grid;
   grid-template-columns: 10% 30% 20% 30% 10%;
   grid-template-areas: 
-    "logout button1 logo button2 username";
+    "logout username logo button2 options";
   height: 100px;
   width: 100vw;
   min-width: 1400px;
@@ -476,6 +476,16 @@ $btn-close-opacity: 0.9;
 }
 
 .logout-button {
+  width: 150px;
+  margin: 25px;
+}
+
+.options-wrapper {
+  grid-area: options;
+  width: 200px;
+}
+
+.options-button {
   width: 150px;
   margin: 25px;
 }

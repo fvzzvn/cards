@@ -10,6 +10,7 @@ import Boards from "./Boards.js";
 import HeaderBar from "./HeaderBar.js";
 import Game from "./Game.js";
 import NewBoard from "./NewBoard.js";
+import Options from "./Options";
 import { clearMessage } from "../slices/message";
 import { getBoards } from "../slices/boards";
 import { getUserCredentials } from "../slices/userCredentials";
@@ -33,7 +34,8 @@ const Home = () => {
   const [showCreateBoard, setShowCreateBoard] = useState(false);
   const [loading, setLoading] = useState(false);
   const [go, setGo] = useState(false);
-  const [currentBoardId, setCurrentBoardId] = useState(0)
+  const [options, setOptions] = useState(false);
+  const [currentBoardId, setCurrentBoardId] = useState(0);
   // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
 
   useEffect(() => {
@@ -76,14 +78,14 @@ const Home = () => {
     setCurrentBoardId((currentBoardId) => id);
     setGo(!go);
   };
-  
+
   const handleShowCreateBoard = () => {
     setShowCreateBoard((showCreateBoard) => true);
-  }
+  };
 
   const handleExitCreateBoard = () => {
     setShowCreateBoard((showCreateBoard) => false);
-  }
+  };
   return (
     <div className="cards-bg">
       {!isLoggedIn ? (
@@ -118,9 +120,13 @@ const Home = () => {
         </div>
       ) : isLoggedIn && loading ? (
         <span className="board-loader spinner-border spinner-border-sm"></span>
-      ) : isLoggedIn && !loading && !inGame && !go ? (
+      ) : isLoggedIn && !loading && !inGame && !go && !options ? (
         <>
-          <HeaderBar username={username}></HeaderBar>
+          <HeaderBar
+            options={options}
+            username={username}
+            setOptions={setOptions}
+          ></HeaderBar>
           <div className="home-boards-bg">
             <div className="home-boards-title">stoły</div>
             <div className="home-boards-container">
@@ -165,36 +171,50 @@ const Home = () => {
               <Button
                 variant="secondary"
                 className="home-board-fliter"
-                onClick={handleShowCreateBoard}>
-                  Stwórz nową grę
+                onClick={handleShowCreateBoard}
+              >
+                Stwórz nową grę
               </Button>
               <Boards
                 boards={boards}
                 handleGo={handleGo}
                 // mmrs={mmrs}
                 // participants={participants}
-              >
-              </Boards>
+              ></Boards>
             </div>
           </div>
           {showCreateBoard && (
             <div className="dim-screen">
               <div className="new-board-wrapper">
                 <div className="new-board-x-holder">
-                  <CloseButton variant="white" onClick={handleExitCreateBoard} />
+                  <CloseButton
+                    variant="white"
+                    onClick={handleExitCreateBoard}
+                  />
                 </div>
                 <NewBoard></NewBoard>
               </div>
             </div>
-            )}
+          )}
+        </>
+      ) : go ? (
+        <>
+          <HeaderBar setGo={setGo} username={username} game={true}></HeaderBar>
+          <Game username={username} boardId={currentBoardId}></Game>
+        </>
+      ) : options ? (
+        <>
+          <HeaderBar
+            options={options}
+            setGo={setGo}
+            setOptions={setOptions}
+            username={username}
+            game={false}
+          />
+          <Options></Options>
         </>
       ) : (
-        go && (
-          <>
-            <HeaderBar setGo={setGo} username={username} game={true}></HeaderBar>
-            <Game username={username} boardId={currentBoardId}></Game>
-          </>
-        )
+        <></>
       )}
     </div>
   );
