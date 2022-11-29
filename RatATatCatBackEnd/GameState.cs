@@ -73,10 +73,20 @@ namespace RatATatCatBackEnd
 
             // Remove the players, best effort
             Player foundPlayer;
-            this.players.TryRemove(foundGame.Player1.Id, out foundPlayer);
-            this.players.TryRemove(foundGame.Player2.Id, out foundPlayer);
-            this.players.TryRemove(foundGame.Player3.Id, out foundPlayer);
-            this.players.TryRemove(foundGame.Player4.Id, out foundPlayer);
+            if (foundGame is DefaultGame)
+            {
+                var defaultFoundGame = (DefaultGame) foundGame;
+                this.players.TryRemove(defaultFoundGame.Player1.Id, out foundPlayer);
+                this.players.TryRemove(defaultFoundGame.Player2.Id, out foundPlayer);
+                this.players.TryRemove(defaultFoundGame.Player3.Id, out foundPlayer);
+                this.players.TryRemove(defaultFoundGame.Player4.Id, out foundPlayer);
+            }
+            if (foundGame is DragonGame)
+            {
+                var dragonFoundGame = (DragonGame)foundGame;
+                this.players.TryRemove(dragonFoundGame.Player1.Id, out foundPlayer);
+                this.players.TryRemove(dragonFoundGame.Player2.Id, out foundPlayer);
+            }
         }
 
         public async Task<DefaultGame> CreateGame(string gameId)

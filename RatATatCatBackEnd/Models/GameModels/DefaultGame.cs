@@ -10,13 +10,14 @@
         }
         public string Id { get; set; }
         public Stack Stack { get; set; }
-        public CardDealer Dealer { get; set; }
+        public ICardDealer Dealer { get; set; }
         public Player PlayerTurn { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
         public Player Player3 { get; set; }
         public Player Player4 { get; set; }
         public int TurnsLeft { get; set; }
+
         private bool AfterGet = false;
         private static Random rng = new Random();
 
@@ -214,6 +215,16 @@
             //        ShuffleCards(Player4);
             //    }
             //}
+        }
+
+        public void PlayCard(Card card, Player player, int position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplySpecialCardEffect(Card card, Player player, int[] positions)
+        {
+            throw new NotImplementedException();
         }
     }
 }
