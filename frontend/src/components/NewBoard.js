@@ -52,13 +52,13 @@ const NewBoard = () => {
             </div>
             <div className="new-board-checkbox">
               <label>
-                <Field type="checkbox" name="checked" value="ranked" />
+                <Field id="cb1" type="checkbox" name="checked" value="ranked" />
                 Gra rankingowa
               </label>
             </div>
             <div className="new-board-checkbox">
               <label>
-                <Field type="checkbox" name="checked" value="public" />
+                <Field id="cb1" type="checkbox" name="checked" value="public" />
                 Stół publiczny
               </label>
             </div>
