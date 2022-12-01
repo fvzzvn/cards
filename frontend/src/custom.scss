@@ -465,6 +465,27 @@ $btn-close-opacity: 0.9;
   margin-top: 20px;
 }
 
+ .gamemode-title {
+  width: 100%;
+  text-align: center;
+  color: white;
+  margin-top: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+ }
+
+.new-board-radio {
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.new-board-radio * {
+  width: 100px;
+}
+
 #cb1 {
   accent-color: #141414;
 }

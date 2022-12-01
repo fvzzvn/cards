@@ -10,6 +10,9 @@ const NewBoard = () => {
   const dispatch = useDispatch();
   const initialValues = {
     boardName: "",
+    public: false,
+    ranked: false,
+    gameMode: 0,
   };
 
   // const userId = useSelector((state) => state.userCredentials.userId);
@@ -60,6 +63,17 @@ const NewBoard = () => {
               <label>
                 <Field id="cb1" type="checkbox" name="checked" value="public" />
                 Stół publiczny
+              </label>
+            </div>
+              <div className="gamemode-title">Tryb gry</div>
+            <div className="new-board-radio">
+              <label>
+                <Field id="cb1" type="radio" name="gameMode" value="0"/>
+                Rat
+              </label>
+              <label>
+                <Field id="cb1" type="radio" name="gameMode" value="1" />
+                Dragon
               </label>
             </div>
             <div className="new-board-box-button-wrapper">
