@@ -30,7 +30,7 @@ const NewBoard = () => {
       })
       .catch(() => {
         setLoading(false);
-      })
+      });
   };
 
   return (
@@ -42,7 +42,7 @@ const NewBoard = () => {
           onSubmit={handleCreateBoard}
         >
           <Form>
-            <div className="form-group">
+            <div className="form-group new-board-box-name">
               <Field
                 name="boardName"
                 placeholder="Nazwa stołu"
@@ -50,32 +50,18 @@ const NewBoard = () => {
                 className="form-control"
               />
             </div>
-            {/* <div className="checkbox-group">
-              <Field
-                name="ranked"
-                placeholder="Gra rankingowa"
-                type="checkbox"
-                className="form-control"
-              />
-            </div>
-            <div className="checkbox-group">
-            <div role="group" aria-labelledby="checkbox-group">
+            <div className="new-board-checkbox">
               <label>
-                <Field
-                name="public"
-                placeholder="Stół publiczny"
-                type="checkbox"
-                className="form-control"
-              />
+                <Field type="checkbox" name="checked" value="ranked" />
+                Gra rankingowa
               </label>
             </div>
-              <Field
-                name="public"
-                placeholder="Stół publiczny"
-                type="checkbox"
-                className="form-control"
-              />
-            </div> */}
+            <div className="new-board-checkbox">
+              <label>
+                <Field type="checkbox" name="checked" value="public" />
+                Stół publiczny
+              </label>
+            </div>
             <div className="new-board-box-button-wrapper">
               <button
                 type="submit"
