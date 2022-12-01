@@ -39,10 +39,10 @@ const Home = () => {
   useEffect(() => {
     dispatch(clearMessage());
     setLoading(true);
-    dispatch(getBoards())
-      .unwrap()
-      .then(() => {})
-      .catch(() => {});
+    // dispatch(getBoards())
+    //   .unwrap()
+    //   .then(() => {})
+    //   .catch(() => {});
     dispatch(getUserCredentials())
       .unwrap()
       .then(() => {
@@ -169,7 +169,7 @@ const Home = () => {
                   Stwórz nową grę
               </Button>
               <Boards
-                boards={boards}
+                // boards={boards}
                 handleGo={handleGo}
                 // mmrs={mmrs}
                 // participants={participants}

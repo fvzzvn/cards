@@ -15,9 +15,6 @@ const NewBoard = () => {
     gameMode: 0,
   };
 
-  // const userId = useSelector((state) => state.userCredentials.userId);
-  // const boardId = useSelector((state) => state.boards.lastBoardId);
-
   const validationSchema = Yup.object().shape({
     boardName: Yup.string().required("Podaj nazwę stołu."),
   });

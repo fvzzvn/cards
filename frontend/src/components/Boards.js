@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board.js";
+import { clearMessage } from "../slices/message";
+import { getBoards } from "../slices/boards";
+import { useDispatch, useSelector } from "react-redux";
 
 const Boards = (props) => {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const { boards } = useSelector((state) => state.boards);
+
+  useEffect(() => {
+    dispatch(clearMessage());
+    setLoading(true);
+    dispatch(getBoards())
+      .unwrap()
+      .then(() => {})
+      .catch(() => {});
+  });
+
   return (
     <>
-      {!props.loading ? (
-        props.boards.map((item, i) => (
+      {loading ? (
+        boards.map((item, i) => (
           <div onClick={(e) => props.handleGo(item.boardId, e)}>
             <Board
               // id={item.id}
