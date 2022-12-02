@@ -45,7 +45,7 @@ const Game = (props) => {
     setConnection(connection);
 
     connection.on("playerJoined", (player) => {
-      dispatch(addParticipant({userId, boardId}));
+      console.log("ADD PARTICIPANT" + userId + " " + boardId);
     });
 
     connection.on("start", (game) => {
@@ -287,6 +287,9 @@ const Game = (props) => {
                     </Button>
                     <Button variant="secondary" onClick={handleEndGame}>
                       Zakończ grę
+                    </Button>
+                    <Button onClick={() => connection.stop()}>
+                      Opuść stół
                     </Button>
                     {!cheat && (
                       <Button
