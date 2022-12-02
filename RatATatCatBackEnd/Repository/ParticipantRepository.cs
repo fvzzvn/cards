@@ -55,8 +55,26 @@ namespace RatATatCatBackEnd.Repository
             {
                 throw;
             }
+        }
 
+        public void AddParticipantByUserName(string username, int boardId)
+        {
+            try
+            {
+                UserInfo user = _IUserInfo.GetUserInfoByUserName(username);
+                Participant p = new Participant
+                {
+                    UserId = user.UserId,
+                    BoardInstanceId = boardId
+                };
 
+                _dbContext.Participants.Add(p);
+                _dbContext.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public List<ParticipantToView> GetParticipantNamesByBoard(int id)

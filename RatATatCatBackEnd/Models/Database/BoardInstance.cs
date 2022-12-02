@@ -8,6 +8,7 @@ namespace RatATatCatBackEnd.Models.Database
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
+        public string BoardName { get; set; }
         public int BoardType { get; set; }
         public int BoardMode { get; set; }
     }

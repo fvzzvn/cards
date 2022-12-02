@@ -37,6 +37,7 @@ namespace RatATatCatBackEnd.Controllers
             {
                 BoardToView nbw = new BoardToView();
                 nbw.BoardId = board.Id;
+                nbw.BoardName = board.BoardName;
                 nbw.BoardMode = board.BoardMode;
                 nbw.BoardType = board.BoardType;
                 var Participants = _IParticipant.GetParticipantNamesByBoard(board.Id);
@@ -57,6 +58,7 @@ namespace RatATatCatBackEnd.Controllers
             var participants = _IParticipant.GetParticipantNamesByBoard(id);
             BoardToView toView = new BoardToView();
             toView.BoardId = board.Id;
+            toView.BoardName = board.BoardName;
             toView.BoardType = board.BoardType;
             toView.BoardMode = board.BoardMode;
 
@@ -71,7 +73,7 @@ namespace RatATatCatBackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<BoardInstance>> Post(BoardInput input)
         {
-            BoardInstance board = new BoardInstance { BoardMode = input.BoardMode, BoardType = input.BoardType };
+            BoardInstance board = new BoardInstance { BoardName = input.BoardName ,BoardMode = input.BoardMode, BoardType = input.BoardType };
             _IBoardInstance.AddBoard(board);
             return await Task.FromResult(board);
         }

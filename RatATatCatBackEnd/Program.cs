@@ -73,6 +73,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHub<GameHub>("/GameHub");
+app.MapHub<BoardHub>("/BoardHub");
 app.MapControllers();
 
 app.Run();

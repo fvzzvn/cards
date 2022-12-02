@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using RatATatCatBackEnd.Interface;
 using RatATatCatBackEnd.Interfaces;
+using RatATatCatBackEnd.Models.Database;
 using RatATatCatBackEnd.Models.GameModels;
 
 namespace RatATatCatBackEnd.Hubs
@@ -26,6 +27,9 @@ namespace RatATatCatBackEnd.Hubs
             Player player = _gameState.CreatePlayer(gameId, username, Context.ConnectionId);
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
             await Clients.Group(gameId).playerJoined(player);
+
+            // add participant
+            _participants.AddParticipantByUserName(username, Int32.Parse(gameId));
 
             if (_gameState.ArePlayersReady(gameId))
             {

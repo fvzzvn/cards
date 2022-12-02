@@ -14,5 +14,6 @@ namespace RatATatCatBackEnd.Interface
         public Participant DeleteParticipant(int id);
         public List<int> GetPlayersMmrByBoardId(int id);
         public Participant GetParticipantByUserName(string username);
+        public void AddParticipantByUserName(string username, int boardId);
     }
 }
