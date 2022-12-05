@@ -5,6 +5,7 @@
         public string Text { get; set; }
         public string Suit { get; set; }
         public bool IsSpecial { get; set; }
+        public bool FacedDown { get; set; }
 
         public Card(string text, string suit, bool special)
         {

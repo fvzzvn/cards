@@ -37,5 +37,7 @@
             this.cards.Push(card);
             this.stackSize++;
         }
+
+        public void Clear() => cards.Clear();
     }
 }

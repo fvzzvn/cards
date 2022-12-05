@@ -12,7 +12,10 @@ namespace RatATatCatBackEnd.Interfaces
         Task playerPlayedSpecialCard(Player player, Card card, IGame game);
         Task applySpecialCardEffect(Card card, Player players, IGame cards);
         Task notPlayersTurn();
-        Task gameEnding();
+        Task GameEnded(Player player);
+        Task newRound(IGame game);
+        Task roundResults(Dictionary<Player, int> roundResults);
+        Task gameResults(Dictionary<Player, int> gameResults);
         Task receiveMessage(string username,string message);
     }
 }

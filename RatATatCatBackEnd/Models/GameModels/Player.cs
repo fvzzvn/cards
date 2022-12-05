@@ -16,6 +16,16 @@
 
         public List<Card> Cards { get; set; }
 
+        // dragon mode, too lazy for interafce
+        public bool AllCardsFacedUp()
+        {
+            bool flag = true;
+            foreach (Card card in Cards)
+            {
+                if (card.FacedDown) flag = false;
+            }
+            return flag;
+        }
         public override string ToString()
         {
             return String.Format("(Id={0}, Name={1}, GameId={2}, Piece={3})",

@@ -17,6 +17,10 @@
         public Player Player3 { get; set; }
         public Player Player4 { get; set; }
         public int TurnsLeft { get; set; }
+        public bool RoundEnded { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<Player, int> RoundResult { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool GameEnded { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Dictionary<Player, int> GameResult { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private bool AfterGet = false;
         private static Random rng = new Random();
@@ -223,6 +227,11 @@
         }
 
         public void ApplySpecialCardEffect(Card card, Player player, int[] positions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NewRound()
         {
             throw new NotImplementedException();
         }

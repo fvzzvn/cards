@@ -46,6 +46,17 @@ namespace RatATatCatBackEnd.Hubs
             {
                 await Clients.Caller.playerPlayedSpecialCard(player, card, game);
             }
+            if (game.RoundEnded)
+            {
+                game.NewRound();
+                await Clients.Group(game.Id).roundResults(game.RoundResult);
+                await Clients.Group(game.Id).newRound(game);
+            }
+            if (game.GameEnded)
+            {
+                await Clients.Group(game.Id).gameResults(game.GameResult);
+                _gameState.RemoveGame(game.Id);
+            }
         }
         public async Task PlayedSpecialCard(Card card, List<Player>? players, List<Card>? cards)
         {
@@ -77,14 +88,6 @@ namespace RatATatCatBackEnd.Hubs
             {
                 await Clients.Caller.notPlayersTurn();
             }
-        }
-        public async Task EndGame(Player player)
-        {
-            IGame game = _gameState.GetGame(player.GameId);
-
-            _gameState.RemoveGame(player.GameId);
-
-            await Clients.Group(game.Id).gameEnding();
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)

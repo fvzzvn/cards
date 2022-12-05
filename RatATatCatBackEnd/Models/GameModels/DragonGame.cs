@@ -11,13 +11,17 @@
         public Stack Stack2 { get; set; }
         public int Player1TokenCount { get; set; }
         public int Player2TokenCount { get; set; }
-
+        public bool RoundEnded { get; set; } = false;
+        public bool GameEnded { get; set; } = false;
+        public Dictionary<Player,int> RoundResult { get; set; }
+        public Dictionary<Player,int> GameResult { get; set; }
         public DragonGame(string id)
         {
             Id = id;
             Dealer = new DragonDealer();
             Stack = new Stack();
             Stack2 = new Stack();
+            RoundResult = new Dictionary<Player, int>();
         }
         public void AddPlayer(Player player)
         {
@@ -27,12 +31,14 @@
 
         public void End()
         {
-            throw new NotImplementedException();
+            GameEnded = true;
+            GameResult[Player1] = Player1TokenCount;
+            GameResult[Player2] = Player2TokenCount;
         }
 
         public Card GiveCard(Player player, string from)
         {
-            Card card = new Card();
+            Card card = new Card { FacedDown = true };
             if (from == "dealer")
             {
                 card = Dealer.GiveCard(player);
@@ -70,7 +76,7 @@
 
         public void RemovePlayer(Player player)
         {
-            if (Player1.Equals(player))
+            if (Player1 is not null && Player1.Equals(player))
             {
                 Player1 = null;
             }
@@ -88,6 +94,8 @@
         public void PlayCard(Card card, Player player, int position)
         {
             player.Cards[position] = card;
+
+            if (player.AllCardsFacedUp()) RoundOver();
         }
         public void ApplySpecialCardEffect(Card card, Player player, int[] positions)
         {
@@ -116,6 +124,120 @@
                 player.Cards[positions[2]] = tempCard;
             }
         }
+        public void CalculatePoints()
+        {
+            int firstPlayerPoints = 0;
+            int secondPlayerPoints = 0;
+
+            Card crowMirror = new Card { Text = "-1" };
+            // szukamy odbicia u obu graczy
+
+            //Player1
+            for (int i=0; i<6; i++)
+            {
+                if (Player1.Cards[i].Equals(crowMirror))
+                {
+                    // szukamy mniejszej karty
+                    if (i == 0 || i == 3)
+                    {
+                        Player1.Cards[i] = Player1.Cards[i + 1];
+                    }
+                    else if (i == 2 || i == 5)
+                    {
+                        Player1.Cards[i] = Player1.Cards[i - 1];
+                    }
+                    else
+                    {
+                        Card tempCard = Player1.Cards[i - 1];
+                        if (Int16.Parse(tempCard.Text) > Int16.Parse(Player1.Cards[i + 1].Text)) tempCard = Player1.Cards[i + 1];
+                        Player1.Cards[i] = tempCard;
+                    }
+                }
+            }
+
+            // Player2
+            for (int i = 0; i < 6; i++)
+            {
+                if (Player2.Cards[i].Equals(crowMirror))
+                {
+                    // szukamy mniejszej karty
+                    if (i == 0 || i == 3)
+                    {
+                        Player2.Cards[i] = Player2.Cards[i + 1];
+                    }
+                    else if (i == 2 || i == 5)
+                    {
+                        Player2.Cards[i] = Player2.Cards[i - 1];
+                    }
+                    else
+                    {
+                        Card tempCard = Player2.Cards[i - 1];
+                        if (Int16.Parse(tempCard.Text) > Int16.Parse(Player2.Cards[i + 1].Text)) tempCard = Player2.Cards[i + 1];
+                        Player2.Cards[i] = tempCard;
+                    }
+                }
+            }
+
+            Card cardZero = new Card { Text = "0" };
+            // sprawdzamy odbicia góra dół, jeśli jest zamieniamy karty na 0
+            // Player1
+            for(int i = 0; i<3; i++)
+            {
+                if (Player1.Cards[i].Equals(Player1.Cards[i + 3]))
+                {
+                    Player1.Cards[i] = cardZero;
+                    Player1.Cards[i + 3] = cardZero;
+                }
+            }
+            //Player2
+            for (int i = 0; i < 3; i++)
+            {
+                if (Player2.Cards[i].Equals(Player2.Cards[i + 3]))
+                {
+                    Player2.Cards[i] = cardZero;
+                    Player2.Cards[i + 3] = cardZero;
+                }
+            }
+
+            // Calculate Points
+            // Player1
+            for (int i = 0; i < 6; i++)
+            {
+                firstPlayerPoints += Int16.Parse(Player1.Cards[i].Text);
+            }
+            // Player2
+            for (int i = 0; i < 6; i++)
+            {
+                secondPlayerPoints += Int16.Parse(Player2.Cards[i].Text);
+            }
+            // Kto wygrał
+            RoundResult[Player1] = firstPlayerPoints;
+            RoundResult[Player2] = secondPlayerPoints;
+            if (firstPlayerPoints > secondPlayerPoints) Player1TokenCount++;
+            else Player2TokenCount++;
+
+        }
+        public void RoundOver()
+        {
+            RoundEnded = true;
+            CalculatePoints();
+            if (Player1TokenCount == 3) End();
+            else if (Player2TokenCount == 3) End();
+        }
+        public void NewRound()
+        {
+            RoundEnded = false;
+            Dealer.FillDeck();
+            Stack.Clear();
+            Stack2.Clear();
+            RoundResult.Clear();
+
+            Player1.Cards.Clear();
+            Player2.Cards.Clear();
+
+            Dealer.GiveHand(Player1);
+            Dealer.GiveHand(Player2);
+        }
         public void PlayCard(Card card, Player player)
         {
             throw new NotImplementedException();
@@ -125,6 +247,5 @@
         {
             throw new NotImplementedException();
         }
-
     }
 }
