@@ -44,6 +44,7 @@ namespace RatATatCatBackEnd.Hubs
             await Clients.Group(game.Id).playerPlayedCard(player, card, game);
             if (card.IsSpecial)
             {
+                // invoke function on caller -> player invoked PlayedSpecialCard
                 await Clients.Caller.playerPlayedSpecialCard(player, card, game);
             }
             if (game.RoundEnded)

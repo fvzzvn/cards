@@ -97,7 +97,7 @@
         {
             player.Cards[position] = card;
 
-            if (player.AllCardsFacedUp()) RoundOver();
+            if (player.AllCardsFacedUp()) RoundEnded = true;
         }
         public void ApplySpecialCardEffect(Card card, Player player, int[] positions)
         {
@@ -221,7 +221,6 @@
         }
         public void RoundOver()
         {
-            RoundEnded = true;
             CalculatePoints();
             if (Player1TokenCount == 3) End();
             else if (Player2TokenCount == 3) End();
