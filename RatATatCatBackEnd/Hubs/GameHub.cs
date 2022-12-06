@@ -48,8 +48,9 @@ namespace RatATatCatBackEnd.Hubs
             }
             if (game.RoundEnded)
             {
-                game.NewRound();
+                game.RoundOver();
                 await Clients.Group(game.Id).roundResults(game.RoundResult);
+                game.NewRound();
                 await Clients.Group(game.Id).newRound(game);
             }
             if (game.GameEnded)
@@ -58,6 +59,7 @@ namespace RatATatCatBackEnd.Hubs
                 _gameState.RemoveGame(game.Id);
             }
         }
+
         public async Task PlayedSpecialCard(Card card, List<Player>? players, List<Card>? cards)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
@@ -89,7 +91,14 @@ namespace RatATatCatBackEnd.Hubs
                 await Clients.Caller.notPlayersTurn();
             }
         }
+        public async Task RatATatCatEnding()
+        {
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
+            IGame game = _gameState.GetGame(player.GameId);
 
+            game.RoundEnding = true;
+            await Clients.Group(game.Id).roundEnding();
+        }
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
