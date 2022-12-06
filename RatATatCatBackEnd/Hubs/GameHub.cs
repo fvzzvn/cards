@@ -85,6 +85,7 @@ namespace RatATatCatBackEnd.Hubs
                 // notify others that player took card
                 await Clients.Group(game.Id).playerTookCard(player, card, game);
                 // next players turn to play his card
+                // this might cause problems -> first player took card but didnt play any, second player if fast enought might do his turn before first player.
                 game.NextTurn();
             }
             else
