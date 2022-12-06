@@ -15,6 +15,8 @@
         public bool GameEnded { get; set; } = false;
         public Dictionary<Player,int> RoundResult { get; set; }
         public Dictionary<Player,int> GameResult { get; set; }
+        public bool RoundEnding { get; set; }
+
         public DragonGame(string id)
         {
             Id = id;

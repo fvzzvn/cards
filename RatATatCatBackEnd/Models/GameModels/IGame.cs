@@ -9,6 +9,7 @@
         Player PlayerTurn { get; set; }
         Stack Stack { get; set; }
         bool RoundEnded { get; set; }
+        bool RoundEnding { get; set; }
         Dictionary<Player, int> RoundResult { get; set; }
         bool GameEnded { get; set; }
         Dictionary<Player, int> GameResult { get; set; }
@@ -17,6 +18,7 @@
         void RemovePlayer(Player player);
         void End();
         void NewRound();
+        void RoundOver();
         bool IsFull();
         Player NextTurn();
         Card GiveCard(Player player, string from);
