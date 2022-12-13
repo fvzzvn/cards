@@ -34,7 +34,7 @@ namespace RatATatCatBackEnd.Hubs
             if (_gameState.ArePlayersReady(gameId))
             {
                 IGame game = _gameState.GetGame(gameId);
-                await Clients.All.start(game);
+                await Clients.Group(gameId).start(game);
             }
         }
 
@@ -58,7 +58,7 @@ namespace RatATatCatBackEnd.Hubs
 
             game.ApplySpecialCardEffect(card, players, cards);
 
-            await Clients.All.applySpecialCardEffect(card, player, game);
+            await Clients.Group(game.Id).applySpecialCardEffect(card, player, game);
         }
         public async Task GetCard(string from)
         {
