@@ -12,7 +12,7 @@ import Game from "./Game.js";
 import NewBoard from "./NewBoard.js";
 import { clearMessage } from "../slices/message";
 // import { getBoards } from "../slices/boards";
-// import { getUserCredentials } from "../slices/userCredentials";
+import { getUserCredentials } from "../slices/userCredentials";
 import {
   HubConnectionBuilder,
   LogLevel,
@@ -42,23 +42,24 @@ const Home = () => {
   // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
   const [connection, setConnection] = useState(null);
 
-  // useEffect(() => {
-  //   const connection = new HubConnectionBuilder()
-  //     .withUrl("https://localhost:7297/BoardHub", {
-  //       skipNegotiation: true,
-  //       transport: HttpTransportType.WebSockets,
-  //     })
-  //     .withAutomaticReconnect()
-  //     .configureLogging(LogLevel.Information)
-  //     .build();
+  useEffect(() => {
+    dispatch(getUserCredentials());
+    const connection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7297/BoardHub", {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
 
-  //   setConnection(connection);
-  //   if (connection) {
-  //     connection.start().then((result) => {
-  //       console.log("SignalR Connected!");
-  //     });
-  //   }
-  // }, [dispatch]);
+    setConnection(connection);
+    if (connection) {
+      connection.start().then((result) => {
+        console.log("SignalR Connected!");
+      });
+    }
+  }, [dispatch]);
 
   const handleLoginClick = () => {
     setShowLogin((showLogin) => !showLogin);

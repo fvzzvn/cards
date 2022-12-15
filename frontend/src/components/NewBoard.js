@@ -33,6 +33,7 @@ const NewBoard = (props) => {
         setLoading(false);
       });
     try {
+      console.log("invoke refresh page")
       await props.connection.invoke("RefreshPage");
     } catch (err) {
       console.log(err);
