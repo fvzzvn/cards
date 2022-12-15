@@ -10,7 +10,7 @@ import Boards from "./Boards.js";
 import HeaderBar from "./HeaderBar.js";
 import Game from "./Game.js";
 import NewBoard from "./NewBoard.js";
-// import { clearMessage } from "../slices/message";
+import { clearMessage } from "../slices/message";
 // import { getBoards } from "../slices/boards";
 // import { getUserCredentials } from "../slices/userCredentials";
 import {
@@ -90,6 +90,7 @@ const Home = () => {
 
   const handleExitCreateBoard = () => {
     setShowCreateBoard((showCreateBoard) => false);
+    dispatch(clearMessage());
   }
   return (
     <div className="cards-bg">
