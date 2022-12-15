@@ -6,7 +6,7 @@ const Board = (props) => {
   if (Object.keys(props.players).length > 0) {
     avgRanking = sumValues(props.players) / Object.keys(props.players).length;
   }
-
+  console.log(props);
   const [ranking, setRanking] = useState(0);
   const [len, setLen] = useState(0);
   let [players, setPlayers] = useState([]);
@@ -44,7 +44,13 @@ const Board = (props) => {
         <div className="card-name">Nazwa gry</div>
       </div>
       <div className="board-card-icon-box">
-        <div className="board-card-icon"></div>
+        {props.boardMode === 1 ? (
+          <div className="board-card-icon rat"></div>
+        ) : props.boardMode === 2 ? (
+          <div className="board-card-icon dragon"></div>
+        ) : (
+          <div className="board-card-icon raven"></div>
+        )}
       </div>
       <div className="board-card-players">
         {players.map((player, i) => (

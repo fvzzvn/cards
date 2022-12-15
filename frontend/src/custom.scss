@@ -339,11 +339,23 @@ $btn-close-opacity: 0.9;
   padding: 3px;
 }
 
+.rat {
+  background-image: url("./assets/img/rat_white.png");
+}
+
+.dragon {
+  background-image: url("./assets/img/dragon_white.png");
+}
+
+.raven {
+  background-image: url("./assets/img/raven_white.png");
+}
+
+
 .board-card-icon {
   height: 100%;
   width: 100%;
   background-color: $major;
-  background-image: url("./assets/img/rat.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;

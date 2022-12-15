@@ -40,6 +40,7 @@ const Boards = (props) => {
               // id={item.id}
               id={item.boardId}
               key={i}
+              boardMode={item.boardMode}
               // ranking={props.mmrs[i]}
               // participants={props.participants[i]}
               players={item.players}

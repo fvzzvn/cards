@@ -26,8 +26,8 @@ const createBoard = (boardName, boardType, boardMode, boardPublic) => {
   return axios
     .post(API_URL + "boards", {
       "boardName": boardName,
-      "boardType": 1,
-      "boardMode": 1,
+      "boardType": boardType,
+      "boardMode": boardMode,
     })
     .then((response) => {
       console.log("created board type:" + boardType, +" mode: " + boardMode);
