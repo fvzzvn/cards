@@ -15,7 +15,7 @@ import { clearMessage } from "../slices/message";
 import { getUserCredentials } from "../slices/userCredentials";
 
 const Home = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   //REDUX STATES
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { inGame } = useSelector((state) => state.game.inGame);
@@ -31,27 +31,27 @@ const Home = () => {
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showRegisterButton, setShowRegisterButton] = useState(true);
   const [showCreateBoard, setShowCreateBoard] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [go, setGo] = useState(false);
   const [currentBoardId, setCurrentBoardId] = useState(0)
   // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
 
-  useEffect(() => {
-    dispatch(clearMessage());
-    setLoading(true);
-    // dispatch(getBoards())
-    //   .unwrap()
-    //   .then(() => {})
-    //   .catch(() => {});
-    dispatch(getUserCredentials())
-      .unwrap()
-      .then(() => {
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(clearMessage());
+  //   setLoading(true);
+  //   // dispatch(getBoards())
+  //   //   .unwrap()
+  //   //   .then(() => {})
+  //   //   .catch(() => {});
+  //   dispatch(getUserCredentials())
+  //     .unwrap()
+  //     .then(() => {
+  //       setLoading(false);
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // }, [dispatch]);
 
   const handleLoginClick = () => {
     setShowLogin((showLogin) => !showLogin);
@@ -116,9 +116,10 @@ const Home = () => {
             </div>
           </div>
         </div>
-      ) : isLoggedIn && loading ? (
-        <span className="board-loader spinner-border spinner-border-sm"></span>
-      ) : isLoggedIn && !loading && !inGame && !go ? (
+      // ) : isLoggedIn && loading ? (
+        // <span className="board-loader spinner-border spinner-border-sm"></span>
+      ) : isLoggedIn && //!loading &&
+      !inGame && !go ? (
         <>
           <HeaderBar username={username}></HeaderBar>
           <div className="home-boards-bg">
