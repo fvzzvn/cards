@@ -497,9 +497,9 @@ $btn-close-opacity: 0.9;
 .header-bar-container {
   position: absolute;
   display: grid;
-  grid-template-columns: 10% 30% 20% 30% 10%;
+  grid-template-columns: 10% 30% 20% 20% 20%;
   grid-template-areas: 
-    "logout button1 logo button2 username";
+    "logout button1 logo button2 details";
   height: 100px;
   width: 100vw;
   min-width: 1400px;
@@ -531,11 +531,50 @@ $btn-close-opacity: 0.9;
 .leave-wrapper {
   grid-area: button2;
   margin: auto;
+  border: solid blue 5px;
 }
 
 .leave-button {
   width: 150px;
   margin: 25px;
+}
+
+.details-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  grid-area: details;
+  color: white;
+}
+
+.username-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 150%;
+  align-self: right;
+  text-align: right;
+}
+
+.username {
+  padding-right: 15px;
+}
+
+.icon-box {
+  min-height: 100px;
+  min-width: 100px;
+  padding: 5px;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  background-image: url("../public/icons/avatar1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: solid $primary 3px;
+  border-radius: 5px;
 }
 
 /*********************************************/
@@ -585,7 +624,6 @@ $btn-close-opacity: 0.9;
   flex-direction: column;
   justify-content: center;
 }
-
 
 
 .top-player {

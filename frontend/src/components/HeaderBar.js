@@ -4,9 +4,8 @@ import { logout } from "../slices/auth";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { resetCredentials } from "../slices/userCredentials";
-import handleGo from "./Home";
 
-const HeaderBar = (props, {setGo}) => {
+const HeaderBar = (props) => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
@@ -28,7 +27,15 @@ const HeaderBar = (props, {setGo}) => {
           <Button className="leave-button" onClick={(e) => {props.setGo(!e)}}>Opuść stół</Button>
         </div>
       )}
-      {props.username && <div className="username-box">{props.username}</div>}
+      {props.username && (
+      <div className="details-box">
+        <div className="username-box">
+          <div className="username">{props.username}</div>
+        </div>
+        <div className="icon-box">
+          <div className="icon"></div>
+        </div>
+        </div>)}
     </div>
   );
 };
