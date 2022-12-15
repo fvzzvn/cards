@@ -137,7 +137,7 @@ const Home = () => {
                 variant="outline-primary"
                 className="home-board-fliter filter"
               >
-                Rat-a-tat-cat
+                Szczury
               </ToggleButton>
               <ToggleButton
                 variant="outline-primary"
