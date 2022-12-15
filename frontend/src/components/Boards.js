@@ -6,21 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Boards = (props) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const { boards } = useSelector((state) => state.boards);
 
   useEffect(() => {
     dispatch(clearMessage());
-    setLoading(true);
     dispatch(getBoards())
       .unwrap()
-      .then(() => {})
-      .catch(() => {});
-  });
+      .then(() => {
+      })
+      .catch(() => {
+      });
+  }, [dispatch]);
 
   return (
     <>
-      {loading ? (
+      {true ? (
         boards.map((item, i) => (
           <div onClick={(e) => props.handleGo(item.boardId, e)}>
             <Board
