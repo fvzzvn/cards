@@ -11,7 +11,7 @@ import HeaderBar from "./HeaderBar.js";
 import Game from "./Game.js";
 import NewBoard from "./NewBoard.js";
 import { clearMessage } from "../slices/message";
-import { getBoards } from "../slices/boards";
+// import { getBoards } from "../slices/boards";
 import { getUserCredentials } from "../slices/userCredentials";
 
 const Home = () => {
@@ -19,7 +19,7 @@ const Home = () => {
   //REDUX STATES
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { inGame } = useSelector((state) => state.game.inGame);
-  const { boards } = useSelector((state) => state.boards);
+  // const { boards } = useSelector((state) => state.boards);
   // const participants = useSelector((state) => state.boards.participants);
   // const mmrs = useSelector((state) => state.boards.mmrs);
   // const players = useSelector((state) => state.boards);
