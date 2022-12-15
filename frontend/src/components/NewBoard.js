@@ -10,9 +10,9 @@ const NewBoard = (props) => {
   const dispatch = useDispatch();
   const initialValues = {
     boardName: "",
-    boardType: "0",
+    boardType: false,
     boardMode: "0",
-    boardPublic: "0",
+    boardPublic: false,
   };
 
   const validationSchema = Yup.object().shape({
@@ -58,13 +58,13 @@ const NewBoard = (props) => {
             </div>
             <div className="new-board-checkbox">
               <label>
-                <Field id="cb1" type="checkbox" name="boardType" value="0" />
+                <Field id="cb1" type="checkbox" name="boardType" />
                 Gra rankingowa
               </label>
             </div>
             <div className="new-board-checkbox">
               <label>
-                <Field id="cb1" type="checkbox" name="boardPublic" value="0" />
+                <Field id="cb1" type="checkbox" name="boardPublic" />
                 Stół publiczny
               </label>
             </div>

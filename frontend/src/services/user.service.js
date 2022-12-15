@@ -22,10 +22,10 @@ const getAdminBoard = () => {
 };
 
 const createBoard = (boardName, boardType, boardMode, boardPublic) => {
-  console.log({"boardName":boardName, "boardType": boardType, "boardMode": boardMode, "boardPublic": boardPublic});
+  console.log({"boardName": boardName, "boardType": boardType, "boardMode": boardMode, "boardPublic": boardPublic});
   return axios
     .post(API_URL + "boards", {
-      // "boardName": boardName,
+      "boardName": boardName,
       "boardType": boardType,
       "boardMode": boardMode,
     })
