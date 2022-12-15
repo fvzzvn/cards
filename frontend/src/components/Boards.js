@@ -38,11 +38,11 @@ const Boards = (props) => {
           <div onClick={(e) => props.handleGo(item.boardId, e)}>
             <Board
               // id={item.id}
-              id={item.boardId}
               key={i}
+              id={item.boardId}
+              boardName={item.boardName}
               boardMode={item.boardMode}
-              // ranking={props.mmrs[i]}
-              // participants={props.participants[i]}
+              boardType={item.boardType}
               players={item.players}
             ></Board>
           </div>

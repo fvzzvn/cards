@@ -27,6 +27,7 @@ const Board = (props) => {
   return (
     <div className="board-card">
       <div className="board-card-id">{props.id}</div>
+      <div className="board-card-ranked">{props.boardType === 1 ? (<>N</>) : (<>R</>)}</div>
       <div className="board-card-ranking">
         {ranking > 2600 ? (
           <div className="card-ranking high">{ranking}</div>
@@ -41,7 +42,7 @@ const Board = (props) => {
         )}
       </div>
       <div className="board-card-name">
-        <div className="card-name">Nazwa gry</div>
+        <div className="card-name">{props.boardName}</div>
       </div>
       <div className="board-card-icon-box">
         {props.boardMode === 1 ? (

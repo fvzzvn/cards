@@ -293,12 +293,12 @@ $btn-close-opacity: 0.9;
 
 .board-card {
   display: grid;
-  grid-template-columns: 30% 15% 30% 25%;
+  grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 20% 20% 60%;
   grid-template-areas:
-    "id ranking ranking ranking"
-    "name name name icon"
-    "players players players players";
+    "id ranked ranking ranking"
+    "name name name  icon"
+    "players players  players players";
   height: 90%;
   width: 90%;
   padding: 4%;
@@ -322,13 +322,23 @@ $btn-close-opacity: 0.9;
   justify-content: center;
 }
 
+.board-card-ranked {
+  grid-area: ranked;
+  margin: 2px;
+  background-color: $major;
+  padding: 3px;
+  font-family: "Bungee Inline", cursive;
+  text-align: center;
+  font-size: 23px;
+}
+
 .board-card-id {
   grid-area: id;
   background-color: $major;
   margin: 2px;
   font-family: "Bungee Inline", cursive;
   text-align: center;
-  font-size: 21px;
+  font-size: 23px;
   overflow: hidden;
 }
 
@@ -367,7 +377,7 @@ $btn-close-opacity: 0.9;
   margin: 2px;
   font-family: "Bungee Inline", cursive;
   text-align: center;
-  font-size: 22px;
+  font-size: 23px;
   overflow: hidden;
 }
 
@@ -377,6 +387,7 @@ $btn-close-opacity: 0.9;
   margin: 2px;
   padding-left: 5px;
   overflow: hidden;
+  text-align: center;
 }
 
 .board-card-players {
