@@ -72,11 +72,15 @@ const NewBoard = (props) => {
             <div className="new-board-radio">
               <label>
                 <Field id="cb1" type="radio" name="boardMode" value="0" />
-                Rat
+                Szczury
               </label>
               <label>
                 <Field id="cb1" type="radio" name="boardMode" value="1" />
-                Dragon
+                Smoki
+              </label>
+              <label>
+                <Field id="cb1" type="radio" name="boardMode" value="2" />
+                Kruki
               </label>
             </div>
             <div className="new-board-box-button-wrapper">

@@ -137,25 +137,25 @@ const Home = () => {
                 variant="outline-primary"
                 className="home-board-fliter filter"
               >
-                Rankingowe
+                Rat-a-tat-cat
               </ToggleButton>
               <ToggleButton
                 variant="outline-primary"
                 className="home-board-fliter filter"
               >
-                Nierankingowe
+                Smoki
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Kruki
               </ToggleButton>
               <ToggleButton
                 variant="outline-primary"
                 className="home-board-fliter filter"
               >
                 Wolne miejsca
-              </ToggleButton>
-              <ToggleButton
-                variant="outline-primary"
-                className="home-board-fliter filter"
-              >
-                Rozpoczęte
               </ToggleButton>
               {/* <Button
                 variant="secondary"
@@ -177,6 +177,31 @@ const Home = () => {
                 onClick={handleShowCreateBoard}>
                   Stwórz nową grę
               </Button>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Nierankingowe
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Rankingowe
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Rozpoczęte
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Sortowanie: ID
+              </ToggleButton>
+              <div></div>
               <Boards
                 // boards={boards}
                 handleGo={handleGo}

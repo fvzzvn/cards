@@ -12,6 +12,10 @@ $btn-close-opacity: 0.9;
 /*              GENERAL CSS                 "/
 /*********************************************/
 
+* {
+  user-select: none;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -284,7 +288,7 @@ $btn-close-opacity: 0.9;
   padding: 0 4%;
   display: grid;
   grid-template-columns: 20% 20% 20% 20% 20%;
-  grid-template-rows: 6% 22% 22% 22% 22%;
+  grid-template-rows: 5% 5% 22% 22% 22%;
 }
 
 .board-card {
@@ -430,7 +434,7 @@ $btn-close-opacity: 0.9;
 
 .new-board-box {
   height: auto;
-  width: 250px;
+  width: 350px;
   border-radius: 5px;
   background-color: $primary;
   display: flex;
@@ -439,6 +443,7 @@ $btn-close-opacity: 0.9;
   background-color: $major;
   border-radius: 20px;
   padding: 10px;
+  user-select: none;
 }
 
 .new-board-box-button-wrapper {
@@ -454,6 +459,7 @@ $btn-close-opacity: 0.9;
   color: white;
   display: flex;
   margin-top: 5px;
+  margin-left: 45px;
 }
 
 .new-board-checkbox label input {
@@ -505,6 +511,7 @@ $btn-close-opacity: 0.9;
   min-width: 1400px;
   background-color: rgba(0, 0, 0, 0.8);
   overflow: hidden;
+  user-select: none;
 }
 
 .header-bar-logo {
@@ -558,12 +565,14 @@ $btn-close-opacity: 0.9;
 
 .username {
   padding-right: 15px;
+  cursor: pointer;
 }
 
 .icon-box {
   min-height: 100px;
   min-width: 100px;
   padding: 5px;
+  cursor: pointer;
 }
 
 .icon {
