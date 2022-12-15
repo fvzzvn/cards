@@ -3,11 +3,23 @@ import Board from "./Board.js";
 import { clearMessage } from "../slices/message";
 import { getBoards } from "../slices/boards";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  HubConnectionBuilder,
+  LogLevel,
+  HttpTransportType,
+} from "@microsoft/signalr";
+
 
 const Boards = (props) => {
   const dispatch = useDispatch();
   // const [loading, setLoading] = useState(false);
   const { boards } = useSelector((state) => state.boards);
+  const [connection, setConnection] = useState(null);
+
+  const invokeRefreshPage = async (connection) => {
+    console.log("invoking RefreshPage through", connection);
+    await connection.invoke("RefreshPage");
+  };
 
   useEffect(() => {
     dispatch(clearMessage());
@@ -17,6 +29,21 @@ const Boards = (props) => {
       })
       .catch(() => {
       });
+      const connection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7297/GameHub", {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    setConnection(connection);
+    if(connection){
+      connection.start().then((result) => {
+        console.log("SignalR Connected!");
+      });
+    }
   }, [dispatch]);
 
   return (
