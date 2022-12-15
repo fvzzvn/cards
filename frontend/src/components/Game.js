@@ -25,8 +25,6 @@ const Game = (props) => {
   
   const dispatch = useDispatch();
 
-  const userId = useSelector((state) => state.userCredentials.userId);
-  const boardId = props.boardId;
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
     await connection.invoke("JoinRoom", `${props.boardId}`, `${props.username}`);
@@ -44,9 +42,7 @@ const Game = (props) => {
 
     setConnection(connection);
 
-    connection.on("playerJoined", (player) => {
-      console.log("ADD PARTICIPANT" + userId + " " + boardId);
-    });
+
 
     connection.on("start", (game) => {
       setGameState(game);

@@ -24,9 +24,9 @@ export const getBoards = createAsyncThunk(
 
 export const createBoard = createAsyncThunk(
   "boards/createBoard",
-  async (thunkAPI) => {
+  async ({boardName, boardType, boardMode, boardPublic}, thunkAPI) => {
     try {
-      const data = await userService.createBoard();
+      const data = await userService.createBoard(boardName, boardType, boardMode, boardPublic);
       return{ data };
     } catch (error) {
       const message =

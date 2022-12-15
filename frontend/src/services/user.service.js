@@ -21,33 +21,32 @@ const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
 
-const createBoard = (boardName, gameMode, gameRanking, gameVisiblity) => {
-  return axios.post(API_URL + "boards", {
-    "boardName": boardName,
-    "boardType": gameRanking,
-    "boardMode": gameMode,
-  }).then((response) => {
-    return response.data;
-  })
-}
-
-const addParticipant = (userId, boardId) => {
-  return axios.post(API_URL + "Participants", {
-    "userId": userId,
-    "boardId": boardId,
-  }).then((response) => {
-    console.log("addparticipant response data for " + API_URL + "Participants(" + userId + ", " + boardId + ") call")
-    console.log(response.data)
-    return response.data;
-  })
-}
+const createBoard = (boardName, boardType, boardMode, boardPublic) => {
+  console.log({"boardName":boardName, "boardType": boardType, "boardMode": boardMode, "boardPublic": boardPublic});
+  return axios
+    .post(API_URL + "boards", {
+      // "boardName": boardName,
+      "boardType": boardType,
+      "boardMode": boardMode,
+    })
+    .then((response) => {
+      console.log("created board type:" + boardType, +" mode: " + boardMode);
+      console.log(response.data);
+      return response.data;
+    });
+  // const response = await axios.post(API_URL + "boards", {
+  //   // "boardName": boardName,
+  //   "boardType": boardType,
+  //   "boardMode": boardMode,
+  // });
+  // return response.data;
+};
 
 const userService = {
   getBoards,
   getUserCredentials,
   getAdminBoard,
   createBoard,
-  addParticipant,
 };
 
 export default userService;

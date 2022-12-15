@@ -10,9 +10,9 @@ const NewBoard = (props) => {
   const dispatch = useDispatch();
   const initialValues = {
     boardName: "",
-    gameRanking: false,
-    gameVisiblity: false,
-    gameMode: 0,
+    boardType: "0",
+    boardMode: "0",
+    boardPublic: "0",
   };
 
   const validationSchema = Yup.object().shape({
@@ -20,10 +20,11 @@ const NewBoard = (props) => {
   });
 
   const handleCreateBoard = async (formValue) => {
-    const { boardName, gameMode, gameRanking, gameVisiblity } = formValue;
+    const { boardName, boardType, boardMode, boardPublic } = formValue;
     setLoading(true);
-    // dispatch(createBoard( boardName ))
-    dispatch(createBoard(boardName, gameMode, gameRanking, gameVisiblity))
+    const args = { boardName, boardType, boardMode, boardPublic };
+    console.log(args);
+    dispatch(createBoard(args))
       .unwrap()
       .then(() => {
         setLoading(false);
@@ -31,11 +32,11 @@ const NewBoard = (props) => {
       .catch(() => {
         setLoading(false);
       });
-      try {
-        await props.connection.invoke("RefreshPage");
-      } catch (err) {
-        console.log(err);
-        }
+    try {
+      await props.connection.invoke("RefreshPage");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -57,24 +58,24 @@ const NewBoard = (props) => {
             </div>
             <div className="new-board-checkbox">
               <label>
-                <Field id="cb1" type="checkbox" name="gameRanked" value="0" />
+                <Field id="cb1" type="checkbox" name="boardType" value="0" />
                 Gra rankingowa
               </label>
             </div>
             <div className="new-board-checkbox">
               <label>
-                <Field id="cb1" type="checkbox" name="gameVisibilty" value="0" />
+                <Field id="cb1" type="checkbox" name="boardPublic" value="0" />
                 Stół publiczny
               </label>
             </div>
-              <div className="gamemode-title">Tryb gry</div>
+            <div className="gamemode-title">Tryb gry</div>
             <div className="new-board-radio">
               <label>
-                <Field id="cb1" type="radio" name="gameMode" value="0"/>
+                <Field id="cb1" type="radio" name="boardMode" value="0" />
                 Rat
               </label>
               <label>
-                <Field id="cb1" type="radio" name="gameMode" value="0" />
+                <Field id="cb1" type="radio" name="boardMode" value="1" />
                 Dragon
               </label>
             </div>
