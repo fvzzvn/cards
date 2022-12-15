@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 const Board = (props) => {
-
   let avgRanking = 0;
-  const sumValues = obj => Object.values(obj).reduce((a, b) => a + b, 0);
-  if(Object.keys(props.players).length > 0){
-    avgRanking = sumValues(props.players)/Object.keys(props.players).length;
-  };
+  const sumValues = (obj) => Object.values(obj).reduce((a, b) => a + b, 0);
+  if (Object.keys(props.players).length > 0) {
+    avgRanking = sumValues(props.players) / Object.keys(props.players).length;
+  }
 
   const [ranking, setRanking] = useState(0);
   const [len, setLen] = useState(0);
   let [players, setPlayers] = useState([]);
-  
+
   useEffect(() => {
     if (props.players) {
       Object.entries(props.players).forEach(([key, value]) => {
         players.push([key, value]);
       });
-      
+
       setLen(players.length);
       setRanking(avgRanking);
       setPlayers(players);
@@ -27,9 +26,7 @@ const Board = (props) => {
 
   return (
     <div className="board-card">
-      <div className="board-card-id">
-        <div className="card-id">{props.id}</div>
-      </div>
+      <div className="board-card-id">{props.id}</div>
       <div className="board-card-ranking">
         {ranking > 2600 ? (
           <div className="card-ranking high">{ranking}</div>
@@ -45,6 +42,9 @@ const Board = (props) => {
       </div>
       <div className="board-card-name">
         <div className="card-name">Nazwa gry</div>
+      </div>
+      <div className="board-card-icon-box">
+        <div className="board-card-icon"></div>
       </div>
       <div className="board-card-players">
         {players.map((player, i) => (

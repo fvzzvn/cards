@@ -293,12 +293,12 @@ $btn-close-opacity: 0.9;
 
 .board-card {
   display: grid;
-  grid-template-columns: 30% 15% 55%;
+  grid-template-columns: 30% 15% 30% 25%;
   grid-template-rows: 20% 20% 60%;
   grid-template-areas:
-    "id ranking ranking"
-    "name name name"
-    "players players players";
+    "id ranking ranking ranking"
+    "name name name icon"
+    "players players players players";
   height: 90%;
   width: 90%;
   padding: 4%;
@@ -330,6 +330,23 @@ $btn-close-opacity: 0.9;
   text-align: center;
   font-size: 21px;
   overflow: hidden;
+}
+
+.board-card-icon-box {
+  grid-area: icon;
+  margin: 2px;
+  background-color: $major;
+  padding: 3px;
+}
+
+.board-card-icon {
+  height: 100%;
+  width: 100%;
+  background-color: $major;
+  background-image: url("./assets/img/rat.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .board-card-ranking {
