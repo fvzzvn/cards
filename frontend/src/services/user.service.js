@@ -21,10 +21,11 @@ const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
 
-const createBoard = () => {
+const createBoard = (boardName, gameMode, gameRanking, gameVisiblity) => {
   return axios.post(API_URL + "boards", {
-    "boardType": 0,
-    "boardMode": 0,
+    "boardName": boardName,
+    "boardType": gameRanking,
+    "boardMode": gameMode,
   }).then((response) => {
     return response.data;
   })

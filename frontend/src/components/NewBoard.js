@@ -4,14 +4,14 @@ import * as Yup from "yup";
 import { createBoard } from "../slices/boards";
 import { useDispatch, useSelector } from "react-redux";
 
-const NewBoard = () => {
+const NewBoard = (props) => {
   const [loading, setLoading] = useState(false);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
   const initialValues = {
     boardName: "",
-    public: false,
-    ranked: false,
+    gameRanking: false,
+    gameVisiblity: false,
     gameMode: 0,
   };
 
@@ -19,11 +19,11 @@ const NewBoard = () => {
     boardName: Yup.string().required("Podaj nazwę stołu."),
   });
 
-  const handleCreateBoard = (formValue) => {
-    const { boardName } = formValue;
+  const handleCreateBoard = async (formValue) => {
+    const { boardName, gameMode, gameRanking, gameVisiblity } = formValue;
     setLoading(true);
     // dispatch(createBoard( boardName ))
-    dispatch(createBoard())
+    dispatch(createBoard(boardName, gameMode, gameRanking, gameVisiblity))
       .unwrap()
       .then(() => {
         setLoading(false);
@@ -31,6 +31,11 @@ const NewBoard = () => {
       .catch(() => {
         setLoading(false);
       });
+      try {
+        await props.connection.invoke("RefreshPage");
+      } catch (err) {
+        console.log(err);
+        }
   };
 
   return (
@@ -52,13 +57,13 @@ const NewBoard = () => {
             </div>
             <div className="new-board-checkbox">
               <label>
-                <Field id="cb1" type="checkbox" name="checked" value="ranked" />
+                <Field id="cb1" type="checkbox" name="gameRanked" value="0" />
                 Gra rankingowa
               </label>
             </div>
             <div className="new-board-checkbox">
               <label>
-                <Field id="cb1" type="checkbox" name="checked" value="public" />
+                <Field id="cb1" type="checkbox" name="gameVisibilty" value="0" />
                 Stół publiczny
               </label>
             </div>
@@ -69,7 +74,7 @@ const NewBoard = () => {
                 Rat
               </label>
               <label>
-                <Field id="cb1" type="radio" name="gameMode" value="1" />
+                <Field id="cb1" type="radio" name="gameMode" value="0" />
                 Dragon
               </label>
             </div>

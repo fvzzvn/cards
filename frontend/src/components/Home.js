@@ -10,12 +10,17 @@ import Boards from "./Boards.js";
 import HeaderBar from "./HeaderBar.js";
 import Game from "./Game.js";
 import NewBoard from "./NewBoard.js";
-import { clearMessage } from "../slices/message";
+// import { clearMessage } from "../slices/message";
 // import { getBoards } from "../slices/boards";
-import { getUserCredentials } from "../slices/userCredentials";
+// import { getUserCredentials } from "../slices/userCredentials";
+import {
+  HubConnectionBuilder,
+  LogLevel,
+  HttpTransportType,
+} from "@microsoft/signalr";
 
 const Home = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   //REDUX STATES
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { inGame } = useSelector((state) => state.game.inGame);
@@ -35,22 +40,24 @@ const Home = () => {
   const [go, setGo] = useState(false);
   const [currentBoardId, setCurrentBoardId] = useState(0)
   // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
+  const [connection, setConnection] = useState(null);
 
   // useEffect(() => {
-  //   dispatch(clearMessage());
-  //   setLoading(true);
-  //   // dispatch(getBoards())
-  //   //   .unwrap()
-  //   //   .then(() => {})
-  //   //   .catch(() => {});
-  //   dispatch(getUserCredentials())
-  //     .unwrap()
-  //     .then(() => {
-  //       setLoading(false);
+  //   const connection = new HubConnectionBuilder()
+  //     .withUrl("https://localhost:7297/BoardHub", {
+  //       skipNegotiation: true,
+  //       transport: HttpTransportType.WebSockets,
   //     })
-  //     .catch(() => {
-  //       setLoading(false);
+  //     .withAutomaticReconnect()
+  //     .configureLogging(LogLevel.Information)
+  //     .build();
+
+  //   setConnection(connection);
+  //   if (connection) {
+  //     connection.start().then((result) => {
+  //       console.log("SignalR Connected!");
   //     });
+  //   }
   // }, [dispatch]);
 
   const handleLoginClick = () => {
@@ -118,7 +125,7 @@ const Home = () => {
         </div>
       // ) : isLoggedIn && loading ? (
         // <span className="board-loader spinner-border spinner-border-sm"></span>
-      ) : isLoggedIn && //!loading &&
+      ) : isLoggedIn &&
       !inGame && !go ? (
         <>
           <HeaderBar username={username}></HeaderBar>
@@ -172,6 +179,7 @@ const Home = () => {
               <Boards
                 // boards={boards}
                 handleGo={handleGo}
+                connection={connection}
                 // mmrs={mmrs}
                 // participants={participants}
               >
@@ -184,7 +192,7 @@ const Home = () => {
                 <div className="new-board-x-holder">
                   <CloseButton variant="white" onClick={handleExitCreateBoard} />
                 </div>
-                <NewBoard></NewBoard>
+                <NewBoard connection={connection}></NewBoard>
               </div>
             </div>
             )}
@@ -192,7 +200,7 @@ const Home = () => {
       ) : (
         go && (
           <>
-            <HeaderBar setGo={setGo} username={username} game={true}></HeaderBar>
+            <HeaderBar connection={connection} setGo={setGo} username={username} game={true}></HeaderBar>
             <Game username={username} boardId={currentBoardId}></Game>
           </>
         )
