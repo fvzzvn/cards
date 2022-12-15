@@ -16,10 +16,6 @@ const Boards = (props) => {
   const { boards } = useSelector((state) => state.boards);
   const [connection, setConnection] = useState(null);
 
-  const invokeRefreshPage = async (connection) => {
-    console.log("invoking RefreshPage through", connection);
-    await connection.invoke("RefreshPage");
-  };
 
   useEffect(() => {
     dispatch(clearMessage());
@@ -44,6 +40,15 @@ const Boards = (props) => {
         console.log("SignalR Connected!");
       });
     }
+
+    connection.on("refreshBoards", () => {
+      dispatch(getBoards())
+      .unwrap()
+      .then(() => {
+      })
+      .catch(() => {
+      });
+    })
   }, [dispatch]);
 
   return (
