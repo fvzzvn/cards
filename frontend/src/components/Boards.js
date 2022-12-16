@@ -9,43 +9,40 @@ import {
   HttpTransportType,
 } from "@microsoft/signalr";
 
-
 const Boards = (props) => {
   const dispatch = useDispatch();
   // const [loading, setLoading] = useState(false);
   const { boards } = useSelector((state) => state.boards);
-  const [connection, setConnection] = useState(null);
-
+  // const [connection, setConnection] = useState(null);
 
   useEffect(() => {
     dispatch(clearMessage());
     dispatch(getBoards())
       .unwrap()
-      .then(() => {
-      })
-      .catch(() => {
-      });
+      .then(() => {})
+      .catch(() => {});
 
-      const connection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7297/BoardHub", {
-        skipNegotiation: true,
-        transport: HttpTransportType.WebSockets,
-      })
-      .withAutomaticReconnect()
-      .configureLogging(LogLevel.Information)
-      .build();
+    //   const connection = new HubConnectionBuilder()
+    //   .withUrl("https://localhost:7297/BoardHub", {
+    //     skipNegotiation: true,
+    //     transport: HttpTransportType.WebSockets,
+    //   })
+    //   .withAutomaticReconnect()
+    //   .configureLogging(LogLevel.Information)
+    //   .build();
 
-    setConnection(connection);
-    if (connection) {
-      connection.start().then((result) => {
+    // setConnection(connection);
+    // if (connection) {
+    //   connection.start().then((result) => {
+    //   });
+    // }
+    if (props.connection) {
+      props.connection.on("refreshBoards", () => {
+        console.log("refresh boards")
+        dispatch(getBoards());
       });
     }
-
-    connection.on("refreshBoards", () => {
-      dispatch(getBoards());
-    })
-
-  }, [dispatch]);
+  }, [props.connection, dispatch]);
 
   return (
     <>
