@@ -3,9 +3,17 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { createBoard } from "../slices/boards";
 import { useDispatch, useSelector } from "react-redux";
+import { clearMessage } from "../slices/message";
+import {
+  HubConnectionBuilder,
+  LogLevel,
+  HttpTransportType,
+} from "@microsoft/signalr";
+
 
 const NewBoard = (props) => {
   const [loading, setLoading] = useState(false);
+  const [connection, setConnection] = useState(null);
   const { message } = useSelector((state) => state.message);
   const dispatch = useDispatch();
   const initialValues = {
@@ -20,25 +28,47 @@ const NewBoard = (props) => {
   });
 
   const handleCreateBoard = async (formValue) => {
-    const { boardName, boardType, boardMode, boardPublic } = formValue;
+    let { boardName, boardType, boardMode, boardPublic } = formValue;
+    if(boardType===false){
+      boardType=1;
+    }
+    else if(boardType===true){
+      boardType=2;
+    }
+    if(boardMode==="1"){
+      boardMode=1;
+    }
+    else if(boardMode==="2"){
+      boardMode=2;
+    }
+    else if(boardMode==="3"){
+      boardMode=3;
+    }
+
     setLoading(true);
-    const args = { boardName, boardType, boardMode, boardPublic };
-    console.log(args);
-    dispatch(createBoard(args))
+    dispatch(createBoard({ boardName, boardType, boardMode, boardPublic }))
       .unwrap()
       .then(() => {
         setLoading(false);
+        dispatch(clearMessage());
+        const connection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7297/BoardHub", {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
       })
-      .catch(() => {
-        setLoading(false);
-      });
-    try {
-      console.log("invoke refresh page")
-      await props.connection.invoke("RefreshPage");
-    } catch (err) {
-      console.log(err);
-    }
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
+
+      setConnection(connection);
+      if (connection) {
+        connection.start().then(() => {
+          console.log("invoke refresh page");
+          connection.invoke("RefreshPage");
+        })
+    }});
   };
+
 
   return (
     <>

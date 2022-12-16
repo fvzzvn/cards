@@ -14,7 +14,7 @@ const Boards = (props) => {
   const dispatch = useDispatch();
   // const [loading, setLoading] = useState(false);
   const { boards } = useSelector((state) => state.boards);
-  // const [connection, setConnection] = useState(null);
+  const [connection, setConnection] = useState(null);
 
 
   useEffect(() => {
@@ -26,10 +26,28 @@ const Boards = (props) => {
       .catch(() => {
       });
 
-    // props.connection.on("refreshBoards", () => {
-    //   dispatch(getBoards());
-    // })
-  }, [dispatch, props.connection]);
+      const connection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7297/BoardHub", {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    setConnection(connection);
+    if (connection) {
+      connection.start().then((result) => {
+        console.log("SignalR Connected!");
+      });
+    }
+
+    connection.on("refreshBoards", () => {
+      console.log("refreshBoards");
+      dispatch(getBoards());
+    })
+    
+  }, [dispatch]);
 
   return (
     <>

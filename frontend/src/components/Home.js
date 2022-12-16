@@ -44,21 +44,6 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getUserCredentials());
-    const connection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7297/BoardHub", {
-        skipNegotiation: true,
-        transport: HttpTransportType.WebSockets,
-      })
-      .withAutomaticReconnect()
-      .configureLogging(LogLevel.Information)
-      .build();
-
-    setConnection(connection);
-    if (connection) {
-      connection.start().then((result) => {
-        console.log("SignalR Connected!");
-      });
-    }
   }, [dispatch]);
 
   const handleLoginClick = () => {

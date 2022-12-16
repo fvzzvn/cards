@@ -6,7 +6,6 @@ const Board = (props) => {
   if (Object.keys(props.players).length > 0) {
     avgRanking = sumValues(props.players) / Object.keys(props.players).length;
   }
-  console.log(props);
   const [ranking, setRanking] = useState(0);
   const [len, setLen] = useState(0);
   let [players, setPlayers] = useState([]);
