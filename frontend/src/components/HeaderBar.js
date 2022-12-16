@@ -22,11 +22,6 @@ const HeaderBar = (props) => {
         </Button>
       </div>
       <div className="header-bar-logo"></div>
-      {props.game && (
-        <div className="leave-wrapper">
-          <Button className="leave-button" onClick={(e) => {props.setGo(!e)}}>Opuść stół</Button>
-        </div>
-      )}
       {props.username && (
       <div className="details-box">
         <div className="username-box">
