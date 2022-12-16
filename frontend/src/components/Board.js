@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Board = (props) => {
+  let plyers = useSelector((state) => state.boards.boards[props.iterator].players)
+  plyers = Object.keys(plyers);
+
   let avgRanking = 0;
   const sumValues = (obj) => Object.values(obj).reduce((a, b) => a + b, 0);
   if (Object.keys(props.players).length > 0) {
@@ -9,6 +13,10 @@ const Board = (props) => {
   const [ranking, setRanking] = useState(0);
   const [len, setLen] = useState(0);
   let [players, setPlayers] = useState([]);
+
+  useEffect(() => {
+    
+  },[props])
 
   useEffect(() => {
     if (props.players) {
@@ -53,23 +61,23 @@ const Board = (props) => {
         )}
       </div>
       <div className="board-card-players">
-        {players.map((player, i) => (
+        {plyers.map((player, i) => (
           <div className="player-name" key={i}>
-            {player[0]}
+            {player}
           </div>
         ))}
-        {len === 3 && (
+        {plyers.length === 3 && (
           <>
             <div className="player-name">-</div>
           </>
         )}
-        {len === 2 && (
+        {plyers.length === 2 && (
           <>
             <div className="player-name">-</div>
             <div className="player-name">-</div>
           </>
         )}
-        {len === 1 && (
+        {plyers.length === 1 && (
           <>
             <div className="player-name">-</div>
             <div className="player-name">-</div>

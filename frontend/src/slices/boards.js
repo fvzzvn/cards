@@ -48,6 +48,13 @@ export const dontGo = createAsyncThunk(
   }
 );
 
+export const clearBoards = createAsyncThunk(
+  "boards/dontGo",
+  async (thunkAPI) => {
+    return true;
+  }
+);
+
 const initialState = { boardsLoaded: false, boards : [], createdBoardId: 0, nowGo: 0 };
 
 const boardsSlice = createSlice({
@@ -71,6 +78,9 @@ const boardsSlice = createSlice({
     },
     [dontGo.fulfilled]: (state, action) => {
       state.nowGo = 0;
+    },
+    [clearBoards.fulfilled]: (state, action) => {
+      state.boards = [];
     }
   },
 });

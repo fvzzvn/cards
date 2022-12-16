@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board.js";
 import { clearMessage } from "../slices/message";
-import { getBoards } from "../slices/boards";
+import { getBoards, clearBoards } from "../slices/boards";
 import { useDispatch, useSelector } from "react-redux";
 import {
   HubConnectionBuilder,
@@ -13,7 +13,7 @@ const Boards = (props) => {
   const dispatch = useDispatch();
   // const [loading, setLoading] = useState(false);
   const { boards } = useSelector((state) => state.boards);
-  // const [connection, setConnection] = useState(null);
+  const [connection, setConnection] = useState(null);
 
   useEffect(() => {
     dispatch(clearMessage());
@@ -22,36 +22,37 @@ const Boards = (props) => {
       .then(() => {})
       .catch(() => {});
 
-    //   const connection = new HubConnectionBuilder()
-    //   .withUrl("https://localhost:7297/BoardHub", {
-    //     skipNegotiation: true,
-    //     transport: HttpTransportType.WebSockets,
-    //   })
-    //   .withAutomaticReconnect()
-    //   .configureLogging(LogLevel.Information)
-    //   .build();
+    const connection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7297/BoardHub", {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
 
-    // setConnection(connection);
-    // if (connection) {
-    //   connection.start().then((result) => {
-    //   });
-    // }
-    if (props.connection) {
-      props.connection.on("refreshBoards", () => {
-        console.log("refresh boards")
-        dispatch(getBoards());
-      });
+    setConnection(connection);
+    if (connection) {
+      connection.start().then((result) => {});
     }
-  }, [props.connection, dispatch]);
+
+    connection.on("refreshBoards", () => {
+      console.log("refresh Boards");
+      // dispatch(clearBoards()).then(
+        dispatch(getBoards())
+        // );
+    });
+  }, [dispatch]);
 
   return (
     <>
-      {true ? (
+      {boards ? (
         boards.map((item, i) => (
           <div onClick={(e) => props.handleGo(item.boardId, e)}>
             <Board
               // id={item.id}
               key={i}
+              iterator={i}
               id={item.boardId}
               boardName={item.boardName}
               boardMode={item.boardMode}

@@ -20,14 +20,39 @@ const Game = (props) => {
   const [gameState, setGameState] = useState("");
   const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
+  const [bHubConnection, setbHubConnection] = useState(null);
   const [cheat, setCheat] = useState(false);
   const [showPlayerCards, setShowPlayerCards] = useState(false);
-  
+
   const dispatch = useDispatch();
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    await connection.invoke("JoinRoom", `${props.boardId}`, `${props.username}`);
+    await connection.invoke(
+      "JoinRoom",
+      `${props.boardId}`,
+      `${props.username}`
+    )
+    setInterval(console.log(), 1500);
+
+    const bHubConnection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7297/BoardHub", {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    setConnection(bHubConnection);
+
+    bHubConnection.on("refreshBoards", () => {});
+
+    if (bHubConnection) {
+      bHubConnection.start().then(() => {
+        bHubConnection.invoke("RefreshPage");
+      });
+    }
   };
 
   useEffect(() => {
@@ -42,11 +67,9 @@ const Game = (props) => {
 
     setConnection(connection);
 
-
-    connection.on("playerJoined", (player) =>
-    {
-      console.log(player.id + " joined " + props.boardId);
-    })
+    connection.on("playerJoined", (player) => {
+      console.log(player + " joined " + props.boardId);
+    });
 
     connection.on("start", (game) => {
       setGameState(game);
@@ -61,7 +84,7 @@ const Game = (props) => {
       setShowPlayerCards(true);
       setTimeout(() => {
         setShowPlayerCards(false);
-      },5000);
+      }, 5000);
     });
 
     connection.on("playerPlayedCard", (player, card, game) => {
@@ -104,7 +127,6 @@ const Game = (props) => {
     if (connection) {
       connection.start().then((result) => {
         console.log("SignalR Connected!");
-
         invokeJoinRoom(connection).catch(console.error);
       });
     }

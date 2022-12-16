@@ -69,10 +69,10 @@ const NewBoard = (props) => {
           connection.start().then(() => {
             connection.invoke("RefreshPage");
           });
+          connection.stop();
         }
       })
       .catch(() => {});
-      
   };
 
   useEffect(() => {
@@ -80,8 +80,7 @@ const NewBoard = (props) => {
       handleGo(createdBoardId);
     }
     dispatch(dontGo());
-  }, [nowGo])
-
+  }, [nowGo]);
 
   return (
     <>

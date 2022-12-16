@@ -45,20 +45,6 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getUserCredentials());
-    const connection = new HubConnectionBuilder()
-    .withUrl("https://localhost:7297/BoardHub", {
-      skipNegotiation: true,
-      transport: HttpTransportType.WebSockets,
-    })
-    .withAutomaticReconnect()
-    .configureLogging(LogLevel.Information)
-    .build();
-
-  setConnection(connection);
-  if (connection) {
-    connection.start().then((result) => {
-    });
-  }
   }, [dispatch]);
 
   const handleLoginClick = () => {
@@ -205,11 +191,7 @@ const Home = () => {
               </ToggleButton>
               <div></div>
               <Boards
-                // boards={boards}
                 handleGo={handleGo}
-                connection={connection}
-                // mmrs={mmrs}
-                // participants={participants}
               ></Boards>
             </div>
           </div>
@@ -234,7 +216,6 @@ const Home = () => {
         go && (
           <>
             <HeaderBar
-              connection={connection}
               setGo={setGo}
               username={username}
               game={true}
