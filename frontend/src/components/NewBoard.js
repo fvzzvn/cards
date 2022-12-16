@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { createBoard } from "../slices/boards";
+import { createBoard, dontGo } from "../slices/boards";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "../slices/message";
 import {
@@ -79,6 +79,7 @@ const NewBoard = (props) => {
     if (nowGo) {
       handleGo(createdBoardId);
     }
+    dispatch(dontGo());
   }, [nowGo])
 
 
