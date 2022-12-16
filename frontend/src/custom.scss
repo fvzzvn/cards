@@ -578,7 +578,6 @@ $btn-close-opacity: 0.9;
 .leave-wrapper {
   grid-area: button2;
   margin: auto;
-  border: solid blue 5px;
 }
 
 .leave-button {
@@ -777,6 +776,16 @@ $btn-close-opacity: 0.9;
   box-shadow: 8px 6px 14px rgba(0, 0, 0, 0.6);
 }
 
+.key-game-buttons-wrapper {
+  margin-top: 45px;
+  display: flex;
+  justify-content: center;
+}
+
+#ready, #leave {
+  font-size: 25px;
+  margin: 0px 30px;
+}
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");

@@ -44,7 +44,7 @@ const Game = (props) => {
       .configureLogging(LogLevel.Information)
       .build();
 
-    setConnection(bHubConnection);
+    setbHubConnection(bHubConnection);
 
     bHubConnection.on("refreshBoards", () => {});
 
@@ -177,6 +177,15 @@ const Game = (props) => {
   const handleCheatCode = () => {
     setCheat(!cheat);
   };
+
+  const handleExitGame = () => {
+    console.log("BHUB CONNECTION:" + bHubConnection);
+    console.log("handle exit game");
+    connection.stop();
+    console.log("game hub stopped");
+    setInterval(console.log(), 1500);
+    bHubConnection.invoke("RefreshPage");
+  }
 
   return (
     <div className="game-component">
@@ -336,6 +345,11 @@ const Game = (props) => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="key-game-buttons-wrapper">
+          <div className="key-game-buttons-box">
+          <Button id="ready" variant="primary">Gotowy</Button>
+          <Button id="leave" variant="secondary" onClick={(e) => {props.setGo(!e); handleExitGame()}}>Opuść stół</Button></div>
         </div>
       </div>
     </div>

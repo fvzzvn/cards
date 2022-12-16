@@ -220,7 +220,7 @@ const Home = () => {
               username={username}
               game={true}
             ></HeaderBar>
-            <Game username={username} boardId={currentBoardId}></Game>
+            <Game setGo={setGo} username={username} boardId={currentBoardId}></Game>
           </>
         )
       )}
