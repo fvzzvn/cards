@@ -10,12 +10,15 @@ import {
   HttpTransportType,
 } from "@microsoft/signalr";
 
-
 const NewBoard = (props) => {
   const [loading, setLoading] = useState(false);
   const [connection, setConnection] = useState(null);
   const { message } = useSelector((state) => state.message);
+  const nowGo = useSelector((state) => state.boards.nowGo);
+  const createdBoardId = useSelector((state) => state.boards.createdBoardId);
   const dispatch = useDispatch();
+  const handleGo = props.handleGo;
+
   const initialValues = {
     boardName: "",
     boardType: false,
@@ -27,47 +30,56 @@ const NewBoard = (props) => {
     boardName: Yup.string().required("Podaj nazwę stołu."),
   });
 
-  const handleCreateBoard = async (formValue) => {
+  const handleCreateBoard = (formValue) => {
     let { boardName, boardType, boardMode, boardPublic } = formValue;
-    if(boardType===false){
-      boardType=1;
+    if (boardType === false) {
+      boardType = 1;
+    } else if (boardType === true) {
+      boardType = 2;
     }
-    else if(boardType===true){
-      boardType=2;
-    }
-    if(boardMode==="1"){
-      boardMode=1;
-    }
-    else if(boardMode==="2"){
-      boardMode=2;
-    }
-    else if(boardMode==="3"){
-      boardMode=3;
+    if (boardMode === "0") {
+      boardMode = 1;
+    } else if (boardMode === "1") {
+      boardMode = 2;
+    } else if (boardMode === "2") {
+      boardMode = 3;
     }
 
     setLoading(true);
     dispatch(createBoard({ boardName, boardType, boardMode, boardPublic }))
       .unwrap()
       .then(() => {
+        console.log();
         setLoading(false);
         dispatch(clearMessage());
         const connection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7297/BoardHub", {
-        skipNegotiation: true,
-        transport: HttpTransportType.WebSockets,
-      })
-      .withAutomaticReconnect()
-      .configureLogging(LogLevel.Information)
-      .build();
+          .withUrl("https://localhost:7297/BoardHub", {
+            skipNegotiation: true,
+            transport: HttpTransportType.WebSockets,
+          })
+          .withAutomaticReconnect()
+          .configureLogging(LogLevel.Information)
+          .build();
 
-      setConnection(connection);
-      if (connection) {
-        connection.start().then(() => {
-          console.log("invoke refresh page");
-          connection.invoke("RefreshPage");
-        })
-    }});
+        setConnection(connection);
+
+        connection.on("refreshBoards", () => {});
+
+        if (connection) {
+          connection.start().then(() => {
+            connection.invoke("RefreshPage");
+          });
+        }
+      })
+      .catch(() => {});
+      
   };
+
+  useEffect(() => {
+    if (nowGo) {
+      handleGo(createdBoardId);
+    }
+  }, [nowGo])
 
 
   return (

@@ -18,6 +18,7 @@ import {
   LogLevel,
   HttpTransportType,
 } from "@microsoft/signalr";
+import { create } from "yup/lib/Reference";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Home = () => {
   const [showCreateBoard, setShowCreateBoard] = useState(false);
   // const [loading, setLoading] = useState(false);
   const [go, setGo] = useState(false);
-  const [currentBoardId, setCurrentBoardId] = useState(0)
+  const [currentBoardId, setCurrentBoardId] = useState(0);
   // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
   const [connection, setConnection] = useState(null);
 
@@ -68,16 +69,17 @@ const Home = () => {
   const handleGo = (id) => {
     setCurrentBoardId((currentBoardId) => id);
     setGo(!go);
+    setShowCreateBoard((showCreateBoard) => false);
   };
-  
+
   const handleShowCreateBoard = () => {
     setShowCreateBoard((showCreateBoard) => true);
-  }
+  };
 
   const handleExitCreateBoard = () => {
     setShowCreateBoard((showCreateBoard) => false);
     dispatch(clearMessage());
-  }
+  };
   return (
     <div className="cards-bg">
       {!isLoggedIn ? (
@@ -110,10 +112,9 @@ const Home = () => {
             </div>
           </div>
         </div>
-      // ) : isLoggedIn && loading ? (
-        // <span className="board-loader spinner-border spinner-border-sm"></span>
-      ) : isLoggedIn &&
-      !inGame && !go ? (
+      ) : // ) : isLoggedIn && loading ? (
+      // <span className="board-loader spinner-border spinner-border-sm"></span>
+      isLoggedIn && !inGame && !go ? (
         <>
           <HeaderBar username={username}></HeaderBar>
           <div className="home-boards-bg">
@@ -160,8 +161,9 @@ const Home = () => {
               <Button
                 variant="secondary"
                 className="home-board-fliter"
-                onClick={handleShowCreateBoard}>
-                  Stwórz nową grę
+                onClick={handleShowCreateBoard}
+              >
+                Stwórz nową grę
               </Button>
               <ToggleButton
                 variant="outline-primary"
@@ -194,25 +196,35 @@ const Home = () => {
                 connection={connection}
                 // mmrs={mmrs}
                 // participants={participants}
-              >
-              </Boards>
+              ></Boards>
             </div>
           </div>
-          {showCreateBoard && (
+          {showCreateBoard && !go && (
             <div className="dim-screen">
               <div className="new-board-wrapper">
                 <div className="new-board-x-holder">
-                  <CloseButton variant="white" onClick={handleExitCreateBoard} />
+                  <CloseButton
+                    variant="white"
+                    onClick={handleExitCreateBoard}
+                  />
                 </div>
-                <NewBoard connection={connection}></NewBoard>
+                <NewBoard
+                  connection={connection}
+                  handleGo={handleGo}
+                ></NewBoard>
               </div>
             </div>
-            )}
+          )}
         </>
       ) : (
         go && (
           <>
-            <HeaderBar connection={connection} setGo={setGo} username={username} game={true}></HeaderBar>
+            <HeaderBar
+              connection={connection}
+              setGo={setGo}
+              username={username}
+              game={true}
+            ></HeaderBar>
             <Game username={username} boardId={currentBoardId}></Game>
           </>
         )

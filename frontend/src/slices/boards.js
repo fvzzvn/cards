@@ -42,7 +42,7 @@ export const createBoard = createAsyncThunk(
 );
 
 
-const initialState = { boardsLoaded: false, boards : [], lastBoardId: 0 };
+const initialState = { boardsLoaded: false, boards : [], createdBoardId: 0, nowGo: 0 };
 
 const boardsSlice = createSlice({
   name: "boards",
@@ -51,17 +51,17 @@ const boardsSlice = createSlice({
     [getBoards.fulfilled]: (state, action) => {
       state.boardsLoaded = true;
       state.boards = action.payload.data;
-      // state.mmrs = action.payload.data.mmrs;
-      // state.participants = action.payload.data.participants;
     },
     [getBoards.rejected]: (state, action) => {
       state.boardsLoaded = false;
     },
     [createBoard.fulfilled]: (state, action) => {
-      state.lastBoardId = action.payload.data.id;
+      state.createdBoardId = action.payload.data.id;
+      state.nowGo = 1;
     },
     [createBoard.rejected]: (state, action) => {
-      state.lastBoardId = 0;
+      state.createdBoardId = 0;
+      state.nowGo = 0;
     },
   },
 });

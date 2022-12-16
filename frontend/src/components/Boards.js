@@ -38,15 +38,13 @@ const Boards = (props) => {
     setConnection(connection);
     if (connection) {
       connection.start().then((result) => {
-        console.log("SignalR Connected!");
       });
     }
 
     connection.on("refreshBoards", () => {
-      console.log("refreshBoards");
       dispatch(getBoards());
     })
-    
+
   }, [dispatch]);
 
   return (

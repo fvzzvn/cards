@@ -22,7 +22,6 @@ const getAdminBoard = () => {
 };
 
 const createBoard = (boardName, boardType, boardMode, boardPublic) => {
-  console.log({"boardName": boardName, "boardType": boardType, "boardMode": boardMode, "boardPublic": boardPublic});
   return axios
     .post(API_URL + "boards", {
       "boardName": boardName,
@@ -30,16 +29,8 @@ const createBoard = (boardName, boardType, boardMode, boardPublic) => {
       "boardMode": boardMode,
     })
     .then((response) => {
-      console.log("created board type:" + boardType, +" mode: " + boardMode);
-      console.log(response.data);
       return response.data;
     });
-  // const response = await axios.post(API_URL + "boards", {
-  //   // "boardName": boardName,
-  //   "boardType": boardType,
-  //   "boardMode": boardMode,
-  // });
-  // return response.data;
 };
 
 const userService = {

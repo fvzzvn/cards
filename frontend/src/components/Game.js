@@ -43,6 +43,10 @@ const Game = (props) => {
     setConnection(connection);
 
 
+    connection.on("playerJoined", (player) =>
+    {
+      console.log(player.id + " joined " + props.boardId);
+    })
 
     connection.on("start", (game) => {
       setGameState(game);
