@@ -319,9 +319,6 @@ const Game = (props) => {
                     <Button variant="secondary" onClick={handleEndGame}>
                       Zakończ grę
                     </Button>
-                    <Button onClick={() => connection.stop()}>
-                      Opuść stół
-                    </Button>
                     {!cheat && (
                       <Button
                         style={{ color: "transparent" }}
