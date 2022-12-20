@@ -68,7 +68,16 @@ namespace RatATatCatBackEnd.Hubs
 
             game.ApplySpecialCardEffect(card, players, cards);
 
-            await Clients.All.applySpecialCardEffect(card, player, game);
+            await Clients.Group(game.Id).applySpecialCardEffect(card, player, game);
+        }
+        public async Task PlayedSpecialCard(Card card, int[] positions)
+        {
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
+            IGame game = _gameState.GetGame(player.GameId);
+
+            game.ApplySpecialCardEffect(card, player, positions);
+
+            await Clients.Group(game.Id).applySpecialCardEffect(card, player, game);
         }
         public async Task GetCard(string from)
         {
