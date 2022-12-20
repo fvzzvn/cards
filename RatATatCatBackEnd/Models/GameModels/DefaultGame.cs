@@ -49,24 +49,21 @@
         }
         public void RemovePlayer(Player player)
         {
-            if (Player1 is not null && this.Player1.Equals(player))
-            {
-                this.Player1 = null;
-            }
-            else if (Player2 is not null && this.Player2.Equals(player))
-            {
-                this.Player2 = null;
-            }
+            if (Player1 is not null)
+                if (Player1 == player)
+                    Player1 = null;
 
-            else if (Player3 is not null && this.Player3.Equals(player))
-            {
-                this.Player3 = null;
-            }
+            else if (Player2 is not null)
+                if (Player2 == player)
+                    Player2 = null;
 
-            else if (Player4 is not null && this.Player4.Equals(player))
-            {
-                this.Player4 = null;
-            }
+            else if (Player3 is not null)
+                if (Player3 == player)
+                    Player3 = null;
+
+            else if (Player4 is not null)
+                if (Player4 == player)
+                    Player4 = null;
         }
         public bool IsFull()
         {
@@ -289,6 +286,11 @@
         }
 
         public void ApplySpecialCardEffect(Card card, Player player, int[] positions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GiveCard(CrowCardRequest request)
         {
             throw new NotImplementedException();
         }

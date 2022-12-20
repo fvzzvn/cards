@@ -22,10 +22,11 @@
         bool IsFull();
         Player NextTurn();
         Card GiveCard(Player player, string from);
+        void GiveCard(CrowCardRequest request);
         void PlayCard(Card card, Player player);
         void PlayCard(Card card, Player player, int position);
-        void ApplySpecialCardEffect(Card card, List<Player> players, List<Card> cards);
-        void ApplySpecialCardEffect(Card card, Player player, int[] positions);
+        void ApplySpecialCardEffect(Card card, List<Player> players, List<Card>? cards);
+        void ApplySpecialCardEffect(Card card, Player player, int[]? positions);
         string ToString();
     }
 }

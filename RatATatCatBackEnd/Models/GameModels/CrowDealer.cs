@@ -30,10 +30,6 @@
             }
             Shuffle();
         }
-        public Dictionary<Card, Card> CreateTrack()
-        {
-            return new Dictionary<Card, Card>();
-        }
         public Card GiveCard(Player player)
         {
             throw new NotImplementedException();

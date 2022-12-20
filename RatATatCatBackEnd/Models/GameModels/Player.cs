@@ -10,10 +10,9 @@
             this.Cards = new List<Card>();
         }
         public string Id { get; set; }
+        public int PlayerPosition { get; set; } = -1;
         public string Name { get; set; }
-
         public string GameId { get; set; }
-
         public List<Card> Cards { get; set; }
 
         // dragon mode, too lazy for interafce

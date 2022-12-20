@@ -248,5 +248,10 @@
         {
             throw new NotImplementedException();
         }
+
+        public void GiveCard(CrowCardRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

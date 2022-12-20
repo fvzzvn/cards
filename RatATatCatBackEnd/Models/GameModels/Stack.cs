@@ -32,6 +32,23 @@
             return card;
         }
 
+        public void GetTopNTimes(Player player, int n)
+        {
+            try
+            {
+                for (int i = 0; i<n; i++)
+                {
+                    // TODO: shuffle if stacksize = 0 
+                    player.Cards.Add(cards.Pop());
+                }
+                stackSize -= n;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public void PlaceCard(Card card)
         {
             this.cards.Push(card);
