@@ -99,5 +99,24 @@ namespace RatATatCatBackEnd.Hubs
 
             await Clients.Group(player.GameId).receiveMessage(player.Name, message);
         }
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            Player player = _gameState.GetPlayer(Context.ConnectionId);
+            IGame game = _gameState.GetGame(player.GameId);
+
+            if (_gameState.ArePlayersReady(game.Id))
+            {
+                // TODO, game is being played
+            }
+            else
+            {
+                game.RemovePlayer(player);
+                _participants.DeleteParticipant(
+                    _participants.GetParticipantByUserName(player.Name)
+                    .ParticipantId);
+            }
+
+            await base.OnDisconnectedAsync(exception);
+        } 
     }
 }
