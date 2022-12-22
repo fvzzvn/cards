@@ -49,7 +49,7 @@ export const dontGo = createAsyncThunk(
 );
 
 export const clearBoards = createAsyncThunk(
-  "boards/dontGo",
+  "boards/clearBoards",
   async (thunkAPI) => {
     return true;
   }
