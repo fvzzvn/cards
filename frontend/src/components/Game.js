@@ -141,13 +141,6 @@ const Game = (props) => {
     }
   };
 
-  const handlePlayCardAfterGet = async () => {
-    try {
-      await connection.invoke("PlayCardAfterGet", activeCard);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const handleGetCardDealer = async () => {
     try {
@@ -303,12 +296,6 @@ const Game = (props) => {
                   <div className="bottom-buttons">
                     <Button variant="secondary" onClick={handlePlayCard}>
                       Zagraj kartę
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      onClick={handlePlayCardAfterGet}
-                    >
-                      Zagraj kartę po dobraniu
                     </Button>
                     <Button variant="secondary" onClick={handleGetCardDealer}>
                       Weź kartę od dealera
