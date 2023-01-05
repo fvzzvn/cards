@@ -12,6 +12,10 @@ import { addParticipant } from "../slices/participants";
 import { useDispatch, useSelector } from "react-redux";
 
 const Game = (props) => {
+  const mainPlayerName = useSelector(
+    (state) => state.userCredentials.displayName
+  );
+
   const [handCards, setHandCards] = useState("");
   const [leftPlayerCards, setLeftCards] = useState("");
   const [rightPlayerCards, setRightCards] = useState("");
@@ -32,7 +36,7 @@ const Game = (props) => {
       "JoinRoom",
       `${props.boardId}`,
       `${props.username}`
-    )
+    );
     setInterval(console.log(), 1500);
 
     const bHubConnection = new HubConnectionBuilder()
@@ -73,13 +77,33 @@ const Game = (props) => {
 
     connection.on("start", (game) => {
       setGameState(game);
-      setHandCards(game.player1.cards);
-      setLeftCards(game.player2.cards);
-      setTopCards(game.player3.cards);
-      setRightCards(game.player4.cards);
+      if (mainPlayerName === game.player1.name) {
+        setHandCards(game.player1.cards);
+        setLeftCards(game.player2.cards);
+        setTopCards(game.player3.cards);
+        setRightCards(game.player4.cards);
+        setActiveCard(game.player1.cards[0]);
+      } else if (mainPlayerName === game.player2.name) {
+        setHandCards(game.player2.cards);
+        setLeftCards(game.player3.cards);
+        setTopCards(game.player4.cards);
+        setRightCards(game.player1.cards);
+        setActiveCard(game.player2.cards[0]);
+      } else if (mainPlayerName === game.player3.name) {
+        setHandCards(game.player3.cards);
+        setLeftCards(game.player4.cards);
+        setTopCards(game.player1.cards);
+        setRightCards(game.player2.cards);
+        setActiveCard(game.player3.cards[0]);
+      } else if (mainPlayerName === game.player4.name) {
+        setHandCards(game.player4.cards);
+        setLeftCards(game.player1.cards);
+        setTopCards(game.player2.cards);
+        setRightCards(game.player3.cards);
+        setActiveCard(game.player4.cards[0]);
+      }
       setStack(game.stack);
       console.log(stack);
-      setActiveCard(game.player1.cards[0]);
       console.log(game, "started");
       setShowPlayerCards(true);
       setTimeout(() => {
@@ -90,25 +114,65 @@ const Game = (props) => {
     connection.on("playerPlayedCard", (player, card, game) => {
       console.log(player, "played", card, "game:", game);
       setGameState(game);
-      setHandCards(game.player1.cards);
-      setLeftCards(game.player2.cards);
-      setTopCards(game.player3.cards);
-      setRightCards(game.player4.cards);
+      if (mainPlayerName === game.player1.name) {
+        setHandCards(game.player1.cards);
+        setLeftCards(game.player2.cards);
+        setTopCards(game.player3.cards);
+        setRightCards(game.player4.cards);
+        setActiveCard(game.player1.cards[0]);
+      } else if (mainPlayerName === game.player2.name) {
+        setHandCards(game.player2.cards);
+        setLeftCards(game.player3.cards);
+        setTopCards(game.player4.cards);
+        setRightCards(game.player1.cards);
+        setActiveCard(game.player2.cards[0]);
+      } else if (mainPlayerName === game.player3.name) {
+        setHandCards(game.player3.cards);
+        setLeftCards(game.player4.cards);
+        setTopCards(game.player1.cards);
+        setRightCards(game.player2.cards);
+        setActiveCard(game.player3.cards[0]);
+      } else if (mainPlayerName === game.player4.name) {
+        setHandCards(game.player4.cards);
+        setLeftCards(game.player1.cards);
+        setTopCards(game.player2.cards);
+        setRightCards(game.player3.cards);
+        setActiveCard(game.player4.cards[0]);
+      }
       setStack(game.stack);
       console.log(stack);
-      setActiveCard(game.player1.cards[0]);
     });
 
     connection.on("playerTookCard", (player, card, game) => {
       console.log(player, "took", card, "game:", game);
       setGameState(game);
-      setHandCards(game.player1.cards);
-      setLeftCards(game.player2.cards);
-      setTopCards(game.player3.cards);
-      setRightCards(game.player4.cards);
+      if (mainPlayerName === game.player1.name) {
+        setHandCards(game.player1.cards);
+        setLeftCards(game.player2.cards);
+        setTopCards(game.player3.cards);
+        setRightCards(game.player4.cards);
+        setActiveCard(game.player1.cards[0]);
+      } else if (mainPlayerName === game.player2.name) {
+        setHandCards(game.player2.cards);
+        setLeftCards(game.player3.cards);
+        setTopCards(game.player4.cards);
+        setRightCards(game.player1.cards);
+        setActiveCard(game.player2.cards[0]);
+      } else if (mainPlayerName === game.player3.name) {
+        setHandCards(game.player3.cards);
+        setLeftCards(game.player4.cards);
+        setTopCards(game.player1.cards);
+        setRightCards(game.player2.cards);
+        setActiveCard(game.player3.cards[0]);
+      } else if (mainPlayerName === game.player4.name) {
+        setHandCards(game.player4.cards);
+        setLeftCards(game.player1.cards);
+        setTopCards(game.player2.cards);
+        setRightCards(game.player3.cards);
+        setActiveCard(game.player4.cards[0]);
+      }
       setStack(game.stack);
       console.log(stack);
-      setActiveCard(game.player1.cards[0]);
     });
 
     connection.on("notPlayersTurn", () => {
@@ -120,6 +184,13 @@ const Game = (props) => {
 
     connection.on("gameEnding", () => {
       console.log("game ending");
+    });
+
+    connection.on("playerPlayedSpecialCard", (player, card, game) => {
+      if (card.text === "Queen") {
+      }
+      if (card.text === "Jack") {
+      }
     });
   }, []);
 
@@ -140,7 +211,6 @@ const Game = (props) => {
       console.log(err);
     }
   };
-
 
   const handleGetCardDealer = async () => {
     try {
@@ -178,7 +248,7 @@ const Game = (props) => {
     console.log("game hub stopped");
     setInterval(console.log(), 1500);
     bHubConnection.invoke("RefreshPage");
-  }
+  };
 
   return (
     <div className="game-component">
@@ -308,8 +378,7 @@ const Game = (props) => {
                     </Button>
                     {!cheat && (
                       <Button
-                        style={{ color: "transparent" }}
-                        variant="outlined"
+                        variant="outlined primary"
                         onClick={handleCheatCode}
                       >
                         Cheat
@@ -317,8 +386,8 @@ const Game = (props) => {
                     )}
                     {cheat && (
                       <Button
-                        style={{ color: "transparent" }}
-                        variant="outlined secondary"
+                        style={{ color: "green" }}
+                        variant="outlined primary"
                         onClick={handleCheatCode}
                       >
                         Cheat
@@ -332,8 +401,20 @@ const Game = (props) => {
         </div>
         <div className="key-game-buttons-wrapper">
           <div className="key-game-buttons-box">
-          <Button id="ready" variant="primary">Gotowy</Button>
-          <Button id="leave" variant="secondary" onClick={(e) => {props.setGo(!e); handleExitGame()}}>Opuść stół</Button></div>
+            <Button id="ready" variant="primary">
+              Gotowy
+            </Button>
+            <Button
+              id="leave"
+              variant="secondary"
+              onClick={(e) => {
+                props.setGo(!e);
+                handleExitGame();
+              }}
+            >
+              Opuść stół
+            </Button>
+          </div>
         </div>
       </div>
     </div>
