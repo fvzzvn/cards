@@ -259,15 +259,7 @@ const Game = (props) => {
               <div className="left-player">
                 {leftPlayerCards &&
                   leftPlayerCards.map((card, i) => (
-                    <div
-                      onClick={() =>
-                        setActiveCard({
-                          text: card.text,
-                          suit: card.suit,
-                          isSpecial: card.isSpecial,
-                        })
-                      }
-                    >
+                    <div>
                       <Card
                         cheat={cheat}
                         rotated={true}
@@ -281,15 +273,7 @@ const Game = (props) => {
               <div className="top-player">
                 {topPlayerCards &&
                   topPlayerCards.map((card, i) => (
-                    <div
-                      onClick={() =>
-                        setActiveCard({
-                          text: card.text,
-                          suit: card.suit,
-                          isSpecial: card.isSpecial,
-                        })
-                      }
-                    >
+                    <div>
                       <Card
                         cheat={cheat}
                         value={card.text}
@@ -313,13 +297,6 @@ const Game = (props) => {
                 {rightPlayerCards &&
                   rightPlayerCards.reverse().map((card, i) => (
                     <div
-                      onClick={() =>
-                        setActiveCard({
-                          text: card.text,
-                          suit: card.suit,
-                          isSpecial: card.isSpecial,
-                        })
-                      }
                     >
                       <Card
                         cheat={cheat}
