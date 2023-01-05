@@ -51,12 +51,17 @@ namespace RatATatCatBackEnd.Hubs
                 await Clients.Caller.playerPlayedSpecialCard(player, card, game);
             }
         }
-        public async Task PlayedSpecialCard(Card card, List<Player>? players, List<Card>? cards)
+        public async Task PlayedSpecialCard(Card card, List<string>? players, List<Card>? cards)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
+            List<Player> playersList = new List<Player>();
+            foreach(string p in players)
+            {
+                playersList.Add(_gameState.GetPlayer(p));
+            }
 
-            game.ApplySpecialCardEffect(card, players, cards);
+            game.ApplySpecialCardEffect(card, playersList, cards);
 
             await Clients.Group(game.Id).applySpecialCardEffect(card, player, game);
         }
