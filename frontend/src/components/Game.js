@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   HubConnectionBuilder,
   LogLevel,
@@ -32,9 +32,11 @@ const Game = (props) => {
   const [cheat, setCheat] = useState(false);
   const [showPlayerCards, setShowPlayerCards] = useState(false);
   const [waitForQueenAction, setWaitForQueenAction] = useState(false);
-  const [queenIdsArray, setQueenIdsArray] = useState([]);
-  const [queenCardArray, setQueenCardArray] = useState([]);
+  const [queenIdsArray, setQueenIdsArray] = useStateCallback([]);
+  const [queenCardArray, setQueenCardArray] = useStateCallback([]);
   const [waitForJackAction, setWaitForJackAction] = useState(false);
+  const [jackIdsArray, setJackIdsArray] = useStateCallback([]);
+  const [jackCardArray, setJackCardArray] = useStateCallback([]);
   const dispatch = useDispatch();
 
   const invokeJoinRoom = async (connection) => {
@@ -213,10 +215,12 @@ const Game = (props) => {
       console.log("player played special card");
       if (card.text === "Queen") {
         console.log("QUEEN PLAYED")
+        setActiveCard(card);
         setWaitForQueenAction(true);
       }
       if (card.text === "Jack") {
-        console.log("JACK PLAYED")
+        console.log("JACK PLAYED");
+        setActiveCard(card);
         setWaitForJackAction(true);
       }
     });
@@ -278,9 +282,29 @@ const Game = (props) => {
     bHubConnection.invoke("RefreshPage");
   };
 
+  function useStateCallback(initialState) {
+    const [state, setState] = useState(initialState);
+    const cbRef = useRef(null); // init mutable ref container for callbacks
+  
+    const setStateCallback = useCallback((state, cb) => {
+      cbRef.current = cb; // store current, passed callback in ref
+      setState(state);
+    }, []); // keep object reference stable, exactly like `useState`
+  
+    useEffect(() => {
+      // cb.current is `null` on initial render, 
+      // so we only invoke callback on state *updates*
+      if (cbRef.current) {
+        cbRef.current(state);
+        cbRef.current = null; // reset callback after execution
+      }
+    }, [state]);
+  
+    return [state, setStateCallback];
+  }
   
   const handleQueenAction = (id, card) => {
-    console.log("HANDLING QUEEN ACTION...", id, card);
+    console.log("HANDLING QUEEN ACTION...", activeCard, id, card);
     setQueenIdsArray(current => [...current, id], () => {
       console.log(queenIdsArray);
     });
@@ -288,10 +312,39 @@ const Game = (props) => {
       console.log(queenCardArray);
     });
     if(queenCardArray.length === 2 && queenIdsArray.length === 2){
-      console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", ["Queen", queenIdsArray, queenCardArray]);
-      connection.invoke(["Queen", queenIdsArray, queenCardArray]);
+      // console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", [activeCard, queenIdsArray, queenCardArray]);
+      // connection.invoke("PlayedSpecialCard", [activeCard, queenIdsArray, queenCardArray]);
+      try {
+        console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", [activeCard, queenIdsArray, queenCardArray]);
+        connection.invoke("PlayedSpecialCard", [activeCard, queenIdsArray, queenCardArray]);
+      } catch (err) {
+        console.log(err);
+      }
       setWaitForQueenAction(false);
     }
+  }
+
+  const handleJackAction = (id, card) => {
+    console.log("HANDLING JACK ACTION...", activeCard, id, card);
+    setJackIdsArray(current => [...current, id], () => {
+      console.log(jackIdsArray);
+    });
+    setJackCardArray(current => [...current, card], () => {
+      console.log(jackCardArray);
+    });
+    if(jackCardArray.length === 2 && jackIdsArray.length === 2){
+      // console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", [activeCard, queenIdsArray, queenCardArray]);
+      // connection.invoke("PlayedSpecialCard", [activeCard, queenIdsArray, queenCardArray]);
+      try {
+        console.log("INVOKING JACK SPECIAL CARD WITH ARRAY: ", [activeCard, jackIdsArray, jackCardArray]);
+        connection.invoke("PlayedSpecialCard", [activeCard, jackIdsArray, jackCardArray]);
+      } catch (err) {
+        console.log(err);
+      }
+      setWaitForJackAction(false);
+    }
+    //  connection.invoke(["Jack", id, card]);
+    //  setWaitForJackAction(false);
   }
 
   return (
@@ -306,6 +359,11 @@ const Game = (props) => {
                     <div
                     onClick={waitForQueenAction ? () =>
                       handleQueenAction(leftPlayerId ,{
+                        text: card.text,
+                        suit: card.suit,
+                        isSpecial: card.isSpecial,
+                      }) : waitForJackAction ? () => 
+                      handleJackAction(topPlayerId, {
                         text: card.text,
                         suit: card.suit,
                         isSpecial: card.isSpecial,
@@ -329,7 +387,12 @@ const Game = (props) => {
                         text: card.text,
                         suit: card.suit,
                         isSpecial: card.isSpecial,
-                      }) : undefined}>
+                      }) : waitForJackAction ? () => 
+                    handleJackAction(topPlayerId, {
+                      text: card.text,
+                      suit: card.suit,
+                      isSpecial: card.isSpecial,
+                    }) : undefined}>
                       <Card
                         cheat={cheat}
                         value={card.text}
@@ -358,6 +421,11 @@ const Game = (props) => {
                         text: card.text,
                         suit: card.suit,
                         isSpecial: card.isSpecial,
+                      }) : waitForJackAction ? () => 
+                      handleJackAction(topPlayerId, {
+                        text: card.text,
+                        suit: card.suit,
+                        isSpecial: card.isSpecial,
                       }) : undefined}
                     >
                       <Card
@@ -376,7 +444,12 @@ const Game = (props) => {
                     handCards.map((card, i) => (
                       <div
                         onClick={waitForQueenAction ? () =>
-                          handleQueenAction(mainPlayerId ,{
+                          handleQueenAction(card, mainPlayerId ,{
+                            text: card.text,
+                            suit: card.suit,
+                            isSpecial: card.isSpecial,
+                          }) : waitForJackAction ? () => 
+                          handleJackAction(topPlayerId, {
                             text: card.text,
                             suit: card.suit,
                             isSpecial: card.isSpecial,
