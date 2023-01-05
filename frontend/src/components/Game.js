@@ -336,8 +336,8 @@ const Game = (props) => {
       // console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", [activeCard, queenIdsArray, queenCardArray]);
       // connection.invoke("PlayedSpecialCard", [activeCard, queenIdsArray, queenCardArray]);
       try {
-        console.log("INVOKING JACK SPECIAL CARD WITH ARRAY: ", [activeCard, jackIdsArray, jackCardArray]);
-        connection.invoke("PlayedSpecialCard", [activeCard, jackIdsArray, jackCardArray]);
+        console.log("INVOKING JACK SPECIAL CARD WITH ARRAY: ", activeCard, jackIdsArray, jackCardArray);
+        connection.invoke("PlayedSpecialCard", activeCard, jackIdsArray, jackCardArray);
       } catch (err) {
         console.log(err);
       }
