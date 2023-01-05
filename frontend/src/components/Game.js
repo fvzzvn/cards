@@ -311,7 +311,7 @@ const Game = (props) => {
               </div>
               <div className="right-player">
                 {rightPlayerCards &&
-                  rightPlayerCards.map((card, i) => (
+                  rightPlayerCards.reverse().map((card, i) => (
                     <div
                       onClick={() =>
                         setActiveCard({
