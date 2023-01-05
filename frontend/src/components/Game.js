@@ -20,6 +20,10 @@ const Game = (props) => {
   const [leftPlayerCards, setLeftCards] = useState("");
   const [rightPlayerCards, setRightCards] = useState("");
   const [topPlayerCards, setTopCards] = useState("");
+  const [mainPlayerId, setMainPlayerId] = useState("");
+  const [leftPlayerId, setLeftPlayerId] = useState("");
+  const [topPlayerId, setTopPlayerId] = useState("");
+  const [rightPlayerId, setRightPlayerId] = useState("");
   const [stack, setStack] = useState("");
   const [gameState, setGameState] = useState("");
   const [activeCard, setActiveCard] = useState("");
@@ -27,7 +31,10 @@ const Game = (props) => {
   const [bHubConnection, setbHubConnection] = useState(null);
   const [cheat, setCheat] = useState(false);
   const [showPlayerCards, setShowPlayerCards] = useState(false);
-
+  const [waitForQueenAction, setWaitForQueenAction] = useState(false);
+  const [queenIdsArray, setQueenIdsArray] = useState([]);
+  const [queenCardArray, setQueenCardArray] = useState([]);
+  const [waitForJackAction, setWaitForJackAction] = useState(false);
   const dispatch = useDispatch();
 
   const invokeJoinRoom = async (connection) => {
@@ -83,24 +90,40 @@ const Game = (props) => {
         setTopCards(game.player3.cards);
         setRightCards(game.player4.cards);
         setActiveCard(game.player1.cards[0]);
+        setMainPlayerId(game.player1.id);
+        setLeftPlayerId(game.player2.id);
+        setTopPlayerId(game.player3.id);
+        setRightPlayerId(game.player4.id);
       } else if (mainPlayerName === game.player2.name) {
         setHandCards(game.player2.cards);
         setLeftCards(game.player3.cards);
         setTopCards(game.player4.cards);
         setRightCards(game.player1.cards);
         setActiveCard(game.player2.cards[0]);
+        setMainPlayerId(game.player2.id);
+        setLeftPlayerId(game.player3.id);
+        setTopPlayerId(game.player4.id);
+        setRightPlayerId(game.player1.id);
       } else if (mainPlayerName === game.player3.name) {
         setHandCards(game.player3.cards);
         setLeftCards(game.player4.cards);
         setTopCards(game.player1.cards);
         setRightCards(game.player2.cards);
         setActiveCard(game.player3.cards[0]);
+        setMainPlayerId(game.player3.id);
+        setLeftPlayerId(game.player4.id);
+        setTopPlayerId(game.player1.id);
+        setRightPlayerId(game.player2.id);
       } else if (mainPlayerName === game.player4.name) {
         setHandCards(game.player4.cards);
         setLeftCards(game.player1.cards);
         setTopCards(game.player2.cards);
         setRightCards(game.player3.cards);
         setActiveCard(game.player4.cards[0]);
+        setMainPlayerId(game.player4.id);
+        setLeftPlayerId(game.player1.id);
+        setTopPlayerId(game.player2.id);
+        setRightPlayerId(game.player3.id);
       }
       setStack(game.stack);
       console.log(stack);
@@ -187,9 +210,14 @@ const Game = (props) => {
     });
 
     connection.on("playerPlayedSpecialCard", (player, card, game) => {
+      console.log("player played special card");
       if (card.text === "Queen") {
+        console.log("QUEEN PLAYED")
+        setWaitForQueenAction(true);
       }
       if (card.text === "Jack") {
+        console.log("JACK PLAYED")
+        setWaitForJackAction(true);
       }
     });
   }, []);
@@ -250,6 +278,22 @@ const Game = (props) => {
     bHubConnection.invoke("RefreshPage");
   };
 
+  
+  const handleQueenAction = (id, card) => {
+    console.log("HANDLING QUEEN ACTION...", id, card);
+    setQueenIdsArray(current => [...current, id], () => {
+      console.log(queenIdsArray);
+    });
+    setQueenCardArray(current => [...current, card], () => {
+      console.log(queenCardArray);
+    });
+    if(queenCardArray.length === 2 && queenIdsArray.length === 2){
+      console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", ["Queen", queenIdsArray, queenCardArray]);
+      connection.invoke(["Queen", queenIdsArray, queenCardArray]);
+      setWaitForQueenAction(false);
+    }
+  }
+
   return (
     <div className="game-component">
       <div className="game-wrapper">
@@ -259,7 +303,13 @@ const Game = (props) => {
               <div className="left-player">
                 {leftPlayerCards &&
                   leftPlayerCards.map((card, i) => (
-                    <div>
+                    <div
+                    onClick={waitForQueenAction ? () =>
+                      handleQueenAction(leftPlayerId ,{
+                        text: card.text,
+                        suit: card.suit,
+                        isSpecial: card.isSpecial,
+                      }) : undefined}>
                       <Card
                         cheat={cheat}
                         rotated={true}
@@ -273,7 +323,13 @@ const Game = (props) => {
               <div className="top-player">
                 {topPlayerCards &&
                   topPlayerCards.map((card, i) => (
-                    <div>
+                    <div
+                    onClick={waitForQueenAction ? () =>
+                      handleQueenAction(topPlayerId ,{
+                        text: card.text,
+                        suit: card.suit,
+                        isSpecial: card.isSpecial,
+                      }) : undefined}>
                       <Card
                         cheat={cheat}
                         value={card.text}
@@ -297,6 +353,12 @@ const Game = (props) => {
                 {rightPlayerCards &&
                   rightPlayerCards.reverse().map((card, i) => (
                     <div
+                    onClick={waitForQueenAction ? () =>
+                      handleQueenAction(rightPlayerId ,{
+                        text: card.text,
+                        suit: card.suit,
+                        isSpecial: card.isSpecial,
+                      }) : undefined}
                     >
                       <Card
                         cheat={cheat}
@@ -313,7 +375,12 @@ const Game = (props) => {
                   {handCards &&
                     handCards.map((card, i) => (
                       <div
-                        onClick={() =>
+                        onClick={waitForQueenAction ? () =>
+                          handleQueenAction(mainPlayerId ,{
+                            text: card.text,
+                            suit: card.suit,
+                            isSpecial: card.isSpecial,
+                          }) : () =>
                           setActiveCard({
                             text: card.text,
                             suit: card.suit,
