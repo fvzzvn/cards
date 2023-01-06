@@ -26,20 +26,24 @@
             if (this.Player1 == null)
             {
                 this.Player1 = player;
+                player.OnBoardPosition = 1;
             }
             else if (this.Player2 == null)
             {
                 this.Player2 = player;
+                player.OnBoardPosition = 2;
             }
 
             else if (this.Player3 == null)
             {
                 this.Player3 = player;
+                player.OnBoardPosition = 3;
             }
 
             else if (this.Player4 == null)
             {
                 this.Player4 = player;
+                player.OnBoardPosition = 4;
             }
         }
         public void RemovePlayer(Player player)
@@ -87,7 +91,7 @@
             }
             else
             {
-                if (Stack.IsEmpty)
+                if (Stack.IsEmpty && PlayerTurn.Equals(player))
                 {
                     player.Cards.Remove(card);
                     Stack.PlaceCard(card);

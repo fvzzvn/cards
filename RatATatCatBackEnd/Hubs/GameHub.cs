@@ -25,17 +25,18 @@ namespace RatATatCatBackEnd.Hubs
             {
                 await _gameState.CreateGame(gameId);
             }
-
+            IGame game = _gameState.GetGame(gameId);
             Player player = _gameState.CreatePlayer(gameId, username, Context.ConnectionId);
+
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
             await Clients.Group(gameId).playerJoined(player);
+            await Clients.Caller.gameStatus(game);
 
             // add participant
             _participants.AddParticipantByUserName(username, Int32.Parse(gameId));
 
             if (_gameState.ArePlayersReady(gameId))
             {
-                IGame game = _gameState.GetGame(gameId);
                 await Clients.Group(gameId).start(game);
             }
         }
@@ -65,7 +66,7 @@ namespace RatATatCatBackEnd.Hubs
 
             game.ApplySpecialCardEffect(card, playersList, cards);
 
-            await Clients.Group(game.Id).applySpecialCardEffect(card, player, game);
+            await Clients.Group(game.Id).applySpecialCardEffect(card, player, game, playersList, cards);
         }
         public async Task GetCard(string from)
         {

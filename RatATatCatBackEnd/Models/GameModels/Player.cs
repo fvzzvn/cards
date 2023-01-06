@@ -10,10 +10,9 @@
             this.Cards = new List<Card>();
         }
         public string Id { get; set; }
+        public int OnBoardPosition { get; set; }
         public string Name { get; set; }
-
         public string GameId { get; set; }
-
         public List<Card> Cards { get; set; }
 
         public override string ToString()
