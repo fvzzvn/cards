@@ -96,10 +96,13 @@
                     player.Cards.Remove(card);
                     Stack.PlaceCard(card);
                 }
-                else if (Stack.PeekTop().Equals(card))
+                else if (!Stack.IsEmpty)
                 {
-                    player.Cards.Remove(card);
-                    Stack.PlaceCard(card);
+                    if (Stack.PeekTop().Equals(card))
+                    {
+                        player.Cards.Remove(card);
+                        Stack.PlaceCard(card);
+                    }
                 }
                 else
                 {
