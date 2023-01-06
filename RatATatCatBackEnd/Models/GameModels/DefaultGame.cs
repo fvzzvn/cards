@@ -71,7 +71,12 @@
             }
             return false;
         }
-
+        public bool IsEmpty()
+        {
+            if (this.Player1 == null & this.Player2 == null & this.Player3 == null & this.Player4 == null)
+                return true;
+            return false;
+        }
         public void PlayCard(Card card, Player player)
         {
             if (AfterGet)

@@ -13,6 +13,7 @@
         void RemovePlayer(Player player);
         void End();
         bool IsFull();
+        bool IsEmpty();
         Player NextTurn();
         Card GiveCard(Player player, string from);
         void PlayCard(Card card, Player player);

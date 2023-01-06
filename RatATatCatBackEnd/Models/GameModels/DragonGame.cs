@@ -53,7 +53,12 @@
             if (Player1 != null && Player2 != null) return true;
             return false;
         }
-
+        public bool IsEmpty()
+        {
+            if (Player1 == null && Player2 == null)
+                return true;
+            return false;
+        }
         public Player NextTurn()
         {
             if (PlayerTurn == Player1)

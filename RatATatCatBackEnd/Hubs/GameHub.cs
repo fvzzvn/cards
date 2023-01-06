@@ -11,11 +11,13 @@ namespace RatATatCatBackEnd.Hubs
         private readonly IGameState _gameState;
         private readonly IServiceProvider _serviceProvider;
         private readonly IParticipant _participants;
+        private readonly IBoardInstance _boards;
         public GameHub(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _gameState = _serviceProvider.GetRequiredService<IGameState>();
             _participants = _serviceProvider.GetRequiredService<IParticipant>();
+            _boards = _serviceProvider.GetRequiredService<IBoardInstance>();
         }
         public async Task JoinRoom(string gameId, string username)
         {
@@ -112,6 +114,8 @@ namespace RatATatCatBackEnd.Hubs
                     _participants.GetParticipantByUserName(player.Name)
                     .ParticipantId);
             }
+            if (game.IsEmpty())
+                _boards.RemoveBoard(Int16.Parse(game.Id));
 
             await base.OnDisconnectedAsync(exception);
         }
