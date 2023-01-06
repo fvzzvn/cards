@@ -92,10 +92,14 @@ const Game = (props) => {
         setTopCards(game.player3.cards);
         setRightCards(game.player4.cards);
         setActiveCard(game.player1.cards[0]);
-        setMainPlayerId(game.player1.id);
-        setLeftPlayerId(game.player2.id);
-        setTopPlayerId(game.player3.id);
-        setRightPlayerId(game.player4.id);
+        console.log(game.player1.id);
+        console.log(game.player2.id);
+        console.log(game.player3.id);
+        console.log(game.player4.id);
+        setMainPlayerId((game.player1.id));
+        setLeftPlayerId((game.player2.id));
+        setTopPlayerId((game.player3.id));
+        setRightPlayerId((game.player4.id));
       } else if (mainPlayerName === game.player2.name) {
         setHandCards(game.player2.cards);
         setLeftCards(game.player3.cards);
@@ -128,11 +132,12 @@ const Game = (props) => {
         setRightPlayerId(game.player3.id);
       }
       setStack(game.stack);
-      console.log(stack);
       console.log(game, "started");
+      // console.log("main: " + mainPlayerId + " left: " + leftPlayerId + "top: " + topPlayerId + "right: " + rightPlayerId)
       setShowPlayerCards(true);
       setTimeout(() => {
-        setShowPlayerCards(false);
+        setShowPlayerCards(false);      
+        // console.log("main: " + mainPlayerId + " left: " + leftPlayerId + "top: " + topPlayerId+ "right: " + rightPlayerId);
       }, 5000);
     });
 
@@ -198,6 +203,42 @@ const Game = (props) => {
       }
       setStack(game.stack);
       console.log(stack);
+    });
+
+    connection.on("applySpecialCardEffect", (card, player, game) => {
+      console.log(player, "used special ", card, " game:", game);
+      if(card.text === "Jack"){
+      setGameState(game);
+      if (mainPlayerName === game.player1.name) {
+        setHandCards(game.player1.cards);
+        setLeftCards(game.player2.cards);
+        setTopCards(game.player3.cards);
+        setRightCards(game.player4.cards);
+        setActiveCard(game.player1.cards[0]);
+      } else if (mainPlayerName === game.player2.name) {
+        setHandCards(game.player2.cards);
+        setLeftCards(game.player3.cards);
+        setTopCards(game.player4.cards);
+        setRightCards(game.player1.cards);
+        setActiveCard(game.player2.cards[0]);
+      } else if (mainPlayerName === game.player3.name) {
+        setHandCards(game.player3.cards);
+        setLeftCards(game.player4.cards);
+        setTopCards(game.player1.cards);
+        setRightCards(game.player2.cards);
+        setActiveCard(game.player3.cards[0]);
+      } else if (mainPlayerName === game.player4.name) {
+        setHandCards(game.player4.cards);
+        setLeftCards(game.player1.cards);
+        setTopCards(game.player2.cards);
+        setRightCards(game.player3.cards);
+        setActiveCard(game.player4.cards[0]);
+      }
+      setStack(game.stack);
+    }
+    else if(card.text === "Queen") {
+      console.log("ODKRYCIE KARTY: ", " wait for backend update");
+    }
     });
 
     connection.on("notPlayersTurn", () => {
@@ -311,12 +352,14 @@ const Game = (props) => {
     setQueenCardArray(current => [...current, card], () => {
       console.log(queenCardArray);
     });
-    if(queenCardArray.length === 2 && queenIdsArray.length === 2){
+    if(queenCardArray.length === 1 && queenIdsArray.length === 1){
       // console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", [activeCard, queenIdsArray, queenCardArray]);
       // connection.invoke("PlayedSpecialCard", [activeCard, queenIdsArray, queenCardArray]);
       try {
-        console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", [activeCard, queenIdsArray, queenCardArray]);
-        connection.invoke("PlayedSpecialCard", [activeCard, queenIdsArray, queenCardArray]);
+        console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", activeCard, queenIdsArray, queenCardArray);
+        connection.invoke("PlayedSpecialCard", activeCard, queenIdsArray, queenCardArray);
+        setQueenIdsArray([]);
+        setQueenCardArray([]);
       } catch (err) {
         console.log(err);
       }
@@ -338,6 +381,8 @@ const Game = (props) => {
       try {
         console.log("INVOKING JACK SPECIAL CARD WITH ARRAY: ", activeCard, jackIdsArray, jackCardArray);
         connection.invoke("PlayedSpecialCard", activeCard, jackIdsArray, jackCardArray);
+        setJackIdsArray([]);
+        setJackCardArray([]);
       } catch (err) {
         console.log(err);
       }
@@ -363,7 +408,7 @@ const Game = (props) => {
                         suit: card.suit,
                         isSpecial: card.isSpecial,
                       }) : waitForJackAction ? () => 
-                      handleJackAction(topPlayerId, {
+                      handleJackAction(leftPlayerId, {
                         text: card.text,
                         suit: card.suit,
                         isSpecial: card.isSpecial,
@@ -422,7 +467,7 @@ const Game = (props) => {
                         suit: card.suit,
                         isSpecial: card.isSpecial,
                       }) : waitForJackAction ? () => 
-                      handleJackAction(topPlayerId, {
+                      handleJackAction(rightPlayerId, {
                         text: card.text,
                         suit: card.suit,
                         isSpecial: card.isSpecial,
@@ -449,7 +494,7 @@ const Game = (props) => {
                             suit: card.suit,
                             isSpecial: card.isSpecial,
                           }) : waitForJackAction ? () => 
-                          handleJackAction(topPlayerId, {
+                          handleJackAction(mainPlayerId, {
                             text: card.text,
                             suit: card.suit,
                             isSpecial: card.isSpecial,
