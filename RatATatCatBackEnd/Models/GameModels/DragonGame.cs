@@ -40,7 +40,7 @@
 
         public Card GiveCard(Player player, string from)
         {
-            Card card = new Card { FacedDown = true };
+            Card card = new Card { };
             if (from == "dealer")
             {
                 card = Dealer.GiveCard(player);
@@ -95,8 +95,18 @@
 
         public void PlayCard(Card card, Player player, int position)
         {
-            player.Cards[position] = card;
-
+            switch (position)
+            {
+                case 6:
+                    Stack.PlaceCard(card);
+                    break;
+                case 7:
+                    Stack2.PlaceCard(card);
+                    break;
+                default:
+                    player.Cards[position] = card;
+                    break;
+            }
             if (player.AllCardsFacedUp()) RoundEnded = true;
         }
         public void ApplySpecialCardEffect(Card card, Player player, int[] positions)
