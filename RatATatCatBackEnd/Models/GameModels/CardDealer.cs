@@ -27,7 +27,6 @@
             Shuffle();
 
         }
-
         public void Shuffle()
         {
             Random rnd = new Random();
@@ -53,7 +52,11 @@
             if (isEmpty()) { FillDeck(); }
             return card;
         }
-
+        public Card StartingCard()
+        {
+            Card card = Cards.Pop();
+            return card;
+        }
         public bool isEmpty()
         {
             if (this.Cards.Count == 0)

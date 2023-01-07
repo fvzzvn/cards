@@ -6,6 +6,7 @@
         void Shuffle();
         void GiveHand(Player player);
         Card GiveCard(Player player);
+        Card StartingCard();
         bool isEmpty();
     }
 }

@@ -46,33 +46,28 @@ namespace RatATatCatBackEnd.Hubs
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
 
+            game.PlayCard(card, player);
 
-            if (game.Stack.IsEmpty && !game.PlayerTurn.Equals(player))
-                await Clients.Caller.cantPlayCard();
-            else
+            // invoke playerPlayedCard on front
+            await Clients.Group(game.Id).playerPlayedCard(player, card, game);
+            if (card.IsSpecial)
             {
-                game.PlayCard(card, player);
-
-                // invoke playerPlayedCard on front
-                await Clients.Group(game.Id).playerPlayedCard(player, card, game);
-                if (card.IsSpecial)
-                {
-                    await Clients.Caller.playerPlayedSpecialCard(player, card, game);
-                }
-                if (game.RoundEnded)
-                {
-                    game.RoundOver();
-                    await Clients.Group(game.Id).roundResults(game.RoundResult);
-                    game.NewRound();
-                    await Clients.Group(game.Id).newRound(game);
-                }
-                if (game.GameEnded)
-                {
-                    await Clients.Group(game.Id).gameResults(game.GameResult);
-                    _gameState.RemoveGame(game.Id);
-                    _boards.RemoveBoard(Int16.Parse(game.Id));
-                }
+                await Clients.Caller.playerPlayedSpecialCard(player, card, game);
             }
+            if (game.RoundEnded)
+            {
+                game.RoundOver();
+                await Clients.Group(game.Id).roundResults(game.RoundResult);
+                game.NewRound();
+                await Clients.Group(game.Id).newRound(game);
+            }
+            if (game.GameEnded)
+            {
+                await Clients.Group(game.Id).gameResults(game.GameResult);
+                _gameState.RemoveGame(game.Id);
+                _boards.RemoveBoard(Int16.Parse(game.Id));
+            }
+            
         }
         public async Task PlayedSpecialCard(Card card, List<string>? players, List<Card>? cards)
         {

@@ -7,6 +7,7 @@
             this.Id = id;
             this.Stack = new Stack();
             this.Dealer = new CardDealer();
+            Stack.PlaceCard(Dealer.StartingCard());
         }
         public string Id { get; set; }
         public Stack Stack { get; set; }
@@ -93,21 +94,12 @@
             }
             else
             {
-                if (Stack.IsEmpty && PlayerTurn.Equals(player))
+                if (Stack.PeekTop().Equals(card))
                 {
                     player.Cards.Remove(card);
                     Stack.PlaceCard(card);
                 }
-                else if (!Stack.IsEmpty)
-                {
-                    if (Stack.PeekTop().Equals(card))
-                    {
-                        player.Cards.Remove(card);
-                        Stack.PlaceCard(card);
-                    }
-                }
-                else if (Stack.IsEmpty)
-                { }
+                
                 else
                 {
                     GetCardFromStack(player);
@@ -124,6 +116,10 @@
         public Card GetCardFromStack(Player player)
         {
             Card card = Stack.GetTop(player);
+            if (!Stack.NotEmpty())
+            {
+                Stack.PlaceCard(Dealer.StartingCard());
+            }
             return card;
         }
 
@@ -175,10 +171,7 @@
 
             else if (from == "stack")
             {
-                if (Stack.NotEmpty())
-                {
-                    card = GetCardFromStack(player);
-                }
+                card = GetCardFromStack(player);
             }
             AfterGet = true;
             return card;

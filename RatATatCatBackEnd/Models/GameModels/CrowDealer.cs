@@ -60,5 +60,10 @@
             foreach (var value in values.OrderBy(x => rnd.Next()))
                 Cards.Push(value);
         }
+
+        public Card StartingCard()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
