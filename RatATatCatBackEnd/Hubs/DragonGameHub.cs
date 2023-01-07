@@ -46,10 +46,11 @@ namespace RatATatCatBackEnd.Hubs
             else
             {
                 // position 6 discard to stack1, position 7 discard to stack2
-                game.PlayCard(card, player, position);
+                if (!card.IsSpecial)
+                    game.PlayCard(card, player, position);
                 if (card.IsSpecial)
+                    // invoke another endpoint on front with parameters
                     await Clients.Caller.playerPlayedSpecialCard(player, card, game);
-
                 if (game.RoundEnded)
                 {
                     game.RoundOver();
@@ -85,8 +86,9 @@ namespace RatATatCatBackEnd.Hubs
                 await Clients.Caller.notPlayersTurn();
             else
             {
+                // on front dont allow get from stack if empty
                 Card card = game.GiveCard(player, from);
-                await Clients.Group(game.Id).playerTookCard(player, card, game);
+                await Clients.Group(game.Id).playerTookCard(player, card, game, from);
             }
         }
 
