@@ -58,6 +58,10 @@
             return Player1 is not null && Player2 is not null;
         }
 
+        public bool IsEmpty()
+        {
+            return Player1 is null && Player2 is null;
+        }
         public void NewRound()
         {
             throw new NotImplementedException();
@@ -196,6 +200,5 @@
                 Track[positions[0]].SwitchTopDown();
             }
         }
-
     }
 }
