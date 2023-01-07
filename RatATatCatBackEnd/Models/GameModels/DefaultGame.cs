@@ -104,6 +104,8 @@
                         Stack.PlaceCard(card);
                     }
                 }
+                else if (Stack.IsEmpty)
+                { }
                 else
                 {
                     GetCardFromStack(player);
