@@ -200,8 +200,11 @@
             if (card.Equals(Jack))
             {
                 int i = players[0].Cards.IndexOf(cards[0]);
-                players[0].Cards[i] = cards[1];
-                players[1].Cards[i] = cards[0];
+                int j = players[1].Cards.IndexOf(cards[1]);
+
+                Card temp = players[0].Cards[i];
+                players[0].Cards[i] = players[1].Cards[j];
+                players[1].Cards[j] = temp;
             }
             //maybe more ?
             //if (card.Equals(Ace)) 

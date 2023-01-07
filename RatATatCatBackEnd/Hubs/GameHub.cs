@@ -45,13 +45,20 @@ namespace RatATatCatBackEnd.Hubs
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
-            
-            game.PlayCard(card, player);
-            // invoke playerPlayedCard on front
-            await Clients.Group(game.Id).playerPlayedCard(player, card, game);
-            if (card.IsSpecial)
+
+
+            if (game.Stack.IsEmpty && !game.PlayerTurn.Equals(player))
+                await Clients.Caller.cantPlayCard();
+            else
             {
-                await Clients.Caller.playerPlayedSpecialCard(player, card, game);
+                game.PlayCard(card, player);
+
+                // invoke playerPlayedCard on front
+                await Clients.Group(game.Id).playerPlayedCard(player, card, game);
+                if (card.IsSpecial)
+                {
+                    await Clients.Caller.playerPlayedSpecialCard(player, card, game);
+                }
             }
         }
         public async Task PlayedSpecialCard(Card card, List<string>? players, List<Card>? cards)
