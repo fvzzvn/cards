@@ -29,7 +29,7 @@
             this.stackSize--;
             card = this.cards.Pop();
             player.Cards.Add(card);
-            IsEmpty = NotEmpty();
+            IsEmpty = !NotEmpty();
             return card;
         }
 
@@ -54,7 +54,7 @@
         {
             this.cards.Push(card);
             this.stackSize++;
-            IsEmpty = NotEmpty();
+            IsEmpty = !NotEmpty();
         }
 
         public void Clear() => cards.Clear();
