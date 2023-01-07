@@ -1,64 +1,56 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using RatATatCatBackEnd.Interface;
-using RatATatCatBackEnd.Interfaces;
-using RatATatCatBackEnd.Models.Database;
 using RatATatCatBackEnd.Models.GameModels;
 
 namespace RatATatCatBackEnd.Hubs
 {
-    public class GameHub : Hub<IGameHub>
+    public class DragonGameHub : Hub<IDragonGameHub>
     {
         private readonly IGameState _gameState;
         private readonly IServiceProvider _serviceProvider;
         private readonly IParticipant _participants;
         private readonly IBoardInstance _boards;
-        public GameHub(IServiceProvider serviceProvider)
+        public DragonGameHub(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _gameState = _serviceProvider.GetRequiredService<IGameState>();
             _participants = _serviceProvider.GetRequiredService<IParticipant>();
             _boards = _serviceProvider.GetRequiredService<IBoardInstance>();
         }
+
         public async Task JoinRoom(string gameId, string username)
         {
             if (_gameState.GetGame(gameId) == null)
             {
                 await _gameState.CreateGame(gameId);
             }
-            IGame game = _gameState.GetGame(gameId);
-            Player player = _gameState.CreatePlayer(gameId, username, Context.ConnectionId);
 
+            Player player = _gameState.CreatePlayer(gameId, username, Context.ConnectionId);
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
             await Clients.Group(gameId).playerJoined(player);
-            await Clients.Caller.gameStatus(game);
-
-            // add participant
-            _participants.AddParticipantByUserName(username, Int32.Parse(gameId));
-
+            
             if (_gameState.ArePlayersReady(gameId))
             {
-                await Clients.Group(gameId).start(game);
+                IGame game = _gameState.GetGame(gameId);
+                await Clients.All.start(game);
             }
         }
 
-        public async Task PlayCard(Card card)
+        public async Task PlayCard(Card card, int position)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
 
-
-            if (game.Stack.IsEmpty && !game.PlayerTurn.Equals(player))
-                await Clients.Caller.cantPlayCard();
+            if (game.PlayerTurn != player)
+                await Clients.Caller.notPlayersTurn();
             else
             {
-                game.PlayCard(card, player);
-
-                // invoke playerPlayedCard on front
-                await Clients.Group(game.Id).playerPlayedCard(player, card, game);
+                // position 6 discard to stack1, position 7 discard to stack2
+                if (!card.IsSpecial)
+                    game.PlayCard(card, player, position);
                 if (card.IsSpecial)
-                {
+                    // invoke another endpoint on front with parameters
                     await Clients.Caller.playerPlayedSpecialCard(player, card, game);
-                }
                 if (game.RoundEnded)
                 {
                     game.RoundOver();
@@ -74,51 +66,46 @@ namespace RatATatCatBackEnd.Hubs
                 }
             }
         }
-        public async Task PlayedSpecialCard(Card card, List<string>? players, List<Card>? cards)
+        
+        public async Task PlayedSpecialCard(Card card, int[]? positions)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
-            List<Player> playersList = new List<Player>();
-            foreach(string p in players)
-            {
-                playersList.Add(_gameState.GetPlayer(p));
-            }
 
-            game.ApplySpecialCardEffect(card, playersList, cards);
+            game.ApplySpecialCardEffect(card, player, positions);
 
-            await Clients.Group(game.Id).applySpecialCardEffect(card, player, game, playersList, cards);
+            await Clients.Group(game.Id).applySpecialCardEffect(card, player, game);
         }
+
         public async Task GetCard(string from)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
 
-            // get card
-            Card card;
-
-            if (game.PlayerTurn == player)
-            {
-                // give card to player 
-                card = game.GiveCard(player, from);
-                // notify others that player took card
-                await Clients.Group(game.Id).playerTookCard(player, card, game);
-                // next players turn to play his card
-                // this might cause problems -> first player took card but didnt play any, second player if fast enought might do his turn before first player.
-                game.NextTurn();
-            }
+            if (!game.PlayerTurn.Equals(player))
+                await Clients.Caller.notPlayersTurn();
             else
             {
-                await Clients.Caller.notPlayersTurn();
+                // on front dont allow get from stack if empty
+                Card card = game.GiveCard(player, from);
+                await Clients.Group(game.Id).playerTookCard(player, card, game, from);
             }
         }
-        public async Task RatATatCatEnding()
+
+        public async Task EndTurn()
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
 
-            game.RoundEnding = true;
-            await Clients.Group(game.Id).roundEnding();
+            if (game.PlayerTurn != player)
+                await Clients.Caller.notPlayersTurn();
+            else
+            {
+                game.NextTurn();
+                await Clients.Group(game.Id).nextTurn(game);
+            }
         }
+
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             Player player = _gameState.GetPlayer(Context.ConnectionId);
@@ -135,17 +122,9 @@ namespace RatATatCatBackEnd.Hubs
                     _participants.GetParticipantByUserName(player.Name)
                     .ParticipantId);
             }
-            if (game.IsEmpty())
-                _boards.RemoveBoard(Int16.Parse(game.Id));
 
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(string message)
-        {
-            Player player = _gameState.GetPlayer(Context.ConnectionId);
-
-            await Clients.Group(player.GameId).receiveMessage(player.Name, message);
-        }
     }
 }

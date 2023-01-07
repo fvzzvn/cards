@@ -16,7 +16,12 @@
         public Player Player2 { get; set; }
         public Player Player3 { get; set; }
         public Player Player4 { get; set; }
-        public int TurnsLeft { get; set; }
+        public int TurnsLeft { get; set; } = 4;
+        public bool RoundEnding { get; set; }
+        public bool RoundEnded { get; set; }
+        public Dictionary<Player, int> RoundResult { get; set; }
+        public bool GameEnded { get; set; }
+        public Dictionary<Player, int> GameResult { get; set; }
 
         private bool AfterGet = false;
         private static Random rng = new Random();
@@ -48,24 +53,21 @@
         }
         public void RemovePlayer(Player player)
         {
-            if (this.Player1.Equals(player))
-            {
-                this.Player1 = null;
-            }
-            else if (this.Player2.Equals(player))
-            {
-                this.Player2 = null;
-            }
+            if (Player1 is not null)
+                if (Player1 == player)
+                    Player1 = null;
 
-            else if (this.Player3.Equals(player))
-            {
-                this.Player3 = null;
-            }
+            else if (Player2 is not null)
+                if (Player2 == player)
+                    Player2 = null;
 
-            else if (this.Player4.Equals(player))
-            {
-                this.Player4 = null;
-            }
+            else if (Player3 is not null)
+                if (Player3 == player)
+                    Player3 = null;
+
+            else if (Player4 is not null)
+                if (Player4 == player)
+                    Player4 = null;
         }
         public bool IsFull()
         {
@@ -148,11 +150,13 @@
                 this.PlayerTurn = this.Player1;
                 return this.Player1;
             }
+            if (RoundEnding) TurnsLeft--;
+            if (TurnsLeft == 0) RoundEnded = true;
         }
 
         public void End()
         {
-            this.TurnsLeft = 4;
+            GameEnded = true;
         }
 
         public override string ToString()
@@ -229,13 +233,77 @@
             //    }
             //}
         }
+        public void RoundOver()
+        {
+            CalculatePoints();
+            // Check for winner
+            foreach (KeyValuePair<Player, int> entry in GameResult)
+            {
+                if (entry.Value >= 100) End();
+            }
+        }
+        public void NewRound()
+        {
+            RoundEnded = false;
+            Dealer.FillDeck();
+            Stack.Clear();
+            RoundResult.Clear();
 
+            Player1.Cards.Clear();
+            Player2.Cards.Clear();
+            Player3.Cards.Clear();
+            Player4.Cards.Clear();
+
+            Dealer.GiveHand(Player1);
+            Dealer.GiveHand(Player2);
+            Dealer.GiveHand(Player3);
+            Dealer.GiveHand(Player4);
+        }
+        public void CalculatePoints()
+        {
+            // Player1
+            int firstPlayerPoints = 0;
+            int secondPlayerPoints = 0;
+            int thirdPlayerPoints = 0;
+            int forthPlayerPoints = 0;
+
+            foreach (Card card in Player1.Cards)
+            {
+                firstPlayerPoints += Int16.Parse(card.Text);
+            }
+            foreach (Card card in Player2.Cards)
+            {
+                secondPlayerPoints += Int16.Parse(card.Text);
+            }
+            foreach (Card card in Player3.Cards)
+            {
+                thirdPlayerPoints += Int16.Parse(card.Text);
+            }
+            foreach (Card card in Player4.Cards)
+            {
+                forthPlayerPoints += Int16.Parse(card.Text);
+            }
+            RoundResult[Player1] = firstPlayerPoints;
+            RoundResult[Player2] = secondPlayerPoints;
+            RoundResult[Player3] = thirdPlayerPoints;
+            RoundResult[Player4] = forthPlayerPoints;
+            // save game results
+            foreach (KeyValuePair<Player, int> entry in RoundResult)
+            {
+                GameResult[entry.Key] += entry.Value;
+            }
+        }
         public void PlayCard(Card card, Player player, int position)
         {
             throw new NotImplementedException();
         }
 
         public void ApplySpecialCardEffect(Card card, Player player, int[] positions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GiveCard(CrowCardRequest request)
         {
             throw new NotImplementedException();
         }

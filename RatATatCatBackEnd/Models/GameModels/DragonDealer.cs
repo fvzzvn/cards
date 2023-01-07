@@ -29,6 +29,7 @@
                     Cards.Push(new Card { Text = types[i] , IsSpecial = true});
                 }
             }
+            Shuffle();
         }
 
         public Card GiveCard(Player player)
@@ -55,7 +56,12 @@
 
         public void Shuffle()
         {
-            throw new NotImplementedException();
+            Random rnd = new Random();
+
+            var values = this.Cards.ToArray();
+            this.Cards.Clear();
+            foreach (var value in values.OrderBy(x => rnd.Next()))
+                this.Cards.Push(value);
         }
     }
 }

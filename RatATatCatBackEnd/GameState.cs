@@ -87,6 +87,12 @@ namespace RatATatCatBackEnd
                 this.players.TryRemove(dragonFoundGame.Player1.Id, out foundPlayer);
                 this.players.TryRemove(dragonFoundGame.Player2.Id, out foundPlayer);
             }
+            if (foundGame is CrowGame)
+            {
+                var dragonFoundGame = (CrowGame)foundGame;
+                this.players.TryRemove(dragonFoundGame.Player1.Id, out foundPlayer);
+                this.players.TryRemove(dragonFoundGame.Player2.Id, out foundPlayer);
+            }
         }
 
         public async Task<DefaultGame> CreateGame(string gameId)
