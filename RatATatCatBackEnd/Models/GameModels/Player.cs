@@ -14,6 +14,7 @@
         public int PlayerPosition { get; set; } = -1;
         public string Name { get; set; }
         public string GameId { get; set; }
+        public bool AfterGet { get; set; } = false;
         public List<Card> Cards { get; set; }
 
         // dragon mode, too lazy for interafce

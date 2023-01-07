@@ -24,7 +24,6 @@
         public bool GameEnded { get; set; }
         public Dictionary<Player, int> GameResult { get; set; }
 
-        private bool AfterGet = false;
         private static Random rng = new Random();
 
         public void AddPlayer(Player player)
@@ -86,11 +85,11 @@
         }
         public void PlayCard(Card card, Player player)
         {
-            if (AfterGet)
+            if (player.AfterGet)
             {
                 player.Cards.Remove(card);
                 Stack.PlaceCard(card);
-                AfterGet = false;
+                player.AfterGet = false;
             }
             else
             {
@@ -107,12 +106,6 @@
             }
         }
 
-        public void PlayCardAfterGet(Card card, Player player)
-        {
-            player.Cards.Remove(card);
-            this.Stack.PlaceCard(card);
-        }
-
         public Card GetCardFromStack(Player player)
         {
             Card card = Stack.GetTop(player);
@@ -125,7 +118,6 @@
 
         public Player NextTurn()
         {
-            AfterGet = false;
             if (this.PlayerTurn == this.Player1)
             {
                 this.PlayerTurn = this.Player2;
@@ -173,7 +165,7 @@
             {
                 card = GetCardFromStack(player);
             }
-            AfterGet = true;
+            player.AfterGet = true;
             return card;
         }
 
