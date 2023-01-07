@@ -199,10 +199,9 @@
             Card Ace = new Card { Text = "Ace" };
             if (card.Equals(Jack))
             {
-                    players[0].Cards.Remove(cards[0]);
-                    players[0].Cards.Add(cards[1]);
-                    players[1].Cards.Remove(cards[1]);
-                    players[1].Cards.Add(cards[0]);
+                int i = players[0].Cards.IndexOf(cards[0]);
+                players[0].Cards[i] = cards[1];
+                players[1].Cards[i] = cards[0];
             }
             //maybe more ?
             //if (card.Equals(Ace)) 
