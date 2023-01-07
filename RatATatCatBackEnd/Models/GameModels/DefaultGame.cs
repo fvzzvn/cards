@@ -232,6 +232,7 @@
             RoundEnded = false;
             Dealer.FillDeck();
             Stack.Clear();
+            Stack.PlaceCard(Dealer.StartingCard());
             RoundResult.Clear();
 
             Player1.Cards.Clear();

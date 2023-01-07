@@ -67,7 +67,6 @@ namespace RatATatCatBackEnd.Hubs
                 _gameState.RemoveGame(game.Id);
                 _boards.RemoveBoard(Int16.Parse(game.Id));
             }
-            
         }
         public async Task PlayedSpecialCard(Card card, List<string>? players, List<Card>? cards)
         {
