@@ -29,7 +29,7 @@ const Game = (props) => {
   const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
   const [bHubConnection, setbHubConnection] = useState(null);
-  const [cheat, setCheat] = useState(false);
+  const [cheat, setCheat] = useState(true);
   const [showPlayerCards, setShowPlayerCards] = useState(false);
   const [waitForQueenAction, setWaitForQueenAction] = useState(false);
   const [queenIdsArray, setQueenIdsArray] = useStateCallback([]);
