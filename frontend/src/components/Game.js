@@ -96,10 +96,10 @@ const Game = (props) => {
         console.log(game.player2.id);
         console.log(game.player3.id);
         console.log(game.player4.id);
-        setMainPlayerId((game.player1.id));
-        setLeftPlayerId((game.player2.id));
-        setTopPlayerId((game.player3.id));
-        setRightPlayerId((game.player4.id));
+        setMainPlayerId(game.player1.id);
+        setLeftPlayerId(game.player2.id);
+        setTopPlayerId(game.player3.id);
+        setRightPlayerId(game.player4.id);
       } else if (mainPlayerName === game.player2.name) {
         setHandCards(game.player2.cards);
         setLeftCards(game.player3.cards);
@@ -136,7 +136,7 @@ const Game = (props) => {
       // console.log("main: " + mainPlayerId + " left: " + leftPlayerId + "top: " + topPlayerId + "right: " + rightPlayerId)
       setShowPlayerCards(true);
       setTimeout(() => {
-        setShowPlayerCards(false);      
+        setShowPlayerCards(false);
         // console.log("main: " + mainPlayerId + " left: " + leftPlayerId + "top: " + topPlayerId+ "right: " + rightPlayerId);
       }, 5000);
     });
@@ -182,64 +182,265 @@ const Game = (props) => {
         setTopCards(game.player3.cards);
         setRightCards(game.player4.cards);
         setActiveCard(game.player1.cards[0]);
+        makeVisibleAfterGet(card);
       } else if (mainPlayerName === game.player2.name) {
         setHandCards(game.player2.cards);
         setLeftCards(game.player3.cards);
         setTopCards(game.player4.cards);
         setRightCards(game.player1.cards);
         setActiveCard(game.player2.cards[0]);
+        makeVisibleAfterGet(card);
       } else if (mainPlayerName === game.player3.name) {
         setHandCards(game.player3.cards);
         setLeftCards(game.player4.cards);
         setTopCards(game.player1.cards);
         setRightCards(game.player2.cards);
         setActiveCard(game.player3.cards[0]);
+        makeVisibleAfterGet(card);
       } else if (mainPlayerName === game.player4.name) {
         setHandCards(game.player4.cards);
         setLeftCards(game.player1.cards);
         setTopCards(game.player2.cards);
         setRightCards(game.player3.cards);
         setActiveCard(game.player4.cards[0]);
+        makeVisibleAfterGet(card);
       }
       setStack(game.stack);
       console.log(stack);
     });
 
-    connection.on("applySpecialCardEffect", (card, player, game) => {
-      console.log(player, "used special ", card, " game:", game);
-      if(card.text === "Jack"){
-      setGameState(game);
-      if (mainPlayerName === game.player1.name) {
-        setHandCards(game.player1.cards);
-        setLeftCards(game.player2.cards);
-        setTopCards(game.player3.cards);
-        setRightCards(game.player4.cards);
-        setActiveCard(game.player1.cards[0]);
-      } else if (mainPlayerName === game.player2.name) {
-        setHandCards(game.player2.cards);
-        setLeftCards(game.player3.cards);
-        setTopCards(game.player4.cards);
-        setRightCards(game.player1.cards);
-        setActiveCard(game.player2.cards[0]);
-      } else if (mainPlayerName === game.player3.name) {
-        setHandCards(game.player3.cards);
-        setLeftCards(game.player4.cards);
-        setTopCards(game.player1.cards);
-        setRightCards(game.player2.cards);
-        setActiveCard(game.player3.cards[0]);
-      } else if (mainPlayerName === game.player4.name) {
-        setHandCards(game.player4.cards);
-        setLeftCards(game.player1.cards);
-        setTopCards(game.player2.cards);
-        setRightCards(game.player3.cards);
-        setActiveCard(game.player4.cards[0]);
+    connection.on(
+      "applySpecialCardEffect",
+      (card, player, game, playersList, cards) => {
+        if (card.text === "Queen") {
+          console.log(
+            "SHOWING CARD FROM QUEEN SPECIAL EFFECT: ",
+            playersList,
+            cards
+          );
+          if (mainPlayerName === game.player1.name) {
+            console.log("I'M PLAYER 1");
+            if (playersList[0].id === game.player1.id) {
+              console.log("SHOWING MY CARD");
+              const temporary = game.player1.cards;
+              let cheatCard = game.player1.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player1.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player1.cards);
+              setHandCards(game.player1.cards);
+            } else if (playersList[0].id === game.player2.id) {
+              console.log("SHOWING LEFT CARD");
+              let cheatCard = game.player2.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player2.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player2.cards);
+              setLeftCards(game.player2.cards);
+            } else if (playersList[0].id === game.player3.id) {
+              console.log("SHOWING TOP CARD");
+              let cheatCard = game.player3.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player3.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player3.cards);
+              setTopCards(game.player3.cards);
+            } else if (playersList[0].id === game.player4.id) {
+              console.log("SHOWING RIGHT CARD");
+              let cheatCard = game.player4.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player4.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player4.cards);
+              setRightCards(game.player4.cards);
+            }
+          } else if (mainPlayerName === game.player2.name) {
+            console.log("I'M PLAYER 2");
+            if (playersList[0].id === game.player2.id) {
+              console.log("SHOWING MY CARD");
+              let cheatCard = game.player2.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player2.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player2.cards);
+              setHandCards(game.player2.cards);
+            } else if (playersList[0].id === game.player3.id) {
+              console.log("SHOWING LEFT CARD");
+              let cheatCard = game.player3.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player3.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player3.cards);
+              setLeftCards(game.player3.cards);
+            } else if (playersList[0].id === game.player4.id) {
+              console.log("SHOWING TOP CARD");
+              let cheatCard = game.player4.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player4.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player4.cards);
+              setTopCards(game.player4.cards);
+            } else if (playersList[0].id === game.player1.id) {
+              console.log("SHOWING RIGHT CARD");
+              let cheatCard = game.player1.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player1.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player1.cards);
+              setRightCards(game.player1.cards);
+            }
+          } else if (mainPlayerName === game.player3.name) {
+            console.log("I'M PLAYER 3");
+            if (playersList[0].id === game.player3.id) {
+              console.log("SHOWING MY CARD");
+              let cheatCard = game.player3.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player3.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player3.cards);
+              setHandCards(game.player3.cards);
+            } else if (playersList[0].id === game.player4.id) {
+              console.log("SHOWING LEFT CARD");
+              let cheatCard = game.player4.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player4.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player4.cards);
+              setLeftCards(game.player4.cards);
+            } else if (playersList[0].id === game.player1.id) {
+              console.log("SHOWING TOP CARD");
+              let cheatCard = game.player1.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player1.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player1.cards);
+              setTopCards(game.player1.cards);
+            } else if (playersList[0].id === game.player2.id) {
+              console.log("SHOWING RIGHT CARD");
+              let cheatCard = game.player2.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player2.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player2.cards);
+              setRightCards(game.player2.cards);
+            }
+          } else if (mainPlayerName === game.player4.name) {
+            console.log("I'M PLAYER 4");
+            if (playersList[0].id === game.player4.id) {
+              console.log("SHOWING MY CARD");
+              let cheatCard = game.player4.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player4.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player4.cards);
+              setHandCards(game.player4.cards);
+            } else if (playersList[0].id === game.player1.id) {
+              console.log("SHOWING LEFT CARD");
+              let cheatCard = game.player1.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player1.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player1.cards);
+              setLeftCards(game.player1.cards);
+            } else if (playersList[0].id === game.player2.id) {
+              console.log("SHOWING TOP CARD");
+              let cheatCard = game.player2.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player2.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player2.cards);
+              setTopCards(game.player2.cards);
+            } else if (playersList[0].id === game.player3.id) {
+              console.log("SHOWING RIGHT CARD");
+              let cheatCard = game.player3.cards.find(
+                (card) =>
+                  card.text === cards[0].text && card.suit === cards[0].suit
+              );
+              console.log(game.player3.cards);
+              console.log(cheatCard);
+              cheatCard.queenCheat = true;
+              console.log(game.player3.cards);
+              setRightCards(game.player3.cards);
+            }
+          }
+          setStack(game.stack);
+        }
+        if (card.text === "Jack") {
+          setGameState(game);
+          if (mainPlayerName === game.player1.name) {
+            setHandCards(game.player1.cards);
+            setLeftCards(game.player2.cards);
+            setTopCards(game.player3.cards);
+            setRightCards(game.player4.cards);
+            setActiveCard(game.player1.cards[0]);
+          } else if (mainPlayerName === game.player2.name) {
+            setHandCards(game.player2.cards);
+            setLeftCards(game.player3.cards);
+            setTopCards(game.player4.cards);
+            setRightCards(game.player1.cards);
+            setActiveCard(game.player2.cards[0]);
+          } else if (mainPlayerName === game.player3.name) {
+            setHandCards(game.player3.cards);
+            setLeftCards(game.player4.cards);
+            setTopCards(game.player1.cards);
+            setRightCards(game.player2.cards);
+            setActiveCard(game.player3.cards[0]);
+          } else if (mainPlayerName === game.player4.name) {
+            setHandCards(game.player4.cards);
+            setLeftCards(game.player1.cards);
+            setTopCards(game.player2.cards);
+            setRightCards(game.player3.cards);
+            setActiveCard(game.player4.cards[0]);
+          }
+          setStack(game.stack);
+        }
       }
-      setStack(game.stack);
-    }
-    else if(card.text === "Queen") {
-      console.log("ODKRYCIE KARTY: ", " wait for backend update");
-    }
-    });
+    );
 
     connection.on("notPlayersTurn", () => {
       console.log("Not players turn");
@@ -255,7 +456,7 @@ const Game = (props) => {
     connection.on("playerPlayedSpecialCard", (player, card, game) => {
       console.log("player played special card");
       if (card.text === "Queen") {
-        console.log("QUEEN PLAYED")
+        console.log("QUEEN PLAYED");
         setActiveCard(card);
         setWaitForQueenAction(true);
       }
@@ -326,38 +527,49 @@ const Game = (props) => {
   function useStateCallback(initialState) {
     const [state, setState] = useState(initialState);
     const cbRef = useRef(null); // init mutable ref container for callbacks
-  
+
     const setStateCallback = useCallback((state, cb) => {
       cbRef.current = cb; // store current, passed callback in ref
       setState(state);
     }, []); // keep object reference stable, exactly like `useState`
-  
+
     useEffect(() => {
-      // cb.current is `null` on initial render, 
+      // cb.current is `null` on initial render,
       // so we only invoke callback on state *updates*
       if (cbRef.current) {
         cbRef.current(state);
         cbRef.current = null; // reset callback after execution
       }
     }, [state]);
-  
+
     return [state, setStateCallback];
   }
-  
+
   const handleQueenAction = (id, card) => {
     console.log("HANDLING QUEEN ACTION...", activeCard, id, card);
-    setQueenIdsArray(current => [...current, id], () => {
-      console.log(queenIdsArray);
-    });
-    setQueenCardArray(current => [...current, card], () => {
-      console.log(queenCardArray);
-    });
-    if(queenCardArray.length === 1 && queenIdsArray.length === 1){
-      // console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", [activeCard, queenIdsArray, queenCardArray]);
-      // connection.invoke("PlayedSpecialCard", [activeCard, queenIdsArray, queenCardArray]);
+    console.log(activeCard);
+    console.log(id);
+    console.log(card);
+    setQueenIdsArray(
+      (current) => [...current, id],
+      () => {
+        console.log(queenIdsArray);
+      }
+    );
+    setQueenCardArray(
+      (current) => [...current, card],
+      () => {
+        console.log(queenCardArray);
+      }
+    );
+    if (queenCardArray.length === 1 && queenIdsArray.length === 1) {
       try {
-        console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", activeCard, queenIdsArray, queenCardArray);
-        connection.invoke("PlayedSpecialCard", activeCard, queenIdsArray, queenCardArray);
+        connection.invoke(
+          "PlayedSpecialCard",
+          activeCard,
+          queenIdsArray,
+          queenCardArray
+        );
         setQueenIdsArray([]);
         setQueenCardArray([]);
       } catch (err) {
@@ -365,22 +577,30 @@ const Game = (props) => {
       }
       setWaitForQueenAction(false);
     }
-  }
+  };
 
   const handleJackAction = (id, card) => {
     console.log("HANDLING JACK ACTION...", activeCard, id, card);
-    setJackIdsArray(current => [...current, id], () => {
-      console.log(jackIdsArray);
-    });
-    setJackCardArray(current => [...current, card], () => {
-      console.log(jackCardArray);
-    });
-    if(jackCardArray.length === 2 && jackIdsArray.length === 2){
-      // console.log("INVOKING QUEEN SPECIAL CARD WITH ARRAY: ", [activeCard, queenIdsArray, queenCardArray]);
-      // connection.invoke("PlayedSpecialCard", [activeCard, queenIdsArray, queenCardArray]);
+    setJackIdsArray(
+      (current) => [...current, id],
+      () => {
+        console.log(jackIdsArray);
+      }
+    );
+    setJackCardArray(
+      (current) => [...current, card],
+      () => {
+        console.log(jackCardArray);
+      }
+    );
+    if (jackCardArray.length === 2 && jackIdsArray.length === 2) {
       try {
-        console.log("INVOKING JACK SPECIAL CARD WITH ARRAY: ", activeCard, jackIdsArray, jackCardArray);
-        connection.invoke("PlayedSpecialCard", activeCard, jackIdsArray, jackCardArray);
+        connection.invoke(
+          "PlayedSpecialCard",
+          activeCard,
+          jackIdsArray,
+          jackCardArray
+        );
         setJackIdsArray([]);
         setJackCardArray([]);
       } catch (err) {
@@ -388,9 +608,29 @@ const Game = (props) => {
       }
       setWaitForJackAction(false);
     }
-    //  connection.invoke(["Jack", id, card]);
-    //  setWaitForJackAction(false);
+  };
+
+  const makeVisibleAfterGet = (c) => {
+      console.log("MAKE VISIBLE AFTER GET: ", c);
+      c.queenCheat = true;    
+      console.log(c);
+      console.log(handCards);
+      let temporary = handCards;
+      let prevState = handCards;      
+      console.log(temporary, prevState);
+      temporary[-1] = c;
+      console.log(temporary, prevState);
+      setHandCards(temporary);
+      setTimeout(() => {
+        console.log(handCards);
+        setHandCards(prevState);
+      }, 5000);
   }
+
+  useEffect(() => {
+    console.log("GAMESTATE CHANGED!!!!!!!!!!");
+  }, [gameState]
+  )
 
   return (
     <div className="game-component">
@@ -402,19 +642,27 @@ const Game = (props) => {
                 {leftPlayerCards &&
                   leftPlayerCards.map((card, i) => (
                     <div
-                    onClick={waitForQueenAction ? () =>
-                      handleQueenAction(leftPlayerId ,{
-                        text: card.text,
-                        suit: card.suit,
-                        isSpecial: card.isSpecial,
-                      }) : waitForJackAction ? () => 
-                      handleJackAction(leftPlayerId, {
-                        text: card.text,
-                        suit: card.suit,
-                        isSpecial: card.isSpecial,
-                      }) : undefined}>
+                      onClick={
+                        waitForQueenAction
+                          ? () =>
+                              handleQueenAction(leftPlayerId, {
+                                text: card.text,
+                                suit: card.suit,
+                                isSpecial: card.isSpecial,
+                              })
+                          : waitForJackAction
+                          ? () =>
+                              handleJackAction(leftPlayerId, {
+                                text: card.text,
+                                suit: card.suit,
+                                isSpecial: card.isSpecial,
+                              })
+                          : undefined
+                      }
+                    >
                       <Card
                         cheat={cheat}
+                        queenCheat={card.queenCheat}
                         rotated={true}
                         value={card.text}
                         suit={card.suit}
@@ -427,19 +675,27 @@ const Game = (props) => {
                 {topPlayerCards &&
                   topPlayerCards.map((card, i) => (
                     <div
-                    onClick={waitForQueenAction ? () =>
-                      handleQueenAction(topPlayerId ,{
-                        text: card.text,
-                        suit: card.suit,
-                        isSpecial: card.isSpecial,
-                      }) : waitForJackAction ? () => 
-                    handleJackAction(topPlayerId, {
-                      text: card.text,
-                      suit: card.suit,
-                      isSpecial: card.isSpecial,
-                    }) : undefined}>
+                      onClick={
+                        waitForQueenAction
+                          ? () =>
+                              handleQueenAction(topPlayerId, {
+                                text: card.text,
+                                suit: card.suit,
+                                isSpecial: card.isSpecial,
+                              })
+                          : waitForJackAction
+                          ? () =>
+                              handleJackAction(topPlayerId, {
+                                text: card.text,
+                                suit: card.suit,
+                                isSpecial: card.isSpecial,
+                              })
+                          : undefined
+                      }
+                    >
                       <Card
                         cheat={cheat}
+                        queenCheat={card.queenCheat}
                         value={card.text}
                         suit={card.suit}
                         key={card.text + card.suit}
@@ -461,20 +717,27 @@ const Game = (props) => {
                 {rightPlayerCards &&
                   rightPlayerCards.reverse().map((card, i) => (
                     <div
-                    onClick={waitForQueenAction ? () =>
-                      handleQueenAction(rightPlayerId ,{
-                        text: card.text,
-                        suit: card.suit,
-                        isSpecial: card.isSpecial,
-                      }) : waitForJackAction ? () => 
-                      handleJackAction(rightPlayerId, {
-                        text: card.text,
-                        suit: card.suit,
-                        isSpecial: card.isSpecial,
-                      }) : undefined}
+                      onClick={
+                        waitForQueenAction
+                          ? () =>
+                              handleQueenAction(rightPlayerId, {
+                                text: card.text,
+                                suit: card.suit,
+                                isSpecial: card.isSpecial,
+                              })
+                          : waitForJackAction
+                          ? () =>
+                              handleJackAction(rightPlayerId, {
+                                text: card.text,
+                                suit: card.suit,
+                                isSpecial: card.isSpecial,
+                              })
+                          : undefined
+                      }
                     >
                       <Card
                         cheat={cheat}
+                        queenCheat={card.queenCheat}
                         rotated={true}
                         value={card.text}
                         suit={card.suit}
@@ -488,22 +751,27 @@ const Game = (props) => {
                   {handCards &&
                     handCards.map((card, i) => (
                       <div
-                        onClick={waitForQueenAction ? () =>
-                          handleQueenAction(card, mainPlayerId ,{
-                            text: card.text,
-                            suit: card.suit,
-                            isSpecial: card.isSpecial,
-                          }) : waitForJackAction ? () => 
-                          handleJackAction(mainPlayerId, {
-                            text: card.text,
-                            suit: card.suit,
-                            isSpecial: card.isSpecial,
-                          }) : () =>
-                          setActiveCard({
-                            text: card.text,
-                            suit: card.suit,
-                            isSpecial: card.isSpecial,
-                          })
+                        onClick={
+                          waitForQueenAction
+                            ? () =>
+                                handleQueenAction(mainPlayerId, {
+                                  text: card.text,
+                                  suit: card.suit,
+                                  isSpecial: card.isSpecial,
+                                })
+                            : waitForJackAction
+                            ? () =>
+                                handleJackAction(mainPlayerId, {
+                                  text: card.text,
+                                  suit: card.suit,
+                                  isSpecial: card.isSpecial,
+                                })
+                            : () =>
+                                setActiveCard({
+                                  text: card.text,
+                                  suit: card.suit,
+                                  isSpecial: card.isSpecial,
+                                })
                         }
                       >
                         {showPlayerCards ? (
@@ -516,6 +784,7 @@ const Game = (props) => {
                         ) : (
                           <Card
                             cheat={cheat}
+                            queenCheat={card.queenCheat}
                             value={card.text}
                             suit={card.suit}
                             key={card.text + card.suit}
