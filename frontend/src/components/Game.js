@@ -190,7 +190,6 @@ const Game = (props) => {
           setHandCards(game.player1.cards);
         }, 5000);
         connection.on("playerPlayedCard", () => {
-          console.log("IS IT EVEN WORKING?");
           clearTimeout(timeoutId);
         });
       } else if (mainPlayerName === game.player2.name) {
@@ -208,7 +207,6 @@ const Game = (props) => {
           setHandCards(game.player2.cards);
         }, 5000);
         connection.on("playerPlayedCard", () => {
-          console.log("IS IT EVEN WORKING?");
           clearTimeout(timeoutId);
         });
       } else if (mainPlayerName === game.player3.name) {
@@ -226,7 +224,6 @@ const Game = (props) => {
           setHandCards(game.player3.cards);
         }, 5000);
         connection.on("playerPlayedCard", () => {
-          console.log("IS IT EVEN WORKING?");
           clearTimeout(timeoutId);
         });
       } else if (mainPlayerName === game.player4.name) {
@@ -244,7 +241,6 @@ const Game = (props) => {
           setHandCards(game.player4.cards);
         }, 5000);
         connection.on("playerPlayedCard", () => {
-          console.log("IS IT EVEN WORKING?");
           clearTimeout(timeoutId);
         });
       }
