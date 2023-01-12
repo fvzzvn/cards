@@ -688,6 +688,9 @@ const Game = (props) => {
     }
   };
 
+  useEffect(() => {
+  }, [handCards]);
+
   return (
     <div className="game-component">
       <div className="game-wrapper">
