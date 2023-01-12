@@ -10,7 +10,7 @@ import Card from "./Card";
 import { v4 as uuid } from "uuid";
 import { addParticipant } from "../slices/participants";
 import { useDispatch, useSelector } from "react-redux";
-import _ from "lodash";
+import _, { forEach } from "lodash";
 
 const Game = (props) => {
   const mainPlayerName = useSelector(
@@ -26,7 +26,7 @@ const Game = (props) => {
   const [topPlayerId, setTopPlayerId] = useState("");
   const [rightPlayerId, setRightPlayerId] = useState("");
   const [stack, setStack] = useState("");
-  const [gameState, setGameState] = useState("");
+  const [gameState, setGameState] = useState([]);
   const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
   const [bHubConnection, setbHubConnection] = useState(null);
@@ -172,8 +172,9 @@ const Game = (props) => {
     });
 
     connection.on("playerTookCard", (player, card, game) => {
-      console.log(player, "took", card, "game:", game);
+      
       setGameState(game);
+      console.log(player, "took", card, "game:", game);
       if (mainPlayerName === game.player1.name) {
         let cardList = _.cloneDeep(game.player1.cards);
         let cheatCard = cardList.find(
@@ -181,13 +182,17 @@ const Game = (props) => {
         );
         cheatCard.queenCheat = true;
         setHandCards(cardList);
-        setTimeout(() => {
-          setHandCards(game.player1.cards);
-        }, 5000);
         setLeftCards(game.player2.cards);
         setTopCards(game.player3.cards);
         setRightCards(game.player4.cards);
         setActiveCard(game.player1.cards[0]);
+        const timeoutId = setTimeout(() => {
+          setHandCards(game.player1.cards);
+        }, 5000);
+        connection.on("playerPlayedCard", () => {
+          console.log("IS IT EVEN WORKING?");
+          clearTimeout(timeoutId);
+        });
       } else if (mainPlayerName === game.player2.name) {
         let cardList = _.cloneDeep(game.player2.cards);
         let cheatCard = cardList.find(
@@ -195,13 +200,17 @@ const Game = (props) => {
         );
         cheatCard.queenCheat = true;
         setHandCards(cardList);
-        setTimeout(() => {
-          setHandCards(game.player2.cards);
-        }, 5000);
         setLeftCards(game.player3.cards);
         setTopCards(game.player4.cards);
         setRightCards(game.player1.cards);
         setActiveCard(game.player2.cards[0]);
+        const timeoutId = setTimeout(() => {
+          setHandCards(game.player2.cards);
+        }, 5000);
+        connection.on("playerPlayedCard", () => {
+          console.log("IS IT EVEN WORKING?");
+          clearTimeout(timeoutId);
+        });
       } else if (mainPlayerName === game.player3.name) {
         let cardList = _.cloneDeep(game.player3.cards);
         let cheatCard = cardList.find(
@@ -209,27 +218,43 @@ const Game = (props) => {
         );
         cheatCard.queenCheat = true;
         setHandCards(cardList);
-        setTimeout(() => {
-          setHandCards(game.player3.cards);
-        }, 5000);
         setLeftCards(game.player4.cards);
         setTopCards(game.player1.cards);
         setRightCards(game.player2.cards);
         setActiveCard(game.player3.cards[0]);
+        const timeoutId = setTimeout(() => {
+          setHandCards(game.player3.cards);
+        }, 5000);
+        connection.on("playerPlayedCard", () => {
+          console.log("IS IT EVEN WORKING?");
+          clearTimeout(timeoutId);
+        });
       } else if (mainPlayerName === game.player4.name) {
-        setHandCards(game.player4.cards);
+        let cardList = _.cloneDeep(game.player4.cards);
+        let cheatCard = cardList.find(
+          (c) => c.text === card.text && c.suit === card.suit
+        );
+        cheatCard.queenCheat = true;
+        setHandCards(cardList);
         setLeftCards(game.player1.cards);
         setTopCards(game.player2.cards);
         setRightCards(game.player3.cards);
         setActiveCard(game.player4.cards[0]);
+        const timeoutId = setTimeout(() => {
+          setHandCards(game.player4.cards);
+        }, 5000);
+        connection.on("playerPlayedCard", () => {
+          console.log("IS IT EVEN WORKING?");
+          clearTimeout(timeoutId);
+        });
       }
       setStack(game.stack);
-      console.log(stack);
     });
 
     connection.on(
       "applySpecialCardEffect",
       (card, player, game, playersList, cards) => {
+        setGameState(game);
         if (card.text === "Queen") {
           console.log(
             "SHOWING CARD FROM QUEEN SPECIAL EFFECT: ",
@@ -428,7 +453,6 @@ const Game = (props) => {
           setStack(game.stack);
         }
         if (card.text === "Jack") {
-          setGameState(game);
           if (mainPlayerName === game.player1.name) {
             setHandCards(game.player1.cards);
             setLeftCards(game.player2.cards);
@@ -690,6 +714,11 @@ const Game = (props) => {
 
   useEffect(() => {
   }, [handCards]);
+
+  // useEffect(() => {
+  //   console.log(gameState);
+  // }, [gameState])
+
 
   return (
     <div className="game-component">
