@@ -472,9 +472,17 @@ const Game = (props) => {
       console.log("stack empty");
     });
 
-    connection.on("gameEnding", () => {
-      console.log("game ending");
+    connection.on("roundEnding", () => {
+      console.log("round ending");
     });
+
+    connection.on("roundResult", () => {
+      console.log("roundResult");
+    })
+
+    connection.on("newRound", () => {
+      console.log("newRound");
+    })
 
     connection.on("playerPlayedSpecialCard", (player, card, game) => {
       console.log("player played special card");
