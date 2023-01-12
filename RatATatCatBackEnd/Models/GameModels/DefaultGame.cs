@@ -17,7 +17,7 @@
         public Player Player2 { get; set; }
         public Player Player3 { get; set; }
         public Player Player4 { get; set; }
-        public int TurnsLeft { get; set; } = 4;
+        public int TurnsLeft { get; set; } = 5;
         public bool RoundEnding { get; set; }
         public bool RoundEnded { get; set; }
         public Dictionary<Player, int> RoundResult { get; set; }
