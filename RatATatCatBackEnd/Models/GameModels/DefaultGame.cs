@@ -121,25 +121,22 @@
             if (this.PlayerTurn == this.Player1)
             {
                 this.PlayerTurn = this.Player2;
-                return this.Player2;
             }
             else if (this.PlayerTurn == this.Player2)
             {
                 this.PlayerTurn = this.Player3;
-                return this.Player3;
             }
             else if (this.PlayerTurn == this.Player3)
             {
                 this.PlayerTurn = this.Player4;
-                return this.Player4;
             }
             else
             {
                 this.PlayerTurn = this.Player1;
-                return this.Player1;
             }
             if (RoundEnding) TurnsLeft--;
             if (TurnsLeft == 0) RoundEnded = true;
+            return PlayerTurn;
         }
 
         public void End()
