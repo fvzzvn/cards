@@ -16,16 +16,16 @@
 
             List<string> suits = new List<string> { "clubs", "diamonds", "hearts", "spades" };
             List<string> types = new List<string> { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+            List<int> values = new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
             for (int i = 0; i < types.Count; i++)
             {
                 for (int j = 0; j < suits.Count; j++)
                 {
-                    if (i < 8) { this.Cards.Push(new Card(types[i], suits[j], false)); }
-                    else { this.Cards.Push(new Card(types[i], suits[j], true)); }
+                    if (i < 8) { this.Cards.Push(new Card(types[i], values[i], suits[j], false)); }
+                    else { this.Cards.Push(new Card(types[i],values[i], suits[j], true)); }
                 }
             }
             Shuffle();
-
         }
         public void Shuffle()
         {

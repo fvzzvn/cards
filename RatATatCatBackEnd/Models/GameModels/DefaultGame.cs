@@ -252,19 +252,19 @@
 
             foreach (Card card in Player1.Cards)
             {
-                firstPlayerPoints += Int16.Parse(card.Text);
+                firstPlayerPoints += card.Value;
             }
             foreach (Card card in Player2.Cards)
             {
-                secondPlayerPoints += Int16.Parse(card.Text);
+                secondPlayerPoints += card.Value;
             }
             foreach (Card card in Player3.Cards)
             {
-                thirdPlayerPoints += Int16.Parse(card.Text);
+                thirdPlayerPoints += card.Value;
             }
             foreach (Card card in Player4.Cards)
             {
-                forthPlayerPoints += Int16.Parse(card.Text);
+                forthPlayerPoints += card.Value;
             }
             RoundResult[Player1] = firstPlayerPoints;
             RoundResult[Player2] = secondPlayerPoints;

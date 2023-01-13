@@ -6,10 +6,12 @@
         public string Suit { get; set; }
         public bool IsSpecial { get; set; }
         public bool FacedDown { get; set; }
+        public int Value { get; set; }
 
-        public Card(string text, string suit, bool special)
+        public Card(string text, int value, string suit, bool special)
         {
             this.Text = text;
+            this.Value = value;
             this.Suit = suit;
             this.IsSpecial = special;
         }
