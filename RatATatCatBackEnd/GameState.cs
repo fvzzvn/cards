@@ -47,13 +47,7 @@ namespace RatATatCatBackEnd
             IGame game = GetGame(gameId);
 
             game.PlayerTurn = game.Player1;
-            game.RoundResult = new Dictionary<Player, int>()
-            {
-                {game.Player1, 0 },
-                {game.Player2, 0 },
-                {game.Player3, 0 },
-                {game.Player4, 0 }
-            };
+
 
             return game.IsFull();
         }
