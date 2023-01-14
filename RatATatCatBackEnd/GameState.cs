@@ -48,7 +48,6 @@ namespace RatATatCatBackEnd
 
             game.PlayerTurn = game.Player1;
 
-
             return game.IsFull();
         }
         public IGame GetGame(string roomId)

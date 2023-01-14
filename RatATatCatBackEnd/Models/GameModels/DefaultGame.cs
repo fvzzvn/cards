@@ -33,23 +33,27 @@
             {
                 this.Player1 = player;
                 player.OnBoardPosition = 1;
+                GameResult[player] = 0;
             }
             else if (this.Player2 == null)
             {
                 this.Player2 = player;
                 player.OnBoardPosition = 2;
+                GameResult[player] = 0;
             }
 
             else if (this.Player3 == null)
             {
                 this.Player3 = player;
                 player.OnBoardPosition = 3;
+                GameResult[player] = 0;
             }
 
             else if (this.Player4 == null)
             {
                 this.Player4 = player;
                 player.OnBoardPosition = 4;
+                GameResult[player] = 0;
             }
         }
         public void RemovePlayer(Player player)
@@ -74,13 +78,6 @@
         {
             if (this.Player1 != null & this.Player2 != null & this.Player3 != null & this.Player4 != null)
             {
-            RoundResult = new Dictionary<Player, int>()
-            {
-                { Player1, 0 },
-                { Player2, 0 },
-                { Player3, 0 },
-                { Player4, 0 }
-            };
                 return true;
             }
             return false;
