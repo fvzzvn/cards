@@ -9,6 +9,7 @@
             this.Dealer = new CardDealer();
             Stack.PlaceCard(Dealer.StartingCard());
             RoundResult = new Dictionary<Player, int>();
+            GameResult = new Dictionary<Player, int>();
         }
         public string Id { get; set; }
         public Stack Stack { get; set; }
