@@ -8,6 +8,8 @@
             this.Stack = new Stack();
             this.Dealer = new CardDealer();
             Stack.PlaceCard(Dealer.StartingCard());
+            RoundResult = new Dictionary<Player, int>();
+            GameResult = new Dictionary<Player, int>();
         }
         public string Id { get; set; }
         public Stack Stack { get; set; }
@@ -20,9 +22,9 @@
         public int TurnsLeft { get; set; } = 5;
         public bool RoundEnding { get; set; }
         public bool RoundEnded { get; set; }
-        public Dictionary<Player, int> RoundResult { get; set; }
+        public Dictionary<Player, int> RoundResult { get; set; } 
         public bool GameEnded { get; set; }
-        public Dictionary<Player, int> GameResult { get; set; }
+        public Dictionary<Player, int> GameResult { get; set; } 
 
         private static Random rng = new Random();
 
