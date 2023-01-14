@@ -4,8 +4,6 @@
     {
         Player Player1 { get; set; }
         Player Player2 { get; set; }
-        Player Player3 { get; set; }
-        Player Player4 { get; set; }
         ICardDealer Dealer { get; set; }
         string Id { get; set; }
         Player PlayerTurn { get; set; }

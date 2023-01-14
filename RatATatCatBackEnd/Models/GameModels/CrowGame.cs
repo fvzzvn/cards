@@ -18,8 +18,6 @@
         public Dictionary<Player, int> RoundResult { get; set; }
         public bool GameEnded { get; set; }
         public Dictionary<Player, int> GameResult { get; set; }
-        public Player Player3 { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Player Player4 { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public CrowGame(string id)
         {

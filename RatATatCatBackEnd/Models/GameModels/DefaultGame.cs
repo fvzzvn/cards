@@ -74,6 +74,13 @@
         {
             if (this.Player1 != null & this.Player2 != null & this.Player3 != null & this.Player4 != null)
             {
+            RoundResult = new Dictionary<Player, int>()
+            {
+                { Player1, 0 },
+                { Player2, 0 },
+                { Player3, 0 },
+                { Player4, 0 }
+            };
                 return true;
             }
             return false;
