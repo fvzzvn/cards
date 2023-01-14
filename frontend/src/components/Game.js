@@ -487,16 +487,16 @@ const Game = (props) => {
     });
 
     connection.on("roundEnding", () => {
-      console.log("round ending");
+      console.log("ROUND ENDING");
     });
 
     connection.on("roundResults", (results) => {
-      console.log("round Result");
+      console.log("ROUND RESULTS");
       console.log(results);
     });
 
     connection.on("gameResults", (results) => {
-      console.log("game Result");
+      console.log("GAME RESULT");
       console.log(results);
     });
 
