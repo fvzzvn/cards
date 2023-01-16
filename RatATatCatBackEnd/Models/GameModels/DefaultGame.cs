@@ -8,8 +8,8 @@
             this.Stack = new Stack();
             this.Dealer = new CardDealer();
             Stack.PlaceCard(Dealer.StartingCard());
-            RoundResult = new Dictionary<Player, int>();
-            GameResult = new Dictionary<Player, int>();
+            RoundResult = new Dictionary<string, int>();
+            GameResult = new Dictionary<string, int>();
         }
         public string Id { get; set; }
         public Stack Stack { get; set; }
@@ -22,9 +22,9 @@
         public int TurnsLeft { get; set; } = 5;
         public bool RoundEnding { get; set; }
         public bool RoundEnded { get; set; }
-        public Dictionary<Player, int> RoundResult { get; set; } 
+        public Dictionary<string, int> RoundResult { get; set; } 
         public bool GameEnded { get; set; }
-        public Dictionary<Player, int> GameResult { get; set; } 
+        public Dictionary<string, int> GameResult { get; set; } 
 
         private static Random rng = new Random();
 
@@ -34,27 +34,27 @@
             {
                 this.Player1 = player;
                 player.OnBoardPosition = 1;
-                GameResult[player] = 0;
+                GameResult[player.Name] = 0;
             }
             else if (this.Player2 == null)
             {
                 this.Player2 = player;
                 player.OnBoardPosition = 2;
-                GameResult[player] = 0;
+                GameResult[player.Name] = 0;
             }
 
             else if (this.Player3 == null)
             {
                 this.Player3 = player;
                 player.OnBoardPosition = 3;
-                GameResult[player] = 0;
+                GameResult[player.Name] = 0;
             }
 
             else if (this.Player4 == null)
             {
                 this.Player4 = player;
                 player.OnBoardPosition = 4;
-                GameResult[player] = 0;
+                GameResult[player.Name] = 0;
             }
         }
         public void RemovePlayer(Player player)
@@ -225,7 +225,7 @@
         {
             CalculatePoints();
             // Check for winner
-            foreach (KeyValuePair<Player, int> entry in GameResult)
+            foreach (KeyValuePair<string, int> entry in GameResult)
             {
                 if (entry.Value >= 100) End();
             }
@@ -272,12 +272,12 @@
             {
                 forthPlayerPoints += card.Value;
             }
-            RoundResult[Player1] = firstPlayerPoints;
-            RoundResult[Player2] = secondPlayerPoints;
-            RoundResult[Player3] = thirdPlayerPoints;
-            RoundResult[Player4] = forthPlayerPoints;
+            RoundResult[Player1.Name] = firstPlayerPoints;
+            RoundResult[Player2.Name] = secondPlayerPoints;
+            RoundResult[Player3.Name] = thirdPlayerPoints;
+            RoundResult[Player4.Name] = forthPlayerPoints;
             // save game results
-            foreach (KeyValuePair<Player, int> entry in RoundResult)
+            foreach (KeyValuePair<string, int> entry in RoundResult)
             {
                 GameResult[entry.Key] += entry.Value;
             }

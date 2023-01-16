@@ -13,8 +13,8 @@
         public int Player2TokenCount { get; set; }
         public bool RoundEnded { get; set; } = false;
         public bool GameEnded { get; set; } = false;
-        public Dictionary<Player,int> RoundResult { get; set; }
-        public Dictionary<Player,int> GameResult { get; set; }
+        public Dictionary<string,int> RoundResult { get; set; }
+        public Dictionary<string, int> GameResult { get; set; }
         public bool RoundEnding { get; set; }
 
         public DragonGame(string id)
@@ -23,19 +23,21 @@
             Dealer = new DragonDealer();
             Stack = new Stack();
             Stack2 = new Stack();
-            RoundResult = new Dictionary<Player, int>();
+            RoundResult = new Dictionary<string, int>();
+            GameResult = new Dictionary<string, int>();
         }
         public void AddPlayer(Player player)
         {
             if (Player1 == null) Player1 = player;
             else Player2 = player;
+            GameResult[player.Name] = 0;
         }
 
         public void End()
         {
             GameEnded = true;
-            GameResult[Player1] = Player1TokenCount;
-            GameResult[Player2] = Player2TokenCount;
+            GameResult[Player1.Name] = Player1TokenCount;
+            GameResult[Player2.Name] = Player2TokenCount;
         }
 
         public Card GiveCard(Player player, string from)
@@ -228,8 +230,8 @@
                 secondPlayerPoints += Int16.Parse(Player2.Cards[i].Text);
             }
             // Kto wygrał
-            RoundResult[Player1] = firstPlayerPoints;
-            RoundResult[Player2] = secondPlayerPoints;
+            RoundResult[Player1.Name] = firstPlayerPoints;
+            RoundResult[Player2.Name] = secondPlayerPoints;
             if (firstPlayerPoints > secondPlayerPoints) Player1TokenCount++;
             else Player2TokenCount++;
 

@@ -15,9 +15,9 @@
         public Stack Stack { get; set; }
         public bool RoundEnded { get; set; }
         public bool RoundEnding { get; set; }
-        public Dictionary<Player, int> RoundResult { get; set; }
+        public Dictionary<string, int> RoundResult { get; set; }
         public bool GameEnded { get; set; }
-        public Dictionary<Player, int> GameResult { get; set; }
+        public Dictionary<string, int> GameResult { get; set; }
 
         public CrowGame(string id)
         {

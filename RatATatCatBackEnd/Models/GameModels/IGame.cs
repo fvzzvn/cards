@@ -10,9 +10,9 @@
         Stack Stack { get; set; }
         bool RoundEnded { get; set; }
         bool RoundEnding { get; set; }
-        Dictionary<Player, int> RoundResult { get; set; }
+        Dictionary<string, int> RoundResult { get; set; }
         bool GameEnded { get; set; }
-        Dictionary<Player, int> GameResult { get; set; }
+        Dictionary<string, int> GameResult { get; set; }
 
         void AddPlayer(Player player);
         void RemovePlayer(Player player);
