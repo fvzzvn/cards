@@ -57,7 +57,15 @@ namespace RatATatCatBackEnd.Hubs
             if (game.RoundEnded)
             {
                 game.RoundOver();
-                await Clients.Group(game.Id).roundResults(game.RoundResult);
+                // send cards;
+                List<List<Card>> cards = new List<List<Card>>
+                {
+                    game.Player1.Cards,
+                    game.Player2.Cards,
+                    game.Player3.Cards,
+                    game.Player4.Cards
+                };
+                await Clients.Group(game.Id).roundResults(game.RoundResult, game.GameResult, cards);
                 game.NewRound();
                 await Clients.Group(game.Id).newRound(game);
             }
