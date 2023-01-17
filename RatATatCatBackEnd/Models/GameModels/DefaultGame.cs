@@ -232,11 +232,14 @@
         }
         public void NewRound()
         {
+            RoundEnding = false;
             RoundEnded = false;
+            TurnsLeft = 5;
             Dealer.FillDeck();
             Stack.Clear();
             Stack.PlaceCard(Dealer.StartingCard());
             RoundResult.Clear();
+
 
             Player1.Cards.Clear();
             Player2.Cards.Clear();
