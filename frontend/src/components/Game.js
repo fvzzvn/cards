@@ -8,6 +8,7 @@ import HeaderBar from "./HeaderBar";
 import Button from "react-bootstrap/Button";
 import Card from "./Card";
 import Results from "./Results";
+import GameResults from "./GameResults";
 import { v4 as uuid } from "uuid";
 import { addParticipant } from "../slices/participants";
 import { useDispatch, useSelector } from "react-redux";
@@ -546,18 +547,15 @@ const Game = (props) => {
       console.log(roundResults, gameResults, cards);
       setShowRoundResults(true);
       setRoundResults([roundResults, gameResults, cards]);
-      // setTimeout(() => {
-      //   setShowRoundResults(false);
-      // }, 10000);
+      setTimeout(() => {
+        setShowRoundResults(false);
+      }, 10000);
     });
 
     connection.on("gameResults", (roundResults, gameResults, cards) => {
       console.log(roundResults, gameResults, cards);
       setShowGameResults(true);
       setGameResults([roundResults, gameResults, cards]);
-      // setTimeout(() => {
-      //   setShowGameResults(false);
-      // }, 10000);
     });
 
     connection.on("newRound", (game) => {
@@ -787,7 +785,7 @@ const Game = (props) => {
         {showGameResults && (
           <div className="dim-screen">
             <div className="results-wrapper">
-              <Results gameResults={gameResults} />
+              <GameResults gameResults={gameResults} />
             </div>
           </div>
         )}

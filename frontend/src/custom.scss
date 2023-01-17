@@ -912,6 +912,68 @@ $btn-close-opacity: 0.9;
   background-color: $primary;
 }
 
+.game-results-wrapper {
+  border: 15px black solid;
+  border-radius: 25px;
+  padding: -2px;
+}
+.game-results-box {
+    width: 1200px;
+    height: 300px;
+    font-size: 22px;
+    text-align: center;
+    background-color: $primary;
+    border-radius: 15px;
+    overflow: hidden;
+    padding: 15px;
+    border: $secondary solid 8px;
+  }
+
+.game-results-label-grid {
+  display: grid;
+  grid-template-columns: 12% 40% 12% 12% 12% 12%;
+  grid-template-rows: 100%;
+  overflow: hidden;
+  border-radius: 15px;
+  height: 12%;
+  width: 100%;
+  font-family: "Bungee Inline", cursive;
+}
+
+.game-results-container {
+  height: 88%;
+  width: 100%;
+  background-color: $primary;
+}
+
+.game-result-grid {
+  display: grid;
+  grid-template-columns: 12% 40% 12% 12% 12% 12%;
+  grid-template-rows: 100%;
+  height: 25%;
+}
+
+.game-results-pos , .game-results-name ,.game-results-points ,.game-results-old-ranking, .game-results-ranking-change, .game-results-new-ranking {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Bungee Inline", cursive;
+  border: 1px $primary-hover solid;
+}
+.game-results-pos {
+  font-size: 25px;
+  border-left: 0px;
+}
+.game-result-name {
+  font-family: "Comfortaa";
+}
+
+.game-results-new-ranking {
+  border-right: 0px;
+}
+
+
+
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");

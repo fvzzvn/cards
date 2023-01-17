@@ -21,20 +21,6 @@ const Results = (props) => {
     results.sort((x, y) => (x.sum > y.sum ? 1 : -1));
   }
 
-  if (props.gameResults) {
-    const gameRes = props.gameResults[1];
-    for (const [key, value] of Object.entries(props.gameResults)) {
-      results.push({
-        displayName: key,
-        points: value,
-        sum: gameRes[key],
-        cards: props.roundResults[2][i],
-      });
-      i++;
-    }
-    results.sort((x, y) => (x.sum > y.sum ? 1 : -1));
-  }
-
   return (
     <div className="results-box">
       <div className="results-container">
