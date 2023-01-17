@@ -2,6 +2,6 @@
 {
     public interface IRankingService
     {
-        void Calculate(Dictionary<string, int>? GameResults);
+        Dictionary<string, Tuple<int, char>> Calculate(Dictionary<string, int>? GameResults);
     }
 }

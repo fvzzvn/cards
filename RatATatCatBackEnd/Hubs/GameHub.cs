@@ -73,11 +73,10 @@ namespace RatATatCatBackEnd.Hubs
             }
             if (game.GameEnded)
             {
-                await Clients.Group(game.Id).gameResults(game.GameResult);
-                _rankingService.Calculate(game.GameResult);
+                var mmrs = _rankingService.Calculate(game.GameResult);
+                await Clients.Group(game.Id).gameResults(game.GameResult, mmrs);
                 _gameState.RemoveGame(game.Id);
                 _boards.RemoveBoard(Int16.Parse(game.Id));
-                
             }
         }
         public async Task PlayedSpecialCard(Card card, List<string>? players, List<Card>? cards)

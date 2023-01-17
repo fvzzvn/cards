@@ -11,7 +11,7 @@ namespace RatATatCatBackEnd.Models
         {
             _userInfo = userInfo;
         }
-        public void Calculate(Dictionary<string,int> gameResults)
+        public Dictionary<string, Tuple<int, char>> Calculate(Dictionary<string, int> gameResults)
         {
             const int def = 20;
             List<int> k = new List<int>();
@@ -23,7 +23,7 @@ namespace RatATatCatBackEnd.Models
                 var res = defFlux * GetPlayerPosition(gameResults, kvp.Value);
                 k.Add((int)Math.Round(res));
             }
-            SaveMmrChange(gameResults.Keys.ToList(), k);
+            return SaveMmrChange(gameResults.Keys.ToList(), k);
         }
         private double GetPlayerPosition(Dictionary<string, int> gameResults, int value)
         {
@@ -56,14 +56,20 @@ namespace RatATatCatBackEnd.Models
             var current_player = _userInfo.GetUserInfoByUserName(player);
             return Math.Round(current_player.Mmr / players.Select(x => x.Mmr).Average(),2);
         }
-        private void SaveMmrChange(List<string> names, List<int> changes)
+        private Dictionary<string,Tuple<int,char>> SaveMmrChange(List<string> names, List<int> changes)
         {
+            Dictionary<string, Tuple<int,char>> res = new Dictionary<string, Tuple<int,char>>();
             for (int i = 0; i < 4; i++)
             {
                 var player = _userInfo.GetUserInfoByUserName(names[i]);
                 player.Mmr += changes[i];
+                char c = changes[i] > 0 ? '+' : '-';
                 _userInfo.UpdateUser(player);
+
+                var tuple = Tuple.Create(player.Mmr, c);
+                res.Add(names[i], tuple);
             }
+            return res;
         }
     }
 }

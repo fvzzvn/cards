@@ -16,7 +16,7 @@ namespace RatATatCatBackEnd.Interfaces
         Task newRound(IGame game);
         Task roundEnding();
         Task roundResults(Dictionary<string, int> roundResults, Dictionary<string, int> gameResults, List<List<Card>> cards);
-        Task gameResults(Dictionary<string, int> gameResults);
+        Task gameResults(Dictionary<string, int> gameResults, Dictionary<string, Tuple<int, char>> mmrs);
         Task gameEnding();
         Task gameStatus(IGame game);
         Task receiveMessage(string username,string message);
