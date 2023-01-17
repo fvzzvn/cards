@@ -1,7 +1,7 @@
 const Card = (props) => {
   return (
     <>
-      {!props.rotated && props.cheat && (
+      {!props.rotated && (props.cheat || props.queenCheat) && (
         <div className="card-container">
           {props.value == "2" && props.suit == "hearts" && (
             <div className="2-hearts">
@@ -265,7 +265,7 @@ const Card = (props) => {
           )}
         </div>
       )}
-      {props.rotated && props.cheat && (
+      {props.rotated && (props.cheat || props.queenCheat) && (
         <div className="card-container">
           {props.value == "2" && props.suit == "hearts" && (
             <div className="2-hearts">
@@ -529,14 +529,14 @@ const Card = (props) => {
           )}
         </div>
       )}
-      {!props.rotated && !props.cheat && (
+      {!props.rotated && !props.cheat && !props.queenCheat && (
         <div className="card-container">
           <div className="card-reverse">
             <img alt="" src="/cards_reverses/reverse2.png"></img>
           </div>
         </div>
       )}
-      {props.rotated && !props.cheat && (
+      {props.rotated && !props.cheat && !props.queenCheat && (
         <div className="card-container">
           <div className="card-reverse">
             <img alt="" src="/cards_reverses/reverse2_rotated.png"></img>

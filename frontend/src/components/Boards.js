@@ -1,24 +1,70 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board.js";
+import { clearMessage } from "../slices/message";
+import { getBoards, clearBoards } from "../slices/boards";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  HubConnectionBuilder,
+  LogLevel,
+  HttpTransportType,
+} from "@microsoft/signalr";
 
 const Boards = (props) => {
+  const dispatch = useDispatch();
+  // const [loading, setLoading] = useState(false);
+  const { boards } = useSelector((state) => state.boards);
+  const [connection, setConnection] = useState(null);
+
+  useEffect(() => {
+    dispatch(clearMessage());
+    dispatch(getBoards())
+      .unwrap()
+      .then(() => {})
+      .catch(() => {});
+
+    const connection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7297/BoardHub", {
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets,
+      })
+      .withAutomaticReconnect()
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    setConnection(connection);
+    if (connection) {
+      connection.start().then((result) => {});
+    }
+
+    connection.on("refreshBoards", () => {
+      console.log("refresh Boards");
+      // dispatch(clearBoards()).then(
+        dispatch(getBoards())
+        // );
+    });
+  }, [dispatch]);
+
   return (
     <>
-        {!props.loading ? (
-          props.boards.map((item, i) => (
+      {boards ? (
+        boards.map((item, i) => (
+          <div onClick={(e) => props.handleGo(item.boardId, e)}>
             <Board
               // id={item.id}
-              id={item.boardId}
               key={i}
-              // ranking={props.mmrs[i]}
-              // participants={props.participants[i]}
+              iterator={i}
+              id={item.boardId}
+              boardName={item.boardName}
+              boardMode={item.boardMode}
+              boardType={item.boardType}
               players={item.players}
             ></Board>
-          ))
-        ) : (
-          <span className="board-loader spinner-border spinner-border-sm"></span>
-        )}
-        {/* {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
+          </div>
+        ))
+      ) : (
+        <span className="board-loader spinner-border spinner-border-sm"></span>
+      )}
+      {/* {[45, 92, 111, 112, 166, 201, 222, 295, 300, 397].map((e, i) => (
           <Board
             id={e}
             key={i}
@@ -26,7 +72,7 @@ const Boards = (props) => {
           ></Board>
         ))
         } */}
-        </>
+    </>
   );
 };
 

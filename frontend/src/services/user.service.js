@@ -21,10 +21,23 @@ const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
 
+const createBoard = (boardName, boardType, boardMode, boardPublic) => {
+  return axios
+    .post(API_URL + "boards", {
+      "boardName": boardName,
+      "boardType": boardType,
+      "boardMode": boardMode,
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 const userService = {
   getBoards,
   getUserCredentials,
   getAdminBoard,
+  createBoard,
 };
 
 export default userService;

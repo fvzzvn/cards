@@ -12,6 +12,10 @@ $btn-close-opacity: 0.9;
 /*              GENERAL CSS                 "/
 /*********************************************/
 
+* {
+  user-select: none;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -284,17 +288,17 @@ $btn-close-opacity: 0.9;
   padding: 0 4%;
   display: grid;
   grid-template-columns: 20% 20% 20% 20% 20%;
-  grid-template-rows: 6% 22% 22% 22% 22%;
+  grid-template-rows: 5% 5% 22% 22% 22%;
 }
 
 .board-card {
   display: grid;
-  grid-template-columns: 30% 15% 55%;
+  grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 20% 20% 60%;
   grid-template-areas:
-    "id ranking ranking"
-    "name name name"
-    "players players players";
+    "id ranked ranking ranking"
+    "name name name  icon"
+    "players players  players players";
   height: 90%;
   width: 90%;
   padding: 4%;
@@ -318,14 +322,53 @@ $btn-close-opacity: 0.9;
   justify-content: center;
 }
 
+.board-card-ranked {
+  grid-area: ranked;
+  margin: 2px;
+  background-color: $major;
+  padding: 3px;
+  font-family: "Bungee Inline", cursive;
+  text-align: center;
+  font-size: 23px;
+}
+
 .board-card-id {
   grid-area: id;
   background-color: $major;
   margin: 2px;
   font-family: "Bungee Inline", cursive;
   text-align: center;
-  font-size: 21px;
+  font-size: 23px;
   overflow: hidden;
+}
+
+.board-card-icon-box {
+  grid-area: icon;
+  margin: 2px;
+  background-color: $major;
+  padding: 3px;
+}
+
+.rat {
+  background-image: url("./assets/img/rat_white.png");
+}
+
+.dragon {
+  background-image: url("./assets/img/dragon_white.png");
+}
+
+.raven {
+  background-image: url("./assets/img/raven_white.png");
+}
+
+
+.board-card-icon {
+  height: 100%;
+  width: 100%;
+  background-color: $major;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .board-card-ranking {
@@ -334,7 +377,7 @@ $btn-close-opacity: 0.9;
   margin: 2px;
   font-family: "Bungee Inline", cursive;
   text-align: center;
-  font-size: 22px;
+  font-size: 23px;
   overflow: hidden;
 }
 
@@ -344,6 +387,7 @@ $btn-close-opacity: 0.9;
   margin: 2px;
   padding-left: 5px;
   overflow: hidden;
+  text-align: center;
 }
 
 .board-card-players {
@@ -395,6 +439,103 @@ $btn-close-opacity: 0.9;
   font-size: 50px;
   text-align: center;
 }
+
+.dim-screen {
+  position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1001;
+}
+
+.new-board-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.new-board-x-holder {
+  padding: 2.727px 2.727px 0 2.727px;
+  background-color: black;
+  border-radius: 15%;
+  transition: background-color 0.3s;
+  position: absolute;
+  right: -0.9em;
+  top: -0.9em;
+  z-index: 1001;
+}
+
+/*********************************************/
+/*         CREATE BOARD POPUP CSS            "/
+/*********************************************/
+
+.new-board-box {
+  height: auto;
+  width: 350px;
+  border-radius: 5px;
+  background-color: $primary;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: $major;
+  border-radius: 20px;
+  padding: 10px;
+  user-select: none;
+}
+
+.new-board-box-button-wrapper {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.new-board-box-name {
+  margin-bottom: 20px;
+}
+
+.new-board-checkbox {
+  color: white;
+  display: flex;
+  margin-top: 5px;
+  margin-left: 45px;
+}
+
+.new-board-checkbox label input {
+  margin: 0 20px;
+  cursor: pointer;
+}
+
+.new-board-box-button-wrapper {
+  margin-top: 20px;
+}
+
+ .gamemode-title {
+  width: 100%;
+  text-align: center;
+  color: white;
+  margin-top: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+ }
+
+.new-board-radio {
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.new-board-radio * {
+  width: 100px;
+}
+
+#cb1 {
+  accent-color: #141414;
+}
+
 /*********************************************/
 /*              HEADER BAR CSS               "/
 /*********************************************/
@@ -402,14 +543,15 @@ $btn-close-opacity: 0.9;
 .header-bar-container {
   position: absolute;
   display: grid;
-  grid-template-columns: 10% 30% 20% 30% 10%;
+  grid-template-columns: 10% 30% 20% 20% 20%;
   grid-template-areas: 
-    "logout button1 logo button2 username";
+    "logout button1 logo button2 details";
   height: 100px;
   width: 100vw;
   min-width: 1400px;
   background-color: rgba(0, 0, 0, 0.8);
   overflow: hidden;
+  user-select: none;
 }
 
 .header-bar-logo {
@@ -441,6 +583,46 @@ $btn-close-opacity: 0.9;
 .leave-button {
   width: 150px;
   margin: 25px;
+}
+
+.details-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  grid-area: details;
+  color: white;
+}
+
+.username-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 150%;
+  align-self: right;
+  text-align: right;
+}
+
+.username {
+  padding-right: 15px;
+  cursor: pointer;
+}
+
+.icon-box {
+  min-height: 100px;
+  min-width: 100px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  background-image: url("../public/icons/avatar1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: solid $primary 3px;
+  border-radius: 5px;
 }
 
 /*********************************************/
@@ -490,7 +672,6 @@ $btn-close-opacity: 0.9;
   flex-direction: column;
   justify-content: center;
 }
-
 
 
 .top-player {
@@ -593,6 +774,142 @@ $btn-close-opacity: 0.9;
 .right-player .card-container img:active {
   transform: translateX(-6px);
   box-shadow: 8px 6px 14px rgba(0, 0, 0, 0.6);
+}
+
+.key-game-buttons-wrapper {
+  margin-top: 45px;
+  display: flex;
+  justify-content: center;
+}
+
+#ready, #leave {
+  font-size: 25px;
+  margin: 0px 30px;
+}
+
+/*********************************************/
+/*             RESULTS  CSS                  "/
+/*********************************************/
+
+.results-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.results-box {
+  width: 600px;
+  height: 600px;
+  font-size: 22px;
+  text-align: center;
+  background: black;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 15px;
+}
+
+.results-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border: $major 5px solid;
+  padding: 5px;
+}
+
+.results-grid {
+  overflow: hidden;
+  border-radius: 15px;
+  display: grid;
+  height: 4%;
+  width: 100%;
+  grid-template-columns: 15% 55% 15% 15%;
+  grid-template-rows: 100%;
+}
+
+.results-label-name{
+  background-color: $primary;
+}
+
+
+.results-pos {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  grid-area: pos;
+  font-size: 85px;
+  font-family: "Bungee Inline";
+  border-bottom:#ef9f0a 2px solid;
+}
+
+.results-name {
+  height: 100%;
+  width: 100%;
+  grid-area: dname;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.mini-card-flexbox {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  grid-area: cards;
+  justify-content: center;
+  align-items: center;
+}
+
+#mini-card-wrapper .card-container * {
+  max-width: 55px;
+  width: 100%;
+}
+
+#mini-card-wrapper .card-container {
+  margin: 0 5px;
+}
+
+.results-points {
+  height: 100%;
+  width: 100%;
+  grid-area: points;
+  font-family: "Bungee Inline", cursive;
+  border-bottom:#ef9f0a 2px solid;
+}
+
+.results-points div {
+  margin-top: -3px;
+}
+
+.results-sum {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  grid-area: sum;
+  font-family: "Bungee Inline", cursive;
+  font-size: 34px;
+  border-bottom:#ef9f0a 2px solid;
+}
+
+.result-grid {
+  height: 25%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 15% 55% 15% 15%;
+  grid-template-rows: 20% 60% 20%;
+  grid-template-areas:
+  "pos dname dname sum"
+  "pos cards cards sum"
+  "pos points points sum";
+}
+
+.result-grid>div{
+  background-color: $primary;
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";

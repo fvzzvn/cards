@@ -9,16 +9,23 @@ import CloseButton from "react-bootstrap/CloseButton";
 import Boards from "./Boards.js";
 import HeaderBar from "./HeaderBar.js";
 import Game from "./Game.js";
+import NewBoard from "./NewBoard.js";
 import { clearMessage } from "../slices/message";
-import { getBoards } from "../slices/boards";
+// import { getBoards } from "../slices/boards";
 import { getUserCredentials } from "../slices/userCredentials";
+import {
+  HubConnectionBuilder,
+  LogLevel,
+  HttpTransportType,
+} from "@microsoft/signalr";
+import { create } from "yup/lib/Reference";
 
 const Home = () => {
   const dispatch = useDispatch();
   //REDUX STATES
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { inGame } = useSelector((state) => state.game.inGame);
-  const { boards } = useSelector((state) => state.boards);
+  // const { boards } = useSelector((state) => state.boards);
   // const participants = useSelector((state) => state.boards.participants);
   // const mmrs = useSelector((state) => state.boards.mmrs);
   // const players = useSelector((state) => state.boards);
@@ -29,25 +36,15 @@ const Home = () => {
   const [showRegister, setShowRegister] = useState(false);
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showRegisterButton, setShowRegisterButton] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [showCreateBoard, setShowCreateBoard] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [go, setGo] = useState(false);
+  const [currentBoardId, setCurrentBoardId] = useState(0);
   // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
+  const [connection, setConnection] = useState(null);
 
   useEffect(() => {
-    dispatch(clearMessage());
-    setLoading(true);
-    dispatch(getBoards())
-      .unwrap()
-      .then(() => {})
-      .catch(() => {});
-    dispatch(getUserCredentials())
-      .unwrap()
-      .then(() => {
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    dispatch(getUserCredentials());
   }, [dispatch]);
 
   const handleLoginClick = () => {
@@ -69,10 +66,20 @@ const Home = () => {
     setShowRegisterButton((showRegisterButton) => true);
   };
 
-  const handleGo = () => {
+  const handleGo = (id) => {
+    setCurrentBoardId((currentBoardId) => id);
     setGo(!go);
+    setShowCreateBoard((showCreateBoard) => false);
   };
 
+  const handleShowCreateBoard = () => {
+    setShowCreateBoard((showCreateBoard) => true);
+  };
+
+  const handleExitCreateBoard = () => {
+    setShowCreateBoard((showCreateBoard) => false);
+    dispatch(clearMessage());
+  };
   return (
     <div className="cards-bg">
       {!isLoggedIn ? (
@@ -105,9 +112,9 @@ const Home = () => {
             </div>
           </div>
         </div>
-      ) : isLoggedIn && loading ? (
-        <span className="board-loader spinner-border spinner-border-sm"></span>
-      ) : isLoggedIn && !loading && !inGame && !go ? (
+      ) : // ) : isLoggedIn && loading ? (
+      // <span className="board-loader spinner-border spinner-border-sm"></span>
+      isLoggedIn && !inGame && !go ? (
         <>
           <HeaderBar username={username}></HeaderBar>
           <div className="home-boards-bg">
@@ -117,8 +124,47 @@ const Home = () => {
                 variant="outline-primary"
                 className="home-board-fliter filter"
               >
-                Rankingowe
+                Szczury
               </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Smoki
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Kruki
+              </ToggleButton>
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
+              >
+                Wolne miejsca
+              </ToggleButton>
+              {/* <Button
+                variant="secondary"
+                className="home-board-fliter"
+                onClick={(e) => handleGo(44, e)}
+              >
+                Board 1
+              </Button>
+              <Button
+                variant="secondary"
+                className="home-board-fliter"
+                onClick={(e) => handleGo(43, e)}
+              >
+                Board 2
+              </Button> */}
+              <Button
+                variant="secondary"
+                className="home-board-fliter"
+                onClick={handleShowCreateBoard}
+              >
+                Stwórz nową grę
+              </Button>
               <ToggleButton
                 variant="outline-primary"
                 className="home-board-fliter filter"
@@ -129,7 +175,7 @@ const Home = () => {
                 variant="outline-primary"
                 className="home-board-fliter filter"
               >
-                Wolne miejsca
+                Rankingowe
               </ToggleButton>
               <ToggleButton
                 variant="outline-primary"
@@ -137,27 +183,44 @@ const Home = () => {
               >
                 Rozpoczęte
               </ToggleButton>
-              <Button
-                variant="secondary"
-                className="home-board-fliter"
-                onClick={handleGo}
+              <ToggleButton
+                variant="outline-primary"
+                className="home-board-fliter filter"
               >
-                Stwórz nową grę
-              </Button>
+                Sortowanie: ID
+              </ToggleButton>
+              <div></div>
               <Boards
-                boards={boards}
-                // mmrs={mmrs}
-                // participants={participants}
-              >
-              </Boards>
+                handleGo={handleGo}
+              ></Boards>
             </div>
           </div>
+          {showCreateBoard && !go && (
+            <div className="dim-screen">
+              <div className="new-board-wrapper">
+                <div className="new-board-x-holder">
+                  <CloseButton
+                    variant="white"
+                    onClick={handleExitCreateBoard}
+                  />
+                </div>
+                <NewBoard
+                  connection={connection}
+                  handleGo={handleGo}
+                ></NewBoard>
+              </div>
+            </div>
+          )}
         </>
       ) : (
         go && (
           <>
-            <HeaderBar setGo={setGo} username={username} game={true}></HeaderBar>
-            <Game username={username}></Game>
+            <HeaderBar
+              setGo={setGo}
+              username={username}
+              game={true}
+            ></HeaderBar>
+            <Game setGo={setGo} username={username} boardId={currentBoardId}></Game>
           </>
         )
       )}

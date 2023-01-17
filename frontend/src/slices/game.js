@@ -4,7 +4,7 @@ import { setMessage } from "./message";
 const user = JSON.parse(localStorage.getItem("user"));
 
 
-const initialState = { inGame: false }
+const initialState = { inGame: false, currentBoardId: 0 }
 
 const gameSlice = createSlice({
     name: "game",
