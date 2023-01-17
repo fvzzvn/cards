@@ -7,6 +7,7 @@ using RatATatCatBackEnd.Hubs;
 using System.Text;
 using RatATatCatBackEnd.Models.Database;
 using RatATatCatBackEnd;
+using RatATatCatBackEnd.Models;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -39,6 +40,7 @@ builder.Services.AddTransient<IBoardInstance, BoardInstanceRepository>();
 builder.Services.AddTransient<IParticipant, ParticipantRepository>();
 builder.Services.AddTransient<IImageHandler, ImageHandler>();
 builder.Services.AddTransient<IUserImagesRepository, UserImagesRepository>();
+builder.Services.AddTransient<IRankingService, RankingService>();
 builder.Services.AddSingleton<IGameState, GameState>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -55,7 +57,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

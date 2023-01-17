@@ -12,12 +12,14 @@ namespace RatATatCatBackEnd.Hubs
         private readonly IServiceProvider _serviceProvider;
         private readonly IParticipant _participants;
         private readonly IBoardInstance _boards;
+        private readonly IRankingService _rankingService;
         public GameHub(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _gameState = _serviceProvider.GetRequiredService<IGameState>();
             _participants = _serviceProvider.GetRequiredService<IParticipant>();
             _boards = _serviceProvider.GetRequiredService<IBoardInstance>();
+            _rankingService = _serviceProvider.GetRequiredService<IRankingService>();
         }
         public async Task JoinRoom(string gameId, string username)
         {
@@ -72,8 +74,10 @@ namespace RatATatCatBackEnd.Hubs
             if (game.GameEnded)
             {
                 await Clients.Group(game.Id).gameResults(game.GameResult);
+                _rankingService.Calculate(game.GameResult);
                 _gameState.RemoveGame(game.Id);
                 _boards.RemoveBoard(Int16.Parse(game.Id));
+                
             }
         }
         public async Task PlayedSpecialCard(Card card, List<string>? players, List<Card>? cards)
