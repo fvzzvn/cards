@@ -799,8 +799,8 @@ $btn-close-opacity: 0.9;
 }
 
 .results-box {
-  width: 700px;
-  height: 900px;
+  width: 600px;
+  height: 600px;
   font-size: 22px;
   text-align: center;
   background: black;
@@ -809,36 +809,48 @@ $btn-close-opacity: 0.9;
   padding: 15px;
 }
 
+.results-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border: $major 5px solid;
+  padding: 5px;
+}
+
 .results-grid {
   overflow: hidden;
   border-radius: 15px;
   display: grid;
-  height: 100%;
+  height: 4%;
   width: 100%;
   grid-template-columns: 15% 55% 15% 15%;
-  grid-template-rows: 8% 22% 22% 22% ;
+  grid-template-rows: 100%;
 }
 
 .results-label-name{
   background-color: $primary;
 }
 
-.results-pos:nth-of-type(even), .results-name:nth-of-type(even), .mini-card-flexbox:nth-of-type(even), .results-points:nth-of-type(even), .results-sum:nth-of-type(even) {
-  background-color: $primary-hover;
-}
-
-.results-pos:nth-of-type(odd), .results-name:nth-of-type(odd), .mini-card-flexbox:nth-of-type(odd), .results-points:nth-of-type(odd), .results-sum:nth-of-type(odd) {
-  background-color: $primary;
-}
 
 .results-pos {
+  display:flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   width: 100%;
+  grid-area: pos;
+  font-size: 85px;
+  font-family: "Bungee Inline";
+  border-bottom:#ef9f0a 2px solid;
 }
 
 .results-name {
   height: 100%;
   width: 100%;
+  grid-area: dname;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .mini-card-flexbox {
@@ -846,21 +858,58 @@ $btn-close-opacity: 0.9;
   height: 100%;
   display: flex;
   flex-direction: row;
+  grid-area: cards;
+  justify-content: center;
+  align-items: center;
 }
 
 #mini-card-wrapper .card-container * {
-  max-width: 80px;
+  max-width: 55px;
   width: 100%;
+}
+
+#mini-card-wrapper .card-container {
+  margin: 0 5px;
 }
 
 .results-points {
   height: 100%;
   width: 100%;
+  grid-area: points;
+  font-family: "Bungee Inline", cursive;
+  border-bottom:#ef9f0a 2px solid;
+}
+
+.results-points div {
+  margin-top: -3px;
 }
 
 .results-sum {
+  display:flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   width: 100%;
+  grid-area: sum;
+  font-family: "Bungee Inline", cursive;
+  font-size: 34px;
+  border-bottom:#ef9f0a 2px solid;
+}
+
+.result-grid {
+  height: 25%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 15% 55% 15% 15%;
+  grid-template-rows: 20% 60% 20%;
+  grid-template-areas:
+  "pos dname dname sum"
+  "pos cards cards sum"
+  "pos points points sum";
+}
+
+.result-grid>div{
+  background-color: $primary;
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";

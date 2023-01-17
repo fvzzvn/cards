@@ -1,4 +1,4 @@
-import Card from "./Card";
+import Result from "./Result";
 
 const Results = (props) => {
   const results = [];
@@ -37,30 +37,34 @@ const Results = (props) => {
 
   return (
     <div className="results-box">
-      <div className="results-grid">
-        <div className="results-label-name">Pozycja</div>
-        <div className="results-label-name">Gracz</div>
-        <div className="results-label-name">Punkty</div>
-        <div className="results-label-name">Suma</div>
+      <div className="results-container">
         {results.map((row, index) => (
-          <>
-            <div className="results-pos">{index + 1}</div>
-            <div className="results-name">{row.displayName}</div>
-            <div className="results-points">{row.points}</div>
-            <div className="results-sum">{row.sum}</div>
-            <div className="mini-card-flexbox">
-              {row.cards.map((card, i) => (
-                <div id="mini-card-wrapper">
-                  <Card
-                    cheat={true}
-                    value={card.text}
-                    suit={card.suit}
-                    key={i + card.text + card.suit}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
+          <Result
+            pos={index + 1}
+            name={row.displayName}
+            points={row.points}
+            sum={row.sum}
+            cards={row.cards}
+            mmr={row.mmr}
+          ></Result>
+          //   <>
+          //     <div className="results-pos">{index + 1}</div>
+          //     <div className="results-name">{row.displayName}</div>
+          //     <div className="results-points">{row.points}</div>
+          //     <div className="results-sum">{row.sum}</div>
+          //     <div className="mini-card-flexbox">
+          //       {row.cards.map((card, i) => (
+          //         <div id="mini-card-wrapper">
+          //           <Card
+          //             cheat={true}
+          //             value={card.text}
+          //             suit={card.suit}
+          //             key={i + card.text + card.suit}
+          //           />
+          //         </div>
+          //       ))}
+          //     </div>
+          //   </>
         ))}
       </div>
     </div>
