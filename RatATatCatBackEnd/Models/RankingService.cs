@@ -71,5 +71,17 @@ namespace RatATatCatBackEnd.Models
             }
             return res;
         }
+
+        public Dictionary<string, int> GetMmrs(Dictionary<string, int> GameResults)
+        {
+            var names = GameResults.Keys.ToList();
+            Dictionary<string, int> res = new Dictionary<string, int>();
+            for (int i = 0; i < 4; i++)
+            {
+                var player = _userInfo.GetUserInfoByUserName(names[i]);
+                res.Add(names[i], player.Mmr);
+            }
+            return res;
+        }
     }
 }

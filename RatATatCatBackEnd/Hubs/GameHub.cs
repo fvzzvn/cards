@@ -73,8 +73,9 @@ namespace RatATatCatBackEnd.Hubs
             }
             if (game.GameEnded)
             {
-                var mmrs = _rankingService.Calculate(game.GameResult);
-                await Clients.Group(game.Id).gameResults(game.GameResult, mmrs);
+                var mmrs = _rankingService.GetMmrs(game.GameResult);
+                var new_mmrs = _rankingService.Calculate(game.GameResult);
+                await Clients.Group(game.Id).gameResults(game.GameResult, mmrs ,new_mmrs);
                 _gameState.RemoveGame(game.Id);
                 _boards.RemoveBoard(Int16.Parse(game.Id));
             }
