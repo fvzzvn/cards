@@ -7,6 +7,7 @@ import {
 import HeaderBar from "./HeaderBar";
 import Button from "react-bootstrap/Button";
 import Card from "./Card";
+import Results from "./Results";
 import { v4 as uuid } from "uuid";
 import { addParticipant } from "../slices/participants";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +33,10 @@ const Game = (props) => {
   const [bHubConnection, setbHubConnection] = useState(null);
   const [cheat, setCheat] = useState(true);
   const [showPlayerCards, setShowPlayerCards] = useState(false);
+  const [showRoundResults, setShowRoundResults] = useState(false);
+  const [showGameResults, setShowGameResults] = useState(false);
+  const [roundResults, setRoundResults] = useState([]);
+  const [gameResults, setGameResults] = useState([]);
   const [waitForQueenAction, setWaitForQueenAction] = useState(false);
   const [queenIdsArray, setQueenIdsArray] = useStateCallback([]);
   const [queenCardArray, setQueenCardArray] = useStateCallback([]);
@@ -172,7 +177,6 @@ const Game = (props) => {
     });
 
     connection.on("playerTookCard", (player, card, game) => {
-      
       setGameState(game);
       console.log(player, "took", card, "game:", game);
       if (mainPlayerName === game.player1.name) {
@@ -180,7 +184,11 @@ const Game = (props) => {
         let cheatCard = cardList.find(
           (c) => c.text === card.text && c.suit === card.suit
         );
-        cheatCard.queenCheat = true;
+        if (cheatCard) {
+          if (cheatCard) {
+            cheatCard.queenCheat = true;
+          }
+        }
         setHandCards(cardList);
         setLeftCards(game.player2.cards);
         setTopCards(game.player3.cards);
@@ -197,7 +205,11 @@ const Game = (props) => {
         let cheatCard = cardList.find(
           (c) => c.text === card.text && c.suit === card.suit
         );
-        cheatCard.queenCheat = true;
+        if (cheatCard) {
+          if (cheatCard) {
+            cheatCard.queenCheat = true;
+          }
+        }
         setHandCards(cardList);
         setLeftCards(game.player3.cards);
         setTopCards(game.player4.cards);
@@ -214,7 +226,11 @@ const Game = (props) => {
         let cheatCard = cardList.find(
           (c) => c.text === card.text && c.suit === card.suit
         );
-        cheatCard.queenCheat = true;
+        if (cheatCard) {
+          if (cheatCard) {
+            cheatCard.queenCheat = true;
+          }
+        }
         setHandCards(cardList);
         setLeftCards(game.player4.cards);
         setTopCards(game.player1.cards);
@@ -231,7 +247,11 @@ const Game = (props) => {
         let cheatCard = cardList.find(
           (c) => c.text === card.text && c.suit === card.suit
         );
-        cheatCard.queenCheat = true;
+        if (cheatCard) {
+          if (cheatCard) {
+            cheatCard.queenCheat = true;
+          }
+        }
         setHandCards(cardList);
         setLeftCards(game.player1.cards);
         setTopCards(game.player2.cards);
@@ -265,7 +285,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setHandCards(cardList);
               setTimeout(() => {
                 setHandCards(game.player1.cards);
@@ -276,7 +298,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setLeftCards(cardList);
               setTimeout(() => {
                 setLeftCards(game.player2.cards);
@@ -287,7 +311,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setTopCards(cardList);
               setTimeout(() => {
                 setTopCards(game.player3.cards);
@@ -298,7 +324,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setRightCards(cardList);
               setTimeout(() => {
                 setRightCards(game.player4.cards);
@@ -312,7 +340,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setHandCards(cardList);
               setTimeout(() => {
                 setHandCards(game.player2.cards);
@@ -323,7 +353,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setLeftCards(cardList);
               setTimeout(() => {
                 setLeftCards(game.player3.cards);
@@ -334,7 +366,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setTopCards(cardList);
               setTimeout(() => {
                 setTopCards(game.player4.cards);
@@ -345,7 +379,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setRightCards(cardList);
               setTimeout(() => {
                 console.log(game.player1.cards);
@@ -359,7 +395,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setHandCards(cardList);
               setTimeout(() => {
                 setHandCards(game.player3.cards);
@@ -370,7 +408,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setLeftCards(cardList);
               setTimeout(() => {
                 setLeftCards(game.player4.cards);
@@ -382,7 +422,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setTopCards(cardList);
               setTimeout(() => {
                 setTopCards(game.player1.cards);
@@ -393,7 +435,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setRightCards(cardList);
               setTimeout(() => {
                 setRightCards(game.player2.cards);
@@ -406,7 +450,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setHandCards(cardList);
               setTimeout(() => {
                 setHandCards(game.player4.cards);
@@ -417,7 +463,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setLeftCards(cardList);
               setTimeout(() => {
                 setLeftCards(game.player1.cards);
@@ -428,7 +476,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setTopCards(cardList);
               setTimeout(() => {
                 setTopCards(game.player2.cards);
@@ -439,7 +489,9 @@ const Game = (props) => {
                 (card) =>
                   card.text === cards[0].text && card.suit === cards[0].suit
               );
-              cheatCard.queenCheat = true;
+              if (cheatCard) {
+                cheatCard.queenCheat = true;
+              }
               setRightCards(cardList);
               setTimeout(() => {
                 setRightCards(game.player3.cards);
@@ -490,14 +542,22 @@ const Game = (props) => {
       console.log("ROUND ENDING");
     });
 
-    connection.on("roundResults", (results) => {
-      console.log("ROUND RESULTS");
-      console.log(results);
+    connection.on("roundResults", (roundResults, gameResults, cards) => {
+      console.log(roundResults, gameResults, cards);
+      setShowRoundResults(true);
+      setRoundResults([roundResults, gameResults, cards]);
+      // setTimeout(() => {
+      //   setShowRoundResults(false);
+      // }, 10000);
     });
 
-    connection.on("gameResults", (results) => {
-      console.log("GAME RESULT");
-      console.log(results);
+    connection.on("gameResults", (roundResults, gameResults, cards) => {
+      console.log(roundResults, gameResults, cards);
+      setShowGameResults(true);
+      setGameResults([roundResults, gameResults, cards]);
+      // setTimeout(() => {
+      //   setShowGameResults(false);
+      // }, 10000);
     });
 
     connection.on("newRound", (game) => {
@@ -708,17 +768,29 @@ const Game = (props) => {
     }
   };
 
-  useEffect(() => {
-  }, [handCards]);
+  useEffect(() => {}, [handCards]);
 
   // useEffect(() => {
   //   console.log(gameState);
   // }, [gameState])
 
-
   return (
     <div className="game-component">
       <div className="game-wrapper">
+        {showRoundResults && (
+          <div className="dim-screen">
+            <div className="results-wrapper">
+              <Results roundResults={roundResults} />
+            </div>
+          </div>
+        )}
+        {showGameResults && (
+          <div className="dim-screen">
+            <div className="results-wrapper">
+              <Results gameResults={gameResults} />
+            </div>
+          </div>
+        )}
         <div className="game-container">
           <div className="game-table">
             <div className="game-grid">
