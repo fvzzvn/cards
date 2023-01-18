@@ -53,7 +53,7 @@ const Game = (props) => {
       `${props.boardId}`,
       `${props.username}`
     );
-    setInterval(console.log(), 1500);
+    setTimeout(()=> {console.log()}, 1500);
 
     const bHubConnection = new HubConnectionBuilder()
       .withUrl("https://localhost:7297/BoardHub", {
@@ -544,18 +544,17 @@ const Game = (props) => {
     });
 
     connection.on("roundResults", (roundResults, gameResults, cards) => {
-      console.log(roundResults, gameResults, cards);
-      setShowRoundResults(true);
       setRoundResults([roundResults, gameResults, cards]);
+      setShowRoundResults(true);
       setTimeout(() => {
         setShowRoundResults(false);
       }, 10000);
     });
 
     connection.on("gameResults", (roundResults, gameResults, cards) => {
-      console.log(roundResults, gameResults, cards);
-      setShowGameResults(true);
       setGameResults([roundResults, gameResults, cards]);
+      setShowGameResults(true);
+      connection.stop();
     });
 
     connection.on("newRound", (game) => {
@@ -673,11 +672,12 @@ const Game = (props) => {
   };
 
   const handleExitGame = () => {
-    console.log("BHUB CONNECTION:" + bHubConnection);
-    console.log("handle exit game");
     connection.stop();
-    console.log("game hub stopped");
-    setInterval(bHubConnection.invoke("RefreshPage"), 1500);
+    if(bHubConnection){
+      bHubConnection.invoke("RefreshPage");
+      bHubConnection.stop();
+    }
+
   };
 
   function useStateCallback(initialState) {
@@ -785,7 +785,11 @@ const Game = (props) => {
         {showGameResults && (
           <div className="dim-screen">
             <div className="results-wrapper">
-              <GameResults gameResults={gameResults} />
+              <GameResults
+                gameResults={gameResults}
+                setGo={props.setGo()}
+                handleExitGame={handleExitGame()}
+              />
             </div>
           </div>
         )}

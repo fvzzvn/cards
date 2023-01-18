@@ -1,13 +1,10 @@
 import GameResult from "./GameResult";
+import { Button } from "react-bootstrap";
 
 const GameResults = (props) => {
   console.log("GAME RESULTS PROPS");
   console.log(props);
   const results = [];
-  let i = 0;
-  // points = props.gameResults[0]
-  // oldRankings = props.gameResults[1]
-  // newRankings = props.gameResults[2]
 
   if (props.gameResults) {
     for (const [key, value] of Object.entries(props.gameResults[0])) {
@@ -19,7 +16,7 @@ const GameResults = (props) => {
       });
     }
     results.sort((x, y) => (x.points > y.points ? 1 : -1));
-    console.log(results);
+    console.log("results:" + results);
   }
 
   return (
@@ -57,7 +54,15 @@ const GameResults = (props) => {
           ))}
         </div>
       </div>
+      <Button
+              id="leave"
+              variant="secondary"
+              onClick={(e) => {
+                props.setGo(!e);
+                props.handleExitGame();
+              }}>Wyjdź</Button>
     </div>
+    
   );
 };
 

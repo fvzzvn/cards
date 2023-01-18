@@ -25,7 +25,7 @@ const Board = (props) => {
       });
 
       setLen(players.length);
-      setRanking(avgRanking);
+      setRanking(Math.round(avgRanking));
       setPlayers(players);
       players = [];
     }

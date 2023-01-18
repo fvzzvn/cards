@@ -33,24 +33,6 @@ const Results = (props) => {
             cards={row.cards}
             mmr={row.mmr}
           ></Result>
-          //   <>
-          //     <div className="results-pos">{index + 1}</div>
-          //     <div className="results-name">{row.displayName}</div>
-          //     <div className="results-points">{row.points}</div>
-          //     <div className="results-sum">{row.sum}</div>
-          //     <div className="mini-card-flexbox">
-          //       {row.cards.map((card, i) => (
-          //         <div id="mini-card-wrapper">
-          //           <Card
-          //             cheat={true}
-          //             value={card.text}
-          //             suit={card.suit}
-          //             key={i + card.text + card.suit}
-          //           />
-          //         </div>
-          //       ))}
-          //     </div>
-          //   </>
         ))}
       </div>
     </div>

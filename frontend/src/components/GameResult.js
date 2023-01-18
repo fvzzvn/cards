@@ -52,7 +52,7 @@ const GameResult = (props) => {
         </div>
       ) : (
         <div className="game-results-new-ranking low">{props.newRanking}</div>
-      )}{" "}
+      )}
     </div>
   );
 };
