@@ -919,7 +919,7 @@ $btn-close-opacity: 0.9;
 }
 .game-results-box {
     width: 1200px;
-    height: 300px;
+    height: 350px;
     font-size: 22px;
     text-align: center;
     background-color: $primary;
@@ -940,17 +940,24 @@ $btn-close-opacity: 0.9;
   font-family: "Bungee Inline", cursive;
 }
 
+#leave {
+  font-size: 18px;
+  padding: 8px 20px;
+  margin-top: 5px;
+}
+
 .game-results-container {
-  height: 88%;
+  height: 82%;
   width: 100%;
   background-color: $primary;
 }
+
 
 .game-result-grid {
   display: grid;
   grid-template-columns: 12% 40% 12% 12% 12% 12%;
   grid-template-rows: 100%;
-  height: 25%;
+  height: 22%;
 }
 
 .game-results-pos , .game-results-name ,.game-results-points ,.game-results-old-ranking, .game-results-ranking-change, .game-results-new-ranking {

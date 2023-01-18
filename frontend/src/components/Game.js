@@ -544,17 +544,16 @@ const Game = (props) => {
     });
 
     connection.on("roundResults", (roundResults, gameResults, cards) => {
-      setRoundResults([roundResults, gameResults, cards]);
       setShowRoundResults(true);
+      setRoundResults([roundResults, gameResults, cards]);
       setTimeout(() => {
         setShowRoundResults(false);
       }, 10000);
     });
 
     connection.on("gameResults", (roundResults, gameResults, cards) => {
-      setGameResults([roundResults, gameResults, cards]);
       setShowGameResults(true);
-      connection.stop();
+      setGameResults([roundResults, gameResults, cards]);  
     });
 
     connection.on("newRound", (game) => {
@@ -674,7 +673,7 @@ const Game = (props) => {
   const handleExitGame = () => {
     connection.stop();
     if(bHubConnection){
-      bHubConnection.invoke("RefreshPage");
+      setTimeout( () => {bHubConnection.invoke("RefreshPage")}, 1500);
       bHubConnection.stop();
     }
 
@@ -787,8 +786,8 @@ const Game = (props) => {
             <div className="results-wrapper">
               <GameResults
                 gameResults={gameResults}
-                setGo={props.setGo()}
-                handleExitGame={handleExitGame()}
+                setGo={props.setGo}
+                handleExitGame={handleExitGame}
               />
             </div>
           </div>
@@ -818,7 +817,6 @@ const Game = (props) => {
                           : undefined
                       }
                     >
-                      {" "}
                       {card.queenCheat ? (
                         <Card
                           cheat={true}

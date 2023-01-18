@@ -52,17 +52,19 @@ const GameResults = (props) => {
               newRanking={row.newRanking}
             />
           ))}
+          <Button
+            id="leave"
+            variant="secondary"
+            onClick={(e) => {
+              props.setGo(!e);
+              props.handleExitGame();
+            }}
+          >
+            Wyjdź
+          </Button>
         </div>
       </div>
-      <Button
-              id="leave"
-              variant="secondary"
-              onClick={(e) => {
-                props.setGo(!e);
-                props.handleExitGame();
-              }}>Wyjdź</Button>
     </div>
-    
   );
 };
 
