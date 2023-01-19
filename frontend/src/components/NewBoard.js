@@ -16,6 +16,7 @@ const NewBoard = (props) => {
   const { message } = useSelector((state) => state.message);
   const nowGo = useSelector((state) => state.boards.nowGo);
   const createdBoardId = useSelector((state) => state.boards.createdBoardId);
+  const createdBoardMode = useSelector((state) => state.boards.createdBoardMode);
   const dispatch = useDispatch();
   const handleGo = props.handleGo;
 
@@ -77,7 +78,7 @@ const NewBoard = (props) => {
 
   useEffect(() => {
     if (nowGo) {
-      handleGo(createdBoardId);
+      handleGo(createdBoardId, createdBoardMode);
     }
     dispatch(dontGo());
   }, [nowGo]);
