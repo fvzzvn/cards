@@ -26,7 +26,7 @@
         public Dictionary<string, int> RoundResult { get; set; } 
         public bool GameEnded { get; set; }
         public Dictionary<string, int> GameResult { get; set; }
-        public int Mode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Mode { get; set; }
 
         private static Random rng = new Random();
 
