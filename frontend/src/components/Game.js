@@ -53,7 +53,7 @@ const Game = (props) => {
     await connection.invoke(
       "JoinRoom",
       `${props.boardId}`,
-      // `${props.boardMode}`,
+      `${props.boardMode}`,
       `${props.username}`
     );
     setTimeout(() => {
@@ -618,13 +618,19 @@ const Game = (props) => {
     });
 
     connection.on("playerPlayedSpecialCard", (player, card, game) => {
-      if (card.text === "Queen") {
-        setQueen(card);
-        setWaitForQueenAction(true);
+      console.log(player);
+      if (player.id === mainPlayerId) {
+        if (card.text === "Queen") {
+          setQueen(card);
+          setWaitForQueenAction(true);
+        }
+        if (card.text === "Jack") {
+          setJack(card);
+          setWaitForJackAction(true);
+        }
       }
-      if (card.text === "Jack") {
-        setJack(card);
-        setWaitForJackAction(true);
+      else {
+        console.log("YOU CAN'T DO ANYTHING RN");
       }
     });
   }, []);
@@ -722,21 +728,6 @@ const Game = (props) => {
         console.log(queenCardArray);
       }
     );
-    // if (queenCardArray.length === 1 && queenIdsArray.length === 1) {
-    //   try {
-    //     connection.invoke(
-    //       "PlayedSpecialCard",
-    //       queen,
-    //       queenIdsArray,
-    //       queenCardArray
-    //     );
-    //     setQueenIdsArray([]);
-    //     setQueenCardArray([]);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    //   setWaitForQueenAction(false);
-    // }
   };
 
   useEffect(() => {
@@ -771,21 +762,6 @@ const Game = (props) => {
         console.log(jackCardArray);
       }
     );
-    // if (jackCardArray.length === 2 && jackIdsArray.length === 2) {
-    //   try {
-    //     connection.invoke(
-    //       "PlayedSpecialCard",
-    //       jack,
-    //       jackIdsArray,
-    //       jackCardArray
-    //     );
-    //     setJackIdsArray([]);
-    //     setJackCardArray([]);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    //   setWaitForJackAction(false);
-    // }
   };
 
   useEffect(() => {

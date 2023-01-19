@@ -48,7 +48,7 @@ const Boards = (props) => {
     <>
       {boards ? (
         boards.map((item, i) => (
-          <div onClick={(e) => props.handleGo(item.boardId, e)}>
+          <div onClick={(e) => props.handleGo(item.boardId, item.boardMode, e)}>
             <Board
               // id={item.id}
               key={i}

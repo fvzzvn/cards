@@ -40,6 +40,7 @@ const Home = () => {
   // const [loading, setLoading] = useState(false);
   const [go, setGo] = useState(false);
   const [currentBoardId, setCurrentBoardId] = useState(0);
+  const [currentBoardMode, setCurrentBoardMode] = useState(0);
   // const { message } = useSelector((state) => state.message);  <--- FUTURE ERROR HANDLING?
   const [connection, setConnection] = useState(null);
 
@@ -66,8 +67,9 @@ const Home = () => {
     setShowRegisterButton((showRegisterButton) => true);
   };
 
-  const handleGo = (id) => {
+  const handleGo = (id, mode) => {
     setCurrentBoardId((currentBoardId) => id);
+    setCurrentBoardMode((currentBoardMode) => mode)
     setGo(!go);
     setShowCreateBoard((showCreateBoard) => false);
   };
@@ -220,7 +222,7 @@ const Home = () => {
               username={username}
               game={true}
             ></HeaderBar>
-            <Game setGo={setGo} username={username} boardId={currentBoardId}></Game>
+            <Game setGo={setGo} username={username} boardId={currentBoardId} boardMode={currentBoardMode}></Game>
           </>
         )
       )}
