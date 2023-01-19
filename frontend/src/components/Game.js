@@ -38,9 +38,11 @@ const Game = (props) => {
   const [showGameResults, setShowGameResults] = useState(false);
   const [roundResults, setRoundResults] = useState([]);
   const [gameResults, setGameResults] = useState([]);
+  const [queen, setQueen] = useState("");
   const [waitForQueenAction, setWaitForQueenAction] = useState(false);
   const [queenIdsArray, setQueenIdsArray] = useStateCallback([]);
   const [queenCardArray, setQueenCardArray] = useStateCallback([]);
+  const [jack, setJack] = useState("");
   const [waitForJackAction, setWaitForJackAction] = useState(false);
   const [jackIdsArray, setJackIdsArray] = useStateCallback([]);
   const [jackCardArray, setJackCardArray] = useStateCallback([]);
@@ -51,9 +53,12 @@ const Game = (props) => {
     await connection.invoke(
       "JoinRoom",
       `${props.boardId}`,
+      `${props.boardMode}`,
       `${props.username}`
     );
-    setTimeout(()=> {console.log()}, 1500);
+    setTimeout(() => {
+      console.log();
+    }, 1500);
 
     const bHubConnection = new HubConnectionBuilder()
       .withUrl("https://localhost:7297/BoardHub", {
@@ -553,7 +558,7 @@ const Game = (props) => {
 
     connection.on("gameResults", (roundResults, gameResults, cards) => {
       setShowGameResults(true);
-      setGameResults([roundResults, gameResults, cards]);  
+      setGameResults([roundResults, gameResults, cards]);
     });
 
     connection.on("newRound", (game) => {
@@ -614,7 +619,7 @@ const Game = (props) => {
 
     connection.on("playerPlayedSpecialCard", (player, card, game) => {
       if (card.text === "Queen") {
-        setActiveCard(card);
+        setQueen(card);
         setWaitForQueenAction(true);
       }
       if (card.text === "Jack") {
@@ -672,11 +677,12 @@ const Game = (props) => {
 
   const handleExitGame = () => {
     connection.stop();
-    if(bHubConnection){
-      setTimeout( () => {bHubConnection.invoke("RefreshPage")}, 1500);
+    if (bHubConnection) {
+      setTimeout(() => {
+        bHubConnection.invoke("RefreshPage");
+      }, 1500);
       bHubConnection.stop();
     }
-
   };
 
   function useStateCallback(initialState) {
@@ -701,8 +707,7 @@ const Game = (props) => {
   }
 
   const handleQueenAction = (id, card) => {
-    console.log("HANDLING QUEEN ACTION...", activeCard, id, card);
-    console.log(activeCard);
+    console.log("HANDLING QUEEN ACTION...", queen, id, card);
     console.log(id);
     console.log(card);
     setQueenIdsArray(
@@ -717,11 +722,29 @@ const Game = (props) => {
         console.log(queenCardArray);
       }
     );
+    // if (queenCardArray.length === 1 && queenIdsArray.length === 1) {
+    //   try {
+    //     connection.invoke(
+    //       "PlayedSpecialCard",
+    //       queen,
+    //       queenIdsArray,
+    //       queenCardArray
+    //     );
+    //     setQueenIdsArray([]);
+    //     setQueenCardArray([]);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    //   setWaitForQueenAction(false);
+    // }
+  };
+
+  useEffect(() => {
     if (queenCardArray.length === 1 && queenIdsArray.length === 1) {
       try {
         connection.invoke(
           "PlayedSpecialCard",
-          activeCard,
+          queen,
           queenIdsArray,
           queenCardArray
         );
@@ -732,10 +755,11 @@ const Game = (props) => {
       }
       setWaitForQueenAction(false);
     }
-  };
+  }, [queenCardArray, queenIdsArray]);
 
   const handleJackAction = (id, card) => {
-    console.log("HANDLING JACK ACTION...", activeCard, id, card);
+    let jack = activeCard;
+    console.log("HANDLING JACK ACTION...", jack, id, card);
     setJackIdsArray(
       (current) => [...current, id],
       () => {
@@ -748,11 +772,29 @@ const Game = (props) => {
         console.log(jackCardArray);
       }
     );
+    // if (jackCardArray.length === 2 && jackIdsArray.length === 2) {
+    //   try {
+    //     connection.invoke(
+    //       "PlayedSpecialCard",
+    //       jack,
+    //       jackIdsArray,
+    //       jackCardArray
+    //     );
+    //     setJackIdsArray([]);
+    //     setJackCardArray([]);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    //   setWaitForJackAction(false);
+    // }
+  };
+
+  useEffect(() => {
     if (jackCardArray.length === 2 && jackIdsArray.length === 2) {
       try {
         connection.invoke(
           "PlayedSpecialCard",
-          activeCard,
+          jack,
           jackIdsArray,
           jackCardArray
         );
@@ -763,13 +805,12 @@ const Game = (props) => {
       }
       setWaitForJackAction(false);
     }
-  };
-
+  }, [jackIdsArray, jackCardArray]);
   useEffect(() => {}, [handCards]);
 
-  // useEffect(() => {
-  //   console.log(gameState);
-  // }, [gameState])
+  useEffect(() => {
+    console.log("Active Card is: " + activeCard.text + activeCard.suit);
+  }, [activeCard]);
 
   return (
     <div className="game-component">
