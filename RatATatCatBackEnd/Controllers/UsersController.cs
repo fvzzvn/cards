@@ -22,7 +22,7 @@ namespace RatATatCatBackEnd.Controllers
             _IUserInfo = IUserInfo;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<ActionResult<UserInfo>> Get()
         {
@@ -33,6 +33,17 @@ namespace RatATatCatBackEnd.Controllers
                 return NotFound();
             }
             return user;
+        }
+        //[Authorize]
+        [HttpGet("GetRankingListing")]
+        public async Task<ActionResult<List<UserInfo>>> GetTop50()
+        {
+            var users = await Task.FromResult(_IUserInfo.GetTop50());
+            if (users == null)
+            {
+                return NotFound();
+            }
+            return users;
         }
 
         [HttpPost]

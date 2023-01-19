@@ -12,5 +12,6 @@ namespace RatATatCatBackEnd.Interface
         public void UpdateUser(UserInfo user);
         public UserInfo DeleteUser(int id);
         public bool CheckUser(int id);
+        public List<UserInfo> GetTop50();
     }
 }
