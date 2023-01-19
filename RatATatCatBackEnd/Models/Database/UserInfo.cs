@@ -12,6 +12,9 @@ namespace RatATatCatBackEnd.Models.Database
         public string Password { get; set; }
         public string Role { get; set; }
         public int Mmr { get; set; }
+        public int RatMMR { get; set; }
+        public int DragonMMR { get; set; }
+        public int CrowMMR { get; set; }
         public DateTime? CreatedDate { get; set; }
 
     }

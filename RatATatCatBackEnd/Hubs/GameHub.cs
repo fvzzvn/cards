@@ -21,11 +21,11 @@ namespace RatATatCatBackEnd.Hubs
             _boards = _serviceProvider.GetRequiredService<IBoardInstance>();
             _rankingService = _serviceProvider.GetRequiredService<IRankingService>();
         }
-        public async Task JoinRoom(string gameId, string username)
+        public async Task JoinRoom(string gameId, string mode, string username)
         {
             if (_gameState.GetGame(gameId) == null)
             {
-                await _gameState.CreateGame(gameId);
+                await _gameState.CreateGame(gameId, Int16.Parse(mode));
             }
             IGame game = _gameState.GetGame(gameId);
             Player player = _gameState.CreatePlayer(gameId, username, Context.ConnectionId);
@@ -73,8 +73,8 @@ namespace RatATatCatBackEnd.Hubs
             }
             if (game.GameEnded)
             {
-                var mmrs = _rankingService.GetMmrs(game.GameResult);
-                var new_mmrs = _rankingService.Calculate(game.GameResult);
+                var mmrs = _rankingService.GetMmrs(game.GameResult, game.Mode);
+                var new_mmrs = _rankingService.Calculate(game.GameResult, game.Mode);
                 await Clients.Group(game.Id).gameResults(game.GameResult, mmrs ,new_mmrs);
                 _gameState.RemoveGame(game.Id);
                 _participants.DeletePlayerFromBoard(Int16.Parse(game.Id));

@@ -20,13 +20,15 @@
         public Dictionary<string, int> GameResult { get; set; }
         public Player Player3 { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Player Player4 { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Mode { get; set; }
 
-        public CrowGame(string id)
+        public CrowGame(string id, int mode)
         {
             Id = id;
             Dealer = new CrowDealer();
             CreateTrack();
-        } 
+            Mode = mode;
+        }
         public void AddPlayer(Player player)
         {
             if (Player1 is null)

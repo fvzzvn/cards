@@ -2,7 +2,7 @@
 {
     public class DefaultGame : IGame
     {
-        public DefaultGame(string id)
+        public DefaultGame(string id, int mode)
         {
             this.Id = id;
             this.Stack = new Stack();
@@ -10,6 +10,7 @@
             Stack.PlaceCard(Dealer.StartingCard());
             RoundResult = new Dictionary<string, int>();
             GameResult = new Dictionary<string, int>();
+            Mode = mode;
         }
         public string Id { get; set; }
         public Stack Stack { get; set; }
@@ -24,7 +25,8 @@
         public bool RoundEnded { get; set; }
         public Dictionary<string, int> RoundResult { get; set; } 
         public bool GameEnded { get; set; }
-        public Dictionary<string, int> GameResult { get; set; } 
+        public Dictionary<string, int> GameResult { get; set; }
+        public int Mode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private static Random rng = new Random();
 

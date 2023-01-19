@@ -42,6 +42,9 @@ namespace RatATatCatBackEnd.Controllers
             user.CreatedDate = DateTime.Now;
             user.Role = "Player";
             user.Mmr = 500;
+            user.RatMMR = 500;
+            user.DragonMMR = 500;
+            user.CrowMMR = 500;
             _IUserInfo.AddUser(user);
             return await Task.FromResult(user);
         }

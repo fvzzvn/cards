@@ -18,11 +18,11 @@ namespace RatATatCatBackEnd.Hubs
             _boards = _serviceProvider.GetRequiredService<IBoardInstance>();
         }
 
-        public async Task JoinRoom(string gameId, string username)
+        public async Task JoinRoom(string gameId, int mode, string username)
         {
             if (_gameState.GetGame(gameId) == null)
             {
-                await _gameState.CreateGame(gameId);
+                await _gameState.CreateGame(gameId, mode);
             }
 
             Player player = _gameState.CreatePlayer(gameId, username, Context.ConnectionId);

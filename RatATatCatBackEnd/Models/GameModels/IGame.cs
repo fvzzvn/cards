@@ -9,6 +9,7 @@
         Player Player4 { get; set; }
         ICardDealer Dealer { get; set; }
         string Id { get; set; }
+        int Mode { get; set; }
         Player PlayerTurn { get; set; }
         Stack Stack { get; set; }
         bool RoundEnded { get; set; }

@@ -18,8 +18,9 @@
         public bool RoundEnding { get; set; }
         public Player Player3 { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Player Player4 { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Mode { get; set; }
 
-        public DragonGame(string id)
+        public DragonGame(string id, int mode)
         {
             Id = id;
             Dealer = new DragonDealer();
@@ -27,6 +28,7 @@
             Stack2 = new Stack();
             RoundResult = new Dictionary<string, int>();
             GameResult = new Dictionary<string, int>();
+            Mode = mode;
         }
         public void AddPlayer(Player player)
         {
