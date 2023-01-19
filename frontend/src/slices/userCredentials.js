@@ -28,6 +28,25 @@ export const getUserCredentials = createAsyncThunk(
   }
 );
 
+export const getEditUserCredentials = createAsyncThunk(
+  "userCredentials/getCredentials",
+  async (thunkAPI) => {
+    try {
+      const data = await userService.getEditUserCredentials();
+      return { data };
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 const initialState = {
   userName: "",
   userEmail: "",

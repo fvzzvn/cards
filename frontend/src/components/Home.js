@@ -211,7 +211,7 @@ const Home = () => {
             username={username}
             game={false}
           />
-          <Options></Options>
+          <Options {...{username, userId}} />
         </>
       ) : (
         <></>
