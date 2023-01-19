@@ -57,6 +57,9 @@ const Game = (props) => {
   const [waitForJackAction, setWaitForJackAction] = useState(false);
   const [jackIdsArray, setJackIdsArray] = useStateCallback([]);
   const [jackCardArray, setJackCardArray] = useStateCallback([]);
+  const [waitForStartingAction, setWaitForStartingAction] = useState(false);
+  const [startingIdsArray, setStartingIdsArray] = useStateCallback([]);
+  const [startingCardArray, setStartingCardArray] = useStateCallback([]);
   const [stun, setStun] = useState(false);
   const dispatch = useDispatch();
 
@@ -202,10 +205,12 @@ const Game = (props) => {
       }
       setStack(game.stack);
       console.log(game, "started");
-      setShowPlayerCards(true);
-      setTimeout(() => {
-        setShowPlayerCards(false);
-      }, 5000);
+
+      setWaitForStartingAction(true);
+      // setShowPlayerCards(true);
+      // setTimeout(() => {
+      //   setShowPlayerCards(false);
+      // }, 5000);
     });
   }, []);
 
@@ -652,10 +657,11 @@ const Game = (props) => {
         }
         setStack(game.stack);
         console.log(game, "started");
-        setShowPlayerCards(true);
-        setTimeout(() => {
-          setShowPlayerCards(false);
-        }, 5000);
+        setWaitForStartingAction(true);
+        // setShowPlayerCards(true);
+        // setTimeout(() => {
+        //   setShowPlayerCards(false);
+        // }, 5000);
       });
 
       connection.on("playerPlayedSpecialCard", (player, card, game) => {
@@ -674,6 +680,7 @@ const Game = (props) => {
           setStun(true);
         }
       });
+
     }
   }, [
     mainPlayerId,
@@ -735,8 +742,8 @@ const Game = (props) => {
   const handleExitGame = () => {
     connection.stop();
     if (bHubConnection) {
-        bHubConnection.invoke("RefreshPage");
-        bHubConnection.stop();
+      bHubConnection.invoke("RefreshPage");
+      bHubConnection.stop();
     }
   };
 
@@ -760,6 +767,52 @@ const Game = (props) => {
 
     return [state, setStateCallback];
   }
+
+  const handleStartingAction = (card) => {
+    console.log("HANDLE STARTING ACTION...", card.suit, card.text);
+    setStartingCardArray(
+      (current) => [...current, card],
+      () => {
+        console.log(startingCardArray);
+      }
+    );
+  };
+
+  const showStarters = (cards) => {
+    let cardList = _.cloneDeep(handCards);
+    let backToList = _.cloneDeep(handCards);
+    let cheatCard = cardList.find(
+      (card) =>
+        card.text === cards[0].text && card.suit === cards[0].suit
+    );
+    if (cheatCard) {
+      cheatCard.queenCheat = true;
+    }
+    cheatCard = cardList.find(
+      (card) =>
+        card.text === cards[1].text && card.suit === cards[1].suit
+    );
+    if (cheatCard) {
+      cheatCard.queenCheat = true;
+    }
+    setHandCards(cardList);
+    const timeoutId = setTimeout(() => {
+      setHandCards(backToList);
+    }, 5000);
+    connection.on("playerPlayedCard", () => {
+      clearTimeout(timeoutId);
+    });
+    setStartingCardArray([]);
+  }
+
+  useEffect(() => {
+    if (startingCardArray.length === 2) {
+      showStarters(startingCardArray);
+      setWaitForStartingAction(false);   
+    }
+  }, [startingCardArray]);
+
+  
 
   const handleQueenAction = (id, card) => {
     console.log("HANDLING QUEEN ACTION...", queen, id, card);
@@ -1006,7 +1059,13 @@ const Game = (props) => {
                     handCards.map((card, i) => (
                       <div
                         onClick={
-                          waitForQueenAction
+                          waitForStartingAction
+                            ? () =>
+                                handleStartingAction({
+                                  text: card.text,
+                                  suit: card.suit,
+                                })
+                            : waitForQueenAction
                             ? () =>
                                 handleQueenAction(mainPlayerId, {
                                   text: card.text,
