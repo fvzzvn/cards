@@ -27,6 +27,7 @@ const Login = (props) => {
 
   const handleLogin = (formValue) => {
     const { email, password } = formValue;
+    console.log( email, password);
     setLoading(true);
     dispatch(login({ email, password }))
       .unwrap()

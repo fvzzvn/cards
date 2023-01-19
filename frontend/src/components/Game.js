@@ -9,6 +9,12 @@ import Button from "react-bootstrap/Button";
 import Card from "./Card";
 import Results from "./Results";
 import GameResults from "./GameResults";
+import {
+  setMainPlayer,
+  setLeftPlayer,
+  setTopPlayer,
+  setRightPlayer,
+} from "../slices/game";
 import { v4 as uuid } from "uuid";
 import { addParticipant } from "../slices/participants";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,15 +24,19 @@ const Game = (props) => {
   const mainPlayerName = useSelector(
     (state) => state.userCredentials.displayName
   );
+  const leftPlayerName = useSelector((state) => state.game.leftPlayerName);
+  const topPlayerName = useSelector((state) => state.game.topPlayerName);
+  const rightPlayerName = useSelector((state) => state.game.rightPlayerName);
+
+  const mainPlayerId = useSelector((state) => state.game.mainPlayerId);
+  const leftPlayerId = useSelector((state) => state.game.leftPlayerId);
+  const topPlayerId = useSelector((state) => state.game.topPlayerId);
+  const rightPlayerId = useSelector((state) => state.game.rightPlayerId);
 
   const [handCards, setHandCards] = useState("");
   const [leftPlayerCards, setLeftCards] = useState("");
   const [rightPlayerCards, setRightCards] = useState("");
   const [topPlayerCards, setTopCards] = useState("");
-  const [mainPlayerId, setMainPlayerId] = useState("");
-  const [leftPlayerId, setLeftPlayerId] = useState("");
-  const [topPlayerId, setTopPlayerId] = useState("");
-  const [rightPlayerId, setRightPlayerId] = useState("");
   const [stack, setStack] = useState("");
   const [gameState, setGameState] = useState([]);
   const [activeCard, setActiveCard] = useState("");
@@ -50,10 +60,14 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
-    console.log("await connection.invoke JoinRoom boardID:" +
-      props.boardId + " boardMode:" + 
-      props.boardMode + " username:" +
-      props.username)
+    console.log(
+      "await connection.invoke JoinRoom boardID:" +
+        props.boardId +
+        " boardMode:" +
+        props.boardMode +
+        " username:" +
+        props.username
+    );
 
     await connection.invoke(
       "JoinRoom",
@@ -109,44 +123,76 @@ const Game = (props) => {
         setTopCards(game.player3.cards);
         setRightCards(game.player4.cards);
         setActiveCard(game.player1.cards[0]);
-        console.log(game.player1.id);
-        console.log(game.player2.id);
-        console.log(game.player3.id);
-        console.log(game.player4.id);
-        setMainPlayerId(game.player1.id);
-        setLeftPlayerId(game.player2.id);
-        setTopPlayerId(game.player3.id);
-        setRightPlayerId(game.player4.id);
+        let id1 = game.player1.id;
+        let n1 = game.player1.name;
+        let id2 = game.player2.id;
+        let n2 = game.player2.name;
+        let id3 = game.player3.id;
+        let n3 = game.player3.name;
+        let id4 = game.player4.id;
+        let n4 = game.player4.name;
+        console.log(id1, n1, id2, n2, id3, n3, id4, n4);
+        dispatch(setMainPlayer([id1, n1]));
+        dispatch(setLeftPlayer([id2, n2]));
+        dispatch(setTopPlayer([id3, n3]));
+        dispatch(setRightPlayer([id4, n4]));
       } else if (mainPlayerName === game.player2.name) {
         setHandCards(game.player2.cards);
         setLeftCards(game.player3.cards);
         setTopCards(game.player4.cards);
         setRightCards(game.player1.cards);
         setActiveCard(game.player2.cards[0]);
-        setMainPlayerId(game.player2.id);
-        setLeftPlayerId(game.player3.id);
-        setTopPlayerId(game.player4.id);
-        setRightPlayerId(game.player1.id);
+        let id1 = game.player1.id;
+        let n1 = game.player1.name;
+        let id2 = game.player2.id;
+        let n2 = game.player2.name;
+        let id3 = game.player3.id;
+        let n3 = game.player3.name;
+        let id4 = game.player4.id;
+        let n4 = game.player4.name;
+        console.log(id1, n1, id2, n2, id3, n3, id4, n4);
+        dispatch(setMainPlayer([id2, n2]));
+        dispatch(setLeftPlayer([id3, n3]));
+        dispatch(setTopPlayer([id4, n4]));
+        dispatch(setRightPlayer([id1, n1]));
       } else if (mainPlayerName === game.player3.name) {
         setHandCards(game.player3.cards);
         setLeftCards(game.player4.cards);
         setTopCards(game.player1.cards);
         setRightCards(game.player2.cards);
         setActiveCard(game.player3.cards[0]);
-        setMainPlayerId(game.player3.id);
-        setLeftPlayerId(game.player4.id);
-        setTopPlayerId(game.player1.id);
-        setRightPlayerId(game.player2.id);
+        let id1 = game.player1.id;
+        let n1 = game.player1.name;
+        let id2 = game.player2.id;
+        let n2 = game.player2.name;
+        let id3 = game.player3.id;
+        let n3 = game.player3.name;
+        let id4 = game.player4.id;
+        let n4 = game.player4.name;
+        console.log(id1, n1, id2, n2, id3, n3, id4, n4);
+        dispatch(setMainPlayer([id3, n3]));
+        dispatch(setLeftPlayer([id4, n4]));
+        dispatch(setTopPlayer([id1, n1]));
+        dispatch(setRightPlayer([id2, n2]));
       } else if (mainPlayerName === game.player4.name) {
         setHandCards(game.player4.cards);
         setLeftCards(game.player1.cards);
         setTopCards(game.player2.cards);
         setRightCards(game.player3.cards);
         setActiveCard(game.player4.cards[0]);
-        setMainPlayerId(game.player4.id);
-        setLeftPlayerId(game.player1.id);
-        setTopPlayerId(game.player2.id);
-        setRightPlayerId(game.player3.id);
+        let id1 = game.player1.id;
+        let n1 = game.player1.name;
+        let id2 = game.player2.id;
+        let n2 = game.player2.name;
+        let id3 = game.player3.id;
+        let n3 = game.player3.name;
+        let id4 = game.player4.id;
+        let n4 = game.player4.name;
+        console.log(id1, n1, id2, n2, id3, n3, id4, n4);
+        dispatch(setMainPlayer({ id4, n4 }));
+        dispatch(setLeftPlayer([id1, n1]));
+        dispatch(setTopPlayer([id2, n2]));
+        dispatch(setRightPlayer([id3, n3]));
       }
       setStack(game.stack);
       console.log(game, "started");
@@ -154,491 +200,492 @@ const Game = (props) => {
       setTimeout(() => {
         setShowPlayerCards(false);
       }, 5000);
-    });
-
-    connection.on("playerPlayedCard", (player, card, game) => {
-      console.log(player, "played", card, "game:", game);
-      setGameState(game);
-      if (mainPlayerName === game.player1.name) {
-        setHandCards(game.player1.cards);
-        setLeftCards(game.player2.cards);
-        setTopCards(game.player3.cards);
-        setRightCards(game.player4.cards);
-        setActiveCard(game.player1.cards[0]);
-      } else if (mainPlayerName === game.player2.name) {
-        setHandCards(game.player2.cards);
-        setLeftCards(game.player3.cards);
-        setTopCards(game.player4.cards);
-        setRightCards(game.player1.cards);
-        setActiveCard(game.player2.cards[0]);
-      } else if (mainPlayerName === game.player3.name) {
-        setHandCards(game.player3.cards);
-        setLeftCards(game.player4.cards);
-        setTopCards(game.player1.cards);
-        setRightCards(game.player2.cards);
-        setActiveCard(game.player3.cards[0]);
-      } else if (mainPlayerName === game.player4.name) {
-        setHandCards(game.player4.cards);
-        setLeftCards(game.player1.cards);
-        setTopCards(game.player2.cards);
-        setRightCards(game.player3.cards);
-        setActiveCard(game.player4.cards[0]);
-      }
-      setStack(game.stack);
-    });
-
-    connection.on("playerTookCard", (player, card, game) => {
-      setGameState(game);
-      console.log(player, "took", card, "game:", game);
-      if (mainPlayerName === game.player1.name) {
-        let cardList = _.cloneDeep(game.player1.cards);
-        let cheatCard = cardList.find(
-          (c) => c.text === card.text && c.suit === card.suit
-        );
-        if (cheatCard) {
-          if (cheatCard) {
-            cheatCard.queenCheat = true;
-          }
-        }
-        setHandCards(cardList);
-        setLeftCards(game.player2.cards);
-        setTopCards(game.player3.cards);
-        setRightCards(game.player4.cards);
-        setActiveCard(game.player1.cards[0]);
-        const timeoutId = setTimeout(() => {
-          setHandCards(game.player1.cards);
-        }, 5000);
-        connection.on("playerPlayedCard", () => {
-          clearTimeout(timeoutId);
-        });
-      } else if (mainPlayerName === game.player2.name) {
-        let cardList = _.cloneDeep(game.player2.cards);
-        let cheatCard = cardList.find(
-          (c) => c.text === card.text && c.suit === card.suit
-        );
-        if (cheatCard) {
-          if (cheatCard) {
-            cheatCard.queenCheat = true;
-          }
-        }
-        setHandCards(cardList);
-        setLeftCards(game.player3.cards);
-        setTopCards(game.player4.cards);
-        setRightCards(game.player1.cards);
-        setActiveCard(game.player2.cards[0]);
-        const timeoutId = setTimeout(() => {
-          setHandCards(game.player2.cards);
-        }, 5000);
-        connection.on("playerPlayedCard", () => {
-          clearTimeout(timeoutId);
-        });
-      } else if (mainPlayerName === game.player3.name) {
-        let cardList = _.cloneDeep(game.player3.cards);
-        let cheatCard = cardList.find(
-          (c) => c.text === card.text && c.suit === card.suit
-        );
-        if (cheatCard) {
-          if (cheatCard) {
-            cheatCard.queenCheat = true;
-          }
-        }
-        setHandCards(cardList);
-        setLeftCards(game.player4.cards);
-        setTopCards(game.player1.cards);
-        setRightCards(game.player2.cards);
-        setActiveCard(game.player3.cards[0]);
-        const timeoutId = setTimeout(() => {
-          setHandCards(game.player3.cards);
-        }, 5000);
-        connection.on("playerPlayedCard", () => {
-          clearTimeout(timeoutId);
-        });
-      } else if (mainPlayerName === game.player4.name) {
-        let cardList = _.cloneDeep(game.player4.cards);
-        let cheatCard = cardList.find(
-          (c) => c.text === card.text && c.suit === card.suit
-        );
-        if (cheatCard) {
-          if (cheatCard) {
-            cheatCard.queenCheat = true;
-          }
-        }
-        setHandCards(cardList);
-        setLeftCards(game.player1.cards);
-        setTopCards(game.player2.cards);
-        setRightCards(game.player3.cards);
-        setActiveCard(game.player4.cards[0]);
-        const timeoutId = setTimeout(() => {
-          setHandCards(game.player4.cards);
-        }, 5000);
-        connection.on("playerPlayedCard", () => {
-          clearTimeout(timeoutId);
-        });
-      }
-      setStack(game.stack);
-    });
-
-    connection.on(
-      "applySpecialCardEffect",
-      (card, player, game, playersList, cards) => {
-        setGameState(game);
-        if (card.text === "Queen") {
-          console.log(
-            "SHOWING CARD FROM QUEEN SPECIAL EFFECT: ",
-            playersList,
-            cards
-          );
-          if (mainPlayerName === game.player1.name) {
-            console.log("I'M PLAYER 1");
-            if (playersList[0].id === game.player1.id) {
-              let cardList = _.cloneDeep(game.player1.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setHandCards(cardList);
-              setTimeout(() => {
-                setHandCards(game.player1.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player2.id) {
-              let cardList = _.cloneDeep(game.player2.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setLeftCards(cardList);
-              setTimeout(() => {
-                setLeftCards(game.player2.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player3.id) {
-              let cardList = _.cloneDeep(game.player3.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setTopCards(cardList);
-              setTimeout(() => {
-                setTopCards(game.player3.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player4.id) {
-              let cardList = _.cloneDeep(game.player4.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setRightCards(cardList);
-              setTimeout(() => {
-                setRightCards(game.player4.cards);
-              }, 5000);
-            }
-          } else if (mainPlayerName === game.player2.name) {
-            console.log("I'M PLAYER 2");
-            if (playersList[0].id === game.player2.id) {
-              let cardList = _.cloneDeep(game.player2.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setHandCards(cardList);
-              setTimeout(() => {
-                setHandCards(game.player2.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player3.id) {
-              let cardList = _.cloneDeep(game.player3.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setLeftCards(cardList);
-              setTimeout(() => {
-                setLeftCards(game.player3.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player4.id) {
-              let cardList = _.cloneDeep(game.player4.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setTopCards(cardList);
-              setTimeout(() => {
-                setTopCards(game.player4.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player1.id) {
-              let cardList = _.cloneDeep(game.player1.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setRightCards(cardList);
-              setTimeout(() => {
-                console.log(game.player1.cards);
-                setRightCards(game.player1.cards);
-              }, 5000);
-            }
-          } else if (mainPlayerName === game.player3.name) {
-            if (playersList[0].id === game.player3.id) {
-              let cardList = _.cloneDeep(game.player3.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setHandCards(cardList);
-              setTimeout(() => {
-                setHandCards(game.player3.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player4.id) {
-              let cardList = _.cloneDeep(game.player4.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setLeftCards(cardList);
-              setTimeout(() => {
-                setLeftCards(game.player4.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player1.id) {
-              console.log("SHOWING TOP CARD");
-              let cardList = _.cloneDeep(game.player1.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setTopCards(cardList);
-              setTimeout(() => {
-                setTopCards(game.player1.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player2.id) {
-              let cardList = _.cloneDeep(game.player2.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setRightCards(cardList);
-              setTimeout(() => {
-                setRightCards(game.player2.cards);
-              }, 5000);
-            }
-          } else if (mainPlayerName === game.player4.name) {
-            if (playersList[0].id === game.player4.id) {
-              let cardList = _.cloneDeep(game.player4.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setHandCards(cardList);
-              setTimeout(() => {
-                setHandCards(game.player4.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player1.id) {
-              let cardList = _.cloneDeep(game.player1.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setLeftCards(cardList);
-              setTimeout(() => {
-                setLeftCards(game.player1.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player2.id) {
-              let cardList = _.cloneDeep(game.player2.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setTopCards(cardList);
-              setTimeout(() => {
-                setTopCards(game.player2.cards);
-              }, 5000);
-            } else if (playersList[0].id === game.player3.id) {
-              let cardList = _.cloneDeep(game.player3.cards);
-              let cheatCard = cardList.find(
-                (card) =>
-                  card.text === cards[0].text && card.suit === cards[0].suit
-              );
-              if (cheatCard) {
-                cheatCard.queenCheat = true;
-              }
-              setRightCards(cardList);
-              setTimeout(() => {
-                setRightCards(game.player3.cards);
-              }, 5000);
-            }
-          }
-          setStack(game.stack);
-        }
-        if (card.text === "Jack") {
-          if (mainPlayerName === game.player1.name) {
-            setHandCards(game.player1.cards);
-            setLeftCards(game.player2.cards);
-            setTopCards(game.player3.cards);
-            setRightCards(game.player4.cards);
-            setActiveCard(game.player1.cards[0]);
-          } else if (mainPlayerName === game.player2.name) {
-            setHandCards(game.player2.cards);
-            setLeftCards(game.player3.cards);
-            setTopCards(game.player4.cards);
-            setRightCards(game.player1.cards);
-            setActiveCard(game.player2.cards[0]);
-          } else if (mainPlayerName === game.player3.name) {
-            setHandCards(game.player3.cards);
-            setLeftCards(game.player4.cards);
-            setTopCards(game.player1.cards);
-            setRightCards(game.player2.cards);
-            setActiveCard(game.player3.cards[0]);
-          } else if (mainPlayerName === game.player4.name) {
-            setHandCards(game.player4.cards);
-            setLeftCards(game.player1.cards);
-            setTopCards(game.player2.cards);
-            setRightCards(game.player3.cards);
-            setActiveCard(game.player4.cards[0]);
-          }
-          setStack(game.stack);
-        }
-      }
-    );
-
-    connection.on("notPlayersTurn", () => {
-      console.log("Not players turn");
-    });
-    connection.on("stackEmpty", () => {
-      console.log("stack empty");
-    });
-
-    connection.on("roundEnding", () => {
-      console.log("ROUND ENDING");
-    });
-
-    connection.on("roundResults", (roundResults, gameResults, cards) => {
-      setShowRoundResults(true);
-      setRoundResults([roundResults, gameResults, cards]);
-      setTimeout(() => {
-        setShowRoundResults(false);
-      }, 10000);
-    });
-
-    connection.on("gameResults", (roundResults, gameResults, cards) => {
-      setShowGameResults(true);
-      setGameResults([roundResults, gameResults, cards]);
-    });
-
-    connection.on("newRound", (game) => {
-      console.log("NEW ROUND:", game);
-      setGameState(game);
-      if (mainPlayerName === game.player1.name) {
-        setHandCards(game.player1.cards);
-        setLeftCards(game.player2.cards);
-        setTopCards(game.player3.cards);
-        setRightCards(game.player4.cards);
-        setActiveCard(game.player1.cards[0]);
-        console.log(game.player1.id);
-        console.log(game.player2.id);
-        console.log(game.player3.id);
-        console.log(game.player4.id);
-        setMainPlayerId(game.player1.id);
-        setLeftPlayerId(game.player2.id);
-        setTopPlayerId(game.player3.id);
-        setRightPlayerId(game.player4.id);
-      } else if (mainPlayerName === game.player2.name) {
-        setHandCards(game.player2.cards);
-        setLeftCards(game.player3.cards);
-        setTopCards(game.player4.cards);
-        setRightCards(game.player1.cards);
-        setActiveCard(game.player2.cards[0]);
-        setMainPlayerId(game.player2.id);
-        setLeftPlayerId(game.player3.id);
-        setTopPlayerId(game.player4.id);
-        setRightPlayerId(game.player1.id);
-      } else if (mainPlayerName === game.player3.name) {
-        setHandCards(game.player3.cards);
-        setLeftCards(game.player4.cards);
-        setTopCards(game.player1.cards);
-        setRightCards(game.player2.cards);
-        setActiveCard(game.player3.cards[0]);
-        setMainPlayerId(game.player3.id);
-        setLeftPlayerId(game.player4.id);
-        setTopPlayerId(game.player1.id);
-        setRightPlayerId(game.player2.id);
-      } else if (mainPlayerName === game.player4.name) {
-        setHandCards(game.player4.cards);
-        setLeftCards(game.player1.cards);
-        setTopCards(game.player2.cards);
-        setRightCards(game.player3.cards);
-        setActiveCard(game.player4.cards[0]);
-        setMainPlayerId(game.player4.id);
-        setLeftPlayerId(game.player1.id);
-        setTopPlayerId(game.player2.id);
-        setRightPlayerId(game.player3.id);
-      }
-      setStack(game.stack);
-      console.log(game, "started");
-      setShowPlayerCards(true);
-      setTimeout(() => {
-        setShowPlayerCards(false);
-      }, 5000);
-    });
-
-    connection.on("playerPlayedSpecialCard", (player, card, game) => {
-      console.log(player);
-      if (player.id === mainPlayerId) {
-        if (card.text === "Queen") {
-          setQueen(card);
-          setWaitForQueenAction(true);
-        }
-        if (card.text === "Jack") {
-          setJack(card);
-          setWaitForJackAction(true);
-        }
-      }
-      else {
-        console.log("YOU CAN'T DO ANYTHING RN");
-      }
     });
   }, []);
+
+  useEffect(() => {
+    if (connection) {
+      connection.on("playerPlayedCard", (player, card, game) => {
+        console.log(player, "played", card, "game:", game);
+        setGameState(game);
+        if (mainPlayerName === game.player1.name) {
+          console.log(mainPlayerName);
+          console.log(mainPlayerId);
+          setHandCards(game.player1.cards);
+          setLeftCards(game.player2.cards);
+          setTopCards(game.player3.cards);
+          setRightCards(game.player4.cards);
+          setActiveCard(game.player1.cards[0]);
+        } else if (mainPlayerName === game.player2.name) {
+          console.log(mainPlayerName);
+          console.log(mainPlayerId);
+          setHandCards(game.player2.cards);
+          setLeftCards(game.player3.cards);
+          setTopCards(game.player4.cards);
+          setRightCards(game.player1.cards);
+          setActiveCard(game.player2.cards[0]);
+        } else if (mainPlayerName === game.player3.name) {
+          console.log(mainPlayerName);
+          console.log(mainPlayerId);
+          setHandCards(game.player3.cards);
+          setLeftCards(game.player4.cards);
+          setTopCards(game.player1.cards);
+          setRightCards(game.player2.cards);
+          setActiveCard(game.player3.cards[0]);
+        } else if (mainPlayerName === game.player4.name) {
+          console.log(mainPlayerName);
+          console.log(mainPlayerId);
+          setHandCards(game.player4.cards);
+          setLeftCards(game.player1.cards);
+          setTopCards(game.player2.cards);
+          setRightCards(game.player3.cards);
+          setActiveCard(game.player4.cards[0]);
+        }
+        setStack(game.stack);
+      });
+
+      connection.on("playerTookCard", (player, card, game) => {
+        setGameState(game);
+        console.log(player, "took", card, "game:", game);
+        if (mainPlayerName === game.player1.name) {
+          let cardList = _.cloneDeep(game.player1.cards);
+          let cheatCard = cardList.find(
+            (c) => c.text === card.text && c.suit === card.suit
+          );
+          if (cheatCard) {
+            if (cheatCard) {
+              cheatCard.queenCheat = true;
+            }
+          }
+          setHandCards(cardList);
+          setLeftCards(game.player2.cards);
+          setTopCards(game.player3.cards);
+          setRightCards(game.player4.cards);
+          setActiveCard(game.player1.cards[0]);
+          const timeoutId = setTimeout(() => {
+            setHandCards(game.player1.cards);
+          }, 5000);
+          connection.on("playerPlayedCard", () => {
+            clearTimeout(timeoutId);
+          });
+        } else if (mainPlayerName === game.player2.name) {
+          let cardList = _.cloneDeep(game.player2.cards);
+          let cheatCard = cardList.find(
+            (c) => c.text === card.text && c.suit === card.suit
+          );
+          if (cheatCard) {
+            if (cheatCard) {
+              cheatCard.queenCheat = true;
+            }
+          }
+          setHandCards(cardList);
+          setLeftCards(game.player3.cards);
+          setTopCards(game.player4.cards);
+          setRightCards(game.player1.cards);
+          setActiveCard(game.player2.cards[0]);
+          const timeoutId = setTimeout(() => {
+            setHandCards(game.player2.cards);
+          }, 5000);
+          connection.on("playerPlayedCard", () => {
+            clearTimeout(timeoutId);
+          });
+        } else if (mainPlayerName === game.player3.name) {
+          let cardList = _.cloneDeep(game.player3.cards);
+          let cheatCard = cardList.find(
+            (c) => c.text === card.text && c.suit === card.suit
+          );
+          if (cheatCard) {
+            if (cheatCard) {
+              cheatCard.queenCheat = true;
+            }
+          }
+          setHandCards(cardList);
+          setLeftCards(game.player4.cards);
+          setTopCards(game.player1.cards);
+          setRightCards(game.player2.cards);
+          setActiveCard(game.player3.cards[0]);
+          const timeoutId = setTimeout(() => {
+            setHandCards(game.player3.cards);
+          }, 5000);
+          connection.on("playerPlayedCard", () => {
+            clearTimeout(timeoutId);
+          });
+        } else if (mainPlayerName === game.player4.name) {
+          let cardList = _.cloneDeep(game.player4.cards);
+          let cheatCard = cardList.find(
+            (c) => c.text === card.text && c.suit === card.suit
+          );
+          if (cheatCard) {
+            if (cheatCard) {
+              cheatCard.queenCheat = true;
+            }
+          }
+          setHandCards(cardList);
+          setLeftCards(game.player1.cards);
+          setTopCards(game.player2.cards);
+          setRightCards(game.player3.cards);
+          setActiveCard(game.player4.cards[0]);
+          const timeoutId = setTimeout(() => {
+            setHandCards(game.player4.cards);
+          }, 5000);
+          connection.on("playerPlayedCard", () => {
+            clearTimeout(timeoutId);
+          });
+        }
+        setStack(game.stack);
+      });
+
+      connection.on(
+        "applySpecialCardEffect",
+        (card, player, game, playersList, cards) => {
+          setGameState(game);
+          if (card.text === "Queen") {
+            console.log(
+              "SHOWING CARD FROM QUEEN SPECIAL EFFECT: ",
+              playersList,
+              cards
+            );
+            if (mainPlayerName === game.player1.name) {
+              console.log("I'M PLAYER 1");
+              if (playersList[0].id === game.player1.id) {
+                let cardList = _.cloneDeep(game.player1.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setHandCards(cardList);
+                setTimeout(() => {
+                  setHandCards(game.player1.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player2.id) {
+                let cardList = _.cloneDeep(game.player2.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setLeftCards(cardList);
+                setTimeout(() => {
+                  setLeftCards(game.player2.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player3.id) {
+                let cardList = _.cloneDeep(game.player3.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setTopCards(cardList);
+                setTimeout(() => {
+                  setTopCards(game.player3.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player4.id) {
+                let cardList = _.cloneDeep(game.player4.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setRightCards(cardList);
+                setTimeout(() => {
+                  setRightCards(game.player4.cards);
+                }, 5000);
+              }
+            } else if (mainPlayerName === game.player2.name) {
+              console.log("I'M PLAYER 2");
+              if (playersList[0].id === game.player2.id) {
+                let cardList = _.cloneDeep(game.player2.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setHandCards(cardList);
+                setTimeout(() => {
+                  setHandCards(game.player2.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player3.id) {
+                let cardList = _.cloneDeep(game.player3.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setLeftCards(cardList);
+                setTimeout(() => {
+                  setLeftCards(game.player3.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player4.id) {
+                let cardList = _.cloneDeep(game.player4.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setTopCards(cardList);
+                setTimeout(() => {
+                  setTopCards(game.player4.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player1.id) {
+                let cardList = _.cloneDeep(game.player1.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setRightCards(cardList);
+                setTimeout(() => {
+                  console.log(game.player1.cards);
+                  setRightCards(game.player1.cards);
+                }, 5000);
+              }
+            } else if (mainPlayerName === game.player3.name) {
+              if (playersList[0].id === game.player3.id) {
+                let cardList = _.cloneDeep(game.player3.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setHandCards(cardList);
+                setTimeout(() => {
+                  setHandCards(game.player3.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player4.id) {
+                let cardList = _.cloneDeep(game.player4.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setLeftCards(cardList);
+                setTimeout(() => {
+                  setLeftCards(game.player4.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player1.id) {
+                console.log("SHOWING TOP CARD");
+                let cardList = _.cloneDeep(game.player1.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setTopCards(cardList);
+                setTimeout(() => {
+                  setTopCards(game.player1.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player2.id) {
+                let cardList = _.cloneDeep(game.player2.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setRightCards(cardList);
+                setTimeout(() => {
+                  setRightCards(game.player2.cards);
+                }, 5000);
+              }
+            } else if (mainPlayerName === game.player4.name) {
+              if (playersList[0].id === game.player4.id) {
+                let cardList = _.cloneDeep(game.player4.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setHandCards(cardList);
+                setTimeout(() => {
+                  setHandCards(game.player4.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player1.id) {
+                let cardList = _.cloneDeep(game.player1.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setLeftCards(cardList);
+                setTimeout(() => {
+                  setLeftCards(game.player1.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player2.id) {
+                let cardList = _.cloneDeep(game.player2.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setTopCards(cardList);
+                setTimeout(() => {
+                  setTopCards(game.player2.cards);
+                }, 5000);
+              } else if (playersList[0].id === game.player3.id) {
+                let cardList = _.cloneDeep(game.player3.cards);
+                let cheatCard = cardList.find(
+                  (card) =>
+                    card.text === cards[0].text && card.suit === cards[0].suit
+                );
+                if (cheatCard) {
+                  cheatCard.queenCheat = true;
+                }
+                setRightCards(cardList);
+                setTimeout(() => {
+                  setRightCards(game.player3.cards);
+                }, 5000);
+              }
+            }
+            setStack(game.stack);
+          }
+          if (card.text === "Jack") {
+            if (mainPlayerName === game.player1.name) {
+              setHandCards(game.player1.cards);
+              setLeftCards(game.player2.cards);
+              setTopCards(game.player3.cards);
+              setRightCards(game.player4.cards);
+              setActiveCard(game.player1.cards[0]);
+            } else if (mainPlayerName === game.player2.name) {
+              setHandCards(game.player2.cards);
+              setLeftCards(game.player3.cards);
+              setTopCards(game.player4.cards);
+              setRightCards(game.player1.cards);
+              setActiveCard(game.player2.cards[0]);
+            } else if (mainPlayerName === game.player3.name) {
+              setHandCards(game.player3.cards);
+              setLeftCards(game.player4.cards);
+              setTopCards(game.player1.cards);
+              setRightCards(game.player2.cards);
+              setActiveCard(game.player3.cards[0]);
+            } else if (mainPlayerName === game.player4.name) {
+              setHandCards(game.player4.cards);
+              setLeftCards(game.player1.cards);
+              setTopCards(game.player2.cards);
+              setRightCards(game.player3.cards);
+              setActiveCard(game.player4.cards[0]);
+            }
+            setStack(game.stack);
+          }
+        }
+      );
+
+      connection.on("notPlayersTurn", () => {
+        console.log("Not players turn");
+      });
+      connection.on("stackEmpty", () => {
+        console.log("stack empty");
+      });
+
+      connection.on("roundEnding", () => {
+        console.log("ROUND ENDING");
+      });
+
+      connection.on("roundResults", (roundResults, gameResults, cards) => {
+        setShowRoundResults(true);
+        setRoundResults([roundResults, gameResults, cards]);
+        setTimeout(() => {
+          setShowRoundResults(false);
+        }, 10000);
+      });
+
+      connection.on("gameResults", (roundResults, gameResults, cards) => {
+        setShowGameResults(true);
+        setGameResults([roundResults, gameResults, cards]);
+      });
+
+      connection.on("newRound", (game) => {
+        console.log("NEW ROUND:", game);
+        setGameState(game);
+        if (mainPlayerName === game.player1.name) {
+          setHandCards(game.player1.cards);
+          setLeftCards(game.player2.cards);
+          setTopCards(game.player3.cards);
+          setRightCards(game.player4.cards);
+          setActiveCard(game.player1.cards[0]);
+        } else if (mainPlayerName === game.player2.name) {
+          setHandCards(game.player2.cards);
+          setLeftCards(game.player3.cards);
+          setTopCards(game.player4.cards);
+          setRightCards(game.player1.cards);
+          setActiveCard(game.player2.cards[0]);
+        } else if (mainPlayerName === game.player3.name) {
+          setHandCards(game.player3.cards);
+          setLeftCards(game.player4.cards);
+          setTopCards(game.player1.cards);
+          setRightCards(game.player2.cards);
+          setActiveCard(game.player3.cards[0]);
+        } else if (mainPlayerName === game.player4.name) {
+          setHandCards(game.player4.cards);
+          setLeftCards(game.player1.cards);
+          setTopCards(game.player2.cards);
+          setRightCards(game.player3.cards);
+          setActiveCard(game.player4.cards[0]);
+        }
+        setStack(game.stack);
+        console.log(game, "started");
+        setShowPlayerCards(true);
+        setTimeout(() => {
+          setShowPlayerCards(false);
+        }, 5000);
+      });
+
+      connection.on("playerPlayedSpecialCard", (player, card, game) => {
+        console.log(player);
+        console.log(mainPlayerId);
+        if (player.id === mainPlayerId) {
+          if (card.text === "Queen") {
+            setQueen(card);
+            setWaitForQueenAction(true);
+          }
+          if (card.text === "Jack") {
+            setJack(card);
+            setWaitForJackAction(true);
+          }
+        } else {
+          console.log("YOU CAN'T DO ANYTHING RN");
+        }
+      });
+    }
+  }, [
+    mainPlayerId,
+    mainPlayerName,
+    leftPlayerName,
+    leftPlayerId,
+    rightPlayerId,
+    rightPlayerName,
+    topPlayerId,
+    topPlayerName,
+  ]);
 
   useEffect(() => {
     if (connection) {
@@ -792,6 +839,10 @@ const Game = (props) => {
   useEffect(() => {
     console.log("Active Card is: " + activeCard.text + activeCard.suit);
   }, [activeCard]);
+
+  useEffect(() => {
+    console.log(mainPlayerId, mainPlayerName);
+  }, [mainPlayerId, mainPlayerName]);
 
   return (
     <div className="game-component">
