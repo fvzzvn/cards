@@ -95,10 +95,22 @@ namespace RatATatCatBackEnd
             }
         }
 
-        public async Task<DefaultGame> CreateGame(string gameId)
+        public async Task<IGame> CreateGame(string gameId, int mode)
         {
+            IGame game = new DefaultGame(gameId, mode);
             // Define the new game and add to waiting pool
-            DefaultGame game = new DefaultGame(gameId);
+            switch (mode)
+            {
+                case 1:
+                    game = new DefaultGame(gameId, mode);
+                    break;
+                case 2:
+                    game = new DragonGame(gameId, mode);
+                    break;
+                case 3:
+                    game = new CrowGame(gameId, mode);
+                    break;
+            }
             this.games[game.Id] = game;
 
             return game;

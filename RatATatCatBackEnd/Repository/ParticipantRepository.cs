@@ -81,14 +81,28 @@ namespace RatATatCatBackEnd.Repository
         {
             List<Participant> participants;
             List<ParticipantToView> participantToViews = new List<ParticipantToView>();
+            var board = _dbContext.BoardInstances.Find(id);
 
             participants = _dbContext.Participants.Where(p => p.BoardInstanceId == id)
                 .ToList();
             
             foreach (Participant p in participants)
             {
+                ParticipantToView pw = new ParticipantToView();
+                
                 UserInfo u = _IUserInfo.GetUserInfo(p.UserId);
-                ParticipantToView pw = new ParticipantToView { Mmr = u.Mmr, Name = u.DisplayName };
+                switch (board.BoardMode)
+                {
+                    case 1:
+                        pw = new ParticipantToView { Mmr = u.RatMMR, Name = u.DisplayName };
+                        break;
+                    case 2:
+                        pw = new ParticipantToView { Mmr = u.DragonMMR, Name = u.DisplayName };
+                        break;
+                    case 3:
+                        pw = new ParticipantToView { Mmr = u.CrowMMR, Name = u.DisplayName };
+                        break;
+                }
                 participantToViews.Add(pw);
             }
 

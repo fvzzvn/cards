@@ -4,7 +4,7 @@ namespace RatATatCatBackEnd
 {
     public interface IGameState
     {
-        Task<DefaultGame> CreateGame(string gameId);
+        Task<IGame> CreateGame(string gameId, int mode);
         Player CreatePlayer(string gameId, string username, string connectionId);
         IGame GetGame(string roomId);
         Player GetPlayer(string playerId);
