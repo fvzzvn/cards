@@ -735,10 +735,8 @@ const Game = (props) => {
   const handleExitGame = () => {
     connection.stop();
     if (bHubConnection) {
-      setTimeout(() => {
         bHubConnection.invoke("RefreshPage");
-      }, 3500);
-      bHubConnection.stop();
+        bHubConnection.stop();
     }
   };
 
