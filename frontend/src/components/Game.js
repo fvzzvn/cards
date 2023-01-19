@@ -50,6 +50,11 @@ const Game = (props) => {
 
   const invokeJoinRoom = async (connection) => {
     console.log("invoking JoinRoom through", connection);
+    console.log("await connection.invoke JoinRoom boardID:" +
+      props.boardId + " boardMode:" + 
+      props.boardMode + " username:" +
+      props.username)
+
     await connection.invoke(
       "JoinRoom",
       `${props.boardId}`,
