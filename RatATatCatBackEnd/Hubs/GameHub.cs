@@ -54,7 +54,7 @@ namespace RatATatCatBackEnd.Hubs
             await Clients.Group(game.Id).playerPlayedCard(player, card, game);
             if (card.IsSpecial)
             {
-                await Clients.Caller.playerPlayedSpecialCard(player, card, game);
+                await Clients.Group(game.Id).playerPlayedSpecialCard(player, card, game);
             }
             if (game.RoundEnded)
             {
@@ -77,6 +77,7 @@ namespace RatATatCatBackEnd.Hubs
                 var new_mmrs = _rankingService.Calculate(game.GameResult);
                 await Clients.Group(game.Id).gameResults(game.GameResult, mmrs ,new_mmrs);
                 _gameState.RemoveGame(game.Id);
+                _participants.DeletePlayerFromBoard(Int16.Parse(game.Id));
                 _boards.RemoveBoard(Int16.Parse(game.Id));
             }
         }
@@ -122,8 +123,14 @@ namespace RatATatCatBackEnd.Hubs
             Player player = _gameState.GetPlayer(Context.ConnectionId);
             IGame game = _gameState.GetGame(player.GameId);
 
-            game.RoundEnding = true;
-            await Clients.Group(game.Id).roundEnding();
+            if (game.PlayerTurn != player)
+                await Clients.Caller.notPlayersTurn();
+
+            else
+            {
+                game.RoundEnding = true;
+                await Clients.Group(game.Id).roundEnding();
+            }
         }
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
@@ -133,6 +140,9 @@ namespace RatATatCatBackEnd.Hubs
             if (_gameState.ArePlayersReady(game.Id))
             {
                 // TODO, game is being played
+                await Clients.Group(game.Id).playedLeftGame();
+                _participants.DeletePlayerFromBoard(Int16.Parse(game.Id));
+                _boards.RemoveBoard(Int16.Parse(game.Id));
             }
             else
             {
@@ -142,6 +152,7 @@ namespace RatATatCatBackEnd.Hubs
                     .ParticipantId);
             }
             if (game.IsEmpty())
+                _participants.DeletePlayerFromBoard(Int16.Parse(game.Id));
                 _boards.RemoveBoard(Int16.Parse(game.Id));
 
             await base.OnDisconnectedAsync(exception);

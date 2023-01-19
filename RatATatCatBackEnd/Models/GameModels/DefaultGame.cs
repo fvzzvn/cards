@@ -115,7 +115,7 @@
         public Card GetCardFromStack(Player player)
         {
             Card card = Stack.GetTop(player);
-            if (!Stack.NotEmpty())
+            if (Stack.cards.Count() == 0)
             {
                 Stack.PlaceCard(Dealer.StartingCard());
             }

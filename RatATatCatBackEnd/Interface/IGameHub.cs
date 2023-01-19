@@ -21,5 +21,6 @@ namespace RatATatCatBackEnd.Interfaces
         Task gameStatus(IGame game);
         Task receiveMessage(string username,string message);
         Task cantPlayCard();
+        Task playedLeftGame();
     }
 }
