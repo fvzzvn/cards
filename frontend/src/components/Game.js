@@ -53,7 +53,7 @@ const Game = (props) => {
     await connection.invoke(
       "JoinRoom",
       `${props.boardId}`,
-      `${props.boardMode}`,
+      // `${props.boardMode}`,
       `${props.username}`
     );
     setTimeout(() => {
@@ -623,7 +623,7 @@ const Game = (props) => {
         setWaitForQueenAction(true);
       }
       if (card.text === "Jack") {
-        setActiveCard(card);
+        setJack(card);
         setWaitForJackAction(true);
       }
     });
@@ -758,7 +758,6 @@ const Game = (props) => {
   }, [queenCardArray, queenIdsArray]);
 
   const handleJackAction = (id, card) => {
-    let jack = activeCard;
     console.log("HANDLING JACK ACTION...", jack, id, card);
     setJackIdsArray(
       (current) => [...current, id],
@@ -806,6 +805,7 @@ const Game = (props) => {
       setWaitForJackAction(false);
     }
   }, [jackIdsArray, jackCardArray]);
+
   useEffect(() => {}, [handCards]);
 
   useEffect(() => {
