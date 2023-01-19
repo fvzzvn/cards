@@ -15,13 +15,13 @@ namespace RatATatCatBackEnd
         {
         }
 
-        public Player CreatePlayer(string gameId, string username, string connectionId)
+        public Player CreatePlayer(string gameId, string username, int userId, int Mmr, string connectionId)
         {
             IGame foundGame;
 
             foundGame = GetGame(gameId);
 
-            Player player = new Player(connectionId, username, gameId);
+            Player player = new Player(connectionId, username, userId, Mmr, gameId);
             this.players[connectionId] = player;
 
             foundGame.Dealer.GiveHand(player);

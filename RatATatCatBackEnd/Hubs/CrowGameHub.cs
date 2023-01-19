@@ -10,12 +10,14 @@ namespace RatATatCatBackEnd.Hubs
         private readonly IServiceProvider _serviceProvider;
         private readonly IParticipant _participants;
         private readonly IBoardInstance _boards;
+        private readonly IUserInfo _user;
         public CrowGameHub(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _gameState = _serviceProvider.GetRequiredService<IGameState>();
             _participants = _serviceProvider.GetRequiredService<IParticipant>();
             _boards = _serviceProvider.GetRequiredService<IBoardInstance>();
+            _user = _serviceProvider.GetRequiredService<IUserInfo>();
         }
         public async Task JoinRoom(string gameId, int mode, string username)
         {
@@ -23,8 +25,8 @@ namespace RatATatCatBackEnd.Hubs
             {
                 await _gameState.CreateGame(gameId, mode);
             }
-
-            Player player = _gameState.CreatePlayer(gameId, username, Context.ConnectionId);
+            var userInfo = _user.GetUserInfoByUserName(username);
+            Player player = _gameState.CreatePlayer(gameId, username, userInfo.UserId, userInfo.CrowMMR, Context.ConnectionId);
             await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
             await Clients.Group(gameId).playerJoined(player);
 

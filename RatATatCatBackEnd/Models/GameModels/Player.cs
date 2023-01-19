@@ -1,14 +1,20 @@
-﻿namespace RatATatCatBackEnd.Models.GameModels
+﻿using RatATatCatBackEnd.Interface;
+
+namespace RatATatCatBackEnd.Models.GameModels
 {
     public class Player
     {
-        public Player(string id, string name, string gameId)
+        public Player(string id, string name, int userId, int Mmr, string gameId)
         {
             this.Id = id;
             this.Name = name;
             this.GameId = gameId;
             this.Cards = new List<Card>();
+            this.UserId = userId;
+            this.Mmr = Mmr;
         }
+        public int UserId { get; set; }
+        public int Mmr { get; set; }
         public string Id { get; set; }
         public int OnBoardPosition { get; set; }
         public int PlayerPosition { get; set; } = -1;

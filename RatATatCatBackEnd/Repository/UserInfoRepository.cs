@@ -54,6 +54,22 @@ namespace RatATatCatBackEnd.Repository
             }
         }
 
+        public List<UserInfo> GetTop50()
+        {
+            try
+            {
+                var users = _dbContext.UserInfos.
+                    OrderByDescending(u => u.RatMMR)
+                    .Take(50)
+                    .ToList();
+                return users;
+            }
+            catch
+            {
+                throw new Exception("Couldn't fetch top 50 players");
+            }
+        }
+
         public UserInfo GetUserInfo(int id)
         {
             try
