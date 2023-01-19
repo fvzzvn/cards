@@ -16,8 +16,8 @@
         public Dictionary<string,int> RoundResult { get; set; }
         public Dictionary<string, int> GameResult { get; set; }
         public bool RoundEnding { get; set; }
-        public Player Player3 { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Player Player4 { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Player Player3 { get; set; }
+        public Player Player4 { get; set; }
         public int Mode { get; set; }
 
         public DragonGame(string id, int mode)

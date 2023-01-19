@@ -18,7 +18,7 @@
             {
                 for (int j = 0; j < types.Count(); j++)
                 {
-                    Cards.Push(new Card { Text = types[i], IsSpecial = false});
+                    Cards.Push(new Card { Text = types[j], IsSpecial = false});
                 }
             }
             types = new List<string> { "-1", "9", "10" };
@@ -26,7 +26,7 @@
             {
                 for (int j = 0; j < types.Count(); j++)
                 {
-                    Cards.Push(new Card { Text = types[i] , IsSpecial = true});
+                    Cards.Push(new Card { Text = types[j] , IsSpecial = true});
                 }
             }
             Shuffle();
