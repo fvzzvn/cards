@@ -23,7 +23,7 @@ const Boards = (props) => {
       .catch(() => {});
 
     const connection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7297/BoardHub", {
+      .withUrl("https://ratsapi.online/BoardHub", {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets,
       })

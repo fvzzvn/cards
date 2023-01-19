@@ -19,6 +19,7 @@ import { v4 as uuid } from "uuid";
 import { addParticipant } from "../slices/participants";
 import { useDispatch, useSelector } from "react-redux";
 import _, { forEach } from "lodash";
+import { setAutoFreeze } from "immer";
 
 const Game = (props) => {
   const mainPlayerName = useSelector(
@@ -42,7 +43,7 @@ const Game = (props) => {
   const [activeCard, setActiveCard] = useState("");
   const [connection, setConnection] = useState(null);
   const [bHubConnection, setbHubConnection] = useState(null);
-  const [cheat, setCheat] = useState(true);
+  const [cheat, setCheat] = useState(false);
   const [showPlayerCards, setShowPlayerCards] = useState(false);
   const [showRoundResults, setShowRoundResults] = useState(false);
   const [showGameResults, setShowGameResults] = useState(false);
@@ -56,6 +57,7 @@ const Game = (props) => {
   const [waitForJackAction, setWaitForJackAction] = useState(false);
   const [jackIdsArray, setJackIdsArray] = useStateCallback([]);
   const [jackCardArray, setJackCardArray] = useStateCallback([]);
+  const [stun, setStun] = useState(false);
   const dispatch = useDispatch();
 
   const invokeJoinRoom = async (connection) => {
@@ -80,7 +82,7 @@ const Game = (props) => {
     }, 1500);
 
     const bHubConnection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7297/BoardHub", {
+      .withUrl("https://ratsapi.online/BoardHub", {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets,
       })
@@ -101,7 +103,7 @@ const Game = (props) => {
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7297/GameHub", {
+      .withUrl("https://ratsapi.online/GameHub", {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets,
       })
@@ -113,6 +115,10 @@ const Game = (props) => {
 
     connection.on("playerJoined", (player) => {
       console.log(player + " joined " + props.boardId);
+    });
+
+    connection.on("playedLeftGame", () => {
+      props.setGo(false);
     });
 
     connection.on("start", (game) => {
@@ -189,7 +195,7 @@ const Game = (props) => {
         let id4 = game.player4.id;
         let n4 = game.player4.name;
         console.log(id1, n1, id2, n2, id3, n3, id4, n4);
-        dispatch(setMainPlayer({ id4, n4 }));
+        dispatch(setMainPlayer([id4, n4]));
         dispatch(setLeftPlayer([id1, n1]));
         dispatch(setTopPlayer([id2, n2]));
         dispatch(setRightPlayer([id3, n3]));
@@ -340,13 +346,7 @@ const Game = (props) => {
         (card, player, game, playersList, cards) => {
           setGameState(game);
           if (card.text === "Queen") {
-            console.log(
-              "SHOWING CARD FROM QUEEN SPECIAL EFFECT: ",
-              playersList,
-              cards
-            );
             if (mainPlayerName === game.player1.name) {
-              console.log("I'M PLAYER 1");
               if (playersList[0].id === game.player1.id) {
                 let cardList = _.cloneDeep(game.player1.cards);
                 let cheatCard = cardList.find(
@@ -401,7 +401,6 @@ const Game = (props) => {
                 }, 5000);
               }
             } else if (mainPlayerName === game.player2.name) {
-              console.log("I'M PLAYER 2");
               if (playersList[0].id === game.player2.id) {
                 let cardList = _.cloneDeep(game.player2.cards);
                 let cheatCard = cardList.find(
@@ -484,7 +483,6 @@ const Game = (props) => {
                   setLeftCards(game.player4.cards);
                 }, 5000);
               } else if (playersList[0].id === game.player1.id) {
-                console.log("SHOWING TOP CARD");
                 let cardList = _.cloneDeep(game.player1.cards);
                 let cheatCard = cardList.find(
                   (card) =>
@@ -596,6 +594,7 @@ const Game = (props) => {
             }
             setStack(game.stack);
           }
+          setStun(false);
         }
       );
 
@@ -671,8 +670,8 @@ const Game = (props) => {
             setJack(card);
             setWaitForJackAction(true);
           }
-        } else {
-          console.log("YOU CAN'T DO ANYTHING RN");
+        } else if (card.text === "Jack" || card.text === "Queen") {
+          setStun(true);
         }
       });
     }
@@ -738,7 +737,7 @@ const Game = (props) => {
     if (bHubConnection) {
       setTimeout(() => {
         bHubConnection.invoke("RefreshPage");
-      }, 1500);
+      }, 3500);
       bHubConnection.stop();
     }
   };
@@ -846,6 +845,7 @@ const Game = (props) => {
 
   return (
     <div className="game-component">
+      {stun && <div className="stun"></div>}
       <div className="game-wrapper">
         {showRoundResults && (
           <div className="dim-screen">

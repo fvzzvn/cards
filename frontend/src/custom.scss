@@ -979,6 +979,13 @@ $btn-close-opacity: 0.9;
   border-right: 0px;
 }
 
+.stun {
+  z-index: 9999999;
+  position:absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,0.4);
+}
 
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";

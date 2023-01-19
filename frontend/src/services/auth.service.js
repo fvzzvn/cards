@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://localhost:7297/api/";
+const API_URL = "https://ratsapi.online/api/";
 
 
 const register = (username, email, password) => {
